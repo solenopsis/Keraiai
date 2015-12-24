@@ -1,6 +1,5 @@
 # GNU GENERAL PUBLIC LICENSE 3.0
 
-
 Copyright (C) 2015  **Scot P. Floess**
 
 This program is free software: you can redistribute it and/or modify
