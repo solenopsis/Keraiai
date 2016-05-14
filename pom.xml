@@ -213,7 +213,7 @@
         <repository>
             <id>bintray-solenopsis-maven</id>
             <name>solenopsis-maven-Keraiai</name>
-            <url>https://api.bintray.com/maven/solenopsis/maven/Keraia/;publish=1</url>
+            <url>https://api.bintray.com/maven/solenopsis/maven/Keraiai/;publish=1</url>
         </repository>
     </distributionManagement>
 </project>
