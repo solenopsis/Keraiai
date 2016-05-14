@@ -6,8 +6,6 @@ Welcome to Keraiai - a Java communication library for SFDC.  This project will c
 
 Currently, [Lasius] (https://github.com/solenopsis/Lasius) contains all WSDLs and generated Java code.  However, depending upon usage, one may not want all the framework code associated with that project.  Therefore, this project was created to support generated Java code from WSDLs (small project with no dependencies).
 
-*It will be the sole responsibility of users to manage logins, session ids, etc.*
-
 ## What Does Keraiai Mean?
 
 Like all [Solenopsis] (https://github.com/solenopsis) themes, we wanted to choose a Latin or Greek word related to ants.  Since this is project is for SFDC communication, we considered an ant's antenna.  The word [keraiai] (http://dictionary.reference.com/browse/antennae) is actually Greek and refers to an insect's horns.

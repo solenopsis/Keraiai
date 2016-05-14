@@ -1,0 +1,17 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven work #
+target
+
+# Netbeans
+nb-configuration.xml
+nb_jr_remoting.cfg
+
+#JRebel
+rebel-remote.xml
+rebel.xml

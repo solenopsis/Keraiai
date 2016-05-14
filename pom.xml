@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.solenopsis</groupId>
+	<artifactId>keraiai</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+    <name>Keraiai SFDC Communication Library</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <org.apache.maven.plugins_maven-compiler-plugin_version>3.3</org.apache.maven.plugins_maven-compiler-plugin_version>
+
+        <java_version>1.7</java_version>
+
+		<org.codehaus.mojo_jaxws-maven-plugin_version>1.12</org.codehaus.mojo_jaxws-maven-plugin_version>
+
+        <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
+
+        <org.flossware_jCore_version>1.0.3</org.flossware_jCore_version>
+
+        <junit_junit_version>4.12</junit_junit_version>
+
+		<base.package>org.solenopsis.keraiai.wsdl</base.package>
+    </properties>
+
+    <developers>
+        <developer>
+            <name>Scot P. Floess</name>
+            <id>flossy</id>
+            <email>flossware@gmail.com</email>
+            <organization>Solenopsis</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-4</timezone>
+        </developer>
+    </developers>
+
+    <build>
+        <!--
+            Doing this as loading the WSDL as a URL was not working well for tests.  We cannot use
+            getResourceAsStream() for a URL...  See the AbstractSessionPortTest as to how this is being
+            used.
+        -->
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-compiler-plugin_version}</version>
+
+                <configuration>
+                    <source>${java_version}</source>
+                    <target>${java_version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+				<version>${org.jvnet.jax-ws-commons_jaxws-maven-plugin_version}</version>
+                <executions>
+                    <execution>
+                        <id>apex-wsdl-import</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+							<packageName>${base.package}.apex</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Keraiai-apex.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws/wsimport</sourceDestDir>
+                            <bindingFiles>
+                                <bindingFile>${basedir}/jaxws/binding.xml</bindingFile>
+                            </bindingFiles>
+                            <xjcArgs>
+                                <!-- Must use -B-XautoNameResolution when used on the command line -->
+                                <xjcArg>-XautoNameResolution</xjcArg>
+                            </xjcArgs>
+                            <!-- Without this, multiple WSDLs won't be processed :( -->
+                            <staleFile>${project.build.directory}/jaxws/stale/wsdl.apex.done</staleFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>enterprise-wsdl-import</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+							<packageName>${base.package}.enterprise</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Keraiai-enterprise.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws/wsimport</sourceDestDir>
+                            <bindingFiles>
+                                <bindingFile>${basedir}/jaxws/binding.xml</bindingFile>
+                            </bindingFiles>
+                            <xjcArgs>
+                                <!-- Must use -B-XautoNameResolution when used on the command line -->
+                                <xjcArg>-XautoNameResolution</xjcArg>
+                            </xjcArgs>
+                            <!-- Without this, multiple WSDLs won't be processed :( -->
+                            <staleFile>${project.build.directory}/jaxws/stale/wsdl.enterprise.done</staleFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>metadata-wsdl-import</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+							<packageName>${base.package}.metadata</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Keraiai-metadata.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws/wsimport</sourceDestDir>
+                            <bindingFiles>
+                                <bindingFile>${basedir}/jaxws/binding.xml</bindingFile>
+                            </bindingFiles>
+                            <xjcArgs>
+                                <!-- Must use -B-XautoNameResolution when used on the command line -->
+                                <xjcArg>-XautoNameResolution</xjcArg>
+                            </xjcArgs>
+                            <!-- Without this, multiple WSDLs won't be processed :( -->
+                            <staleFile>${project.build.directory}/jaxws/stale/wsdl.metadata.done</staleFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>partner-wsdl-import</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+							<packageName>${base.package}.partner</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Keraiai-partner.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws/wsimport</sourceDestDir>
+                            <bindingFiles>
+                                <bindingFile>${basedir}/jaxws/binding.xml</bindingFile>
+                            </bindingFiles>
+                            <xjcArgs>
+                                <!-- Must use -B-XautoNameResolution when used on the command line -->
+                                <xjcArg>-XautoNameResolution</xjcArg>
+                            </xjcArgs>
+                            <!-- Without this, multiple WSDLs won't be processed :( -->
+                            <staleFile>${project.build.directory}/jaxws/stale/wsdl.partner.done</staleFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>tooling-wsdl-import</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+							<packageName>${base.package}.tooling</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Keraiai-tooling.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws/wsimport</sourceDestDir>
+                            <bindingFiles>
+                                <bindingFile>${basedir}/jaxws/binding.xml</bindingFile>
+                            </bindingFiles>
+                            <xjcArgs>
+                                <!-- Must use -B-XautoNameResolution when used on the command line -->
+                                <xjcArg>-XautoNameResolution</xjcArg>
+                            </xjcArgs>
+                            <!-- Without this, multiple WSDLs won't be processed :( -->
+                            <staleFile>${project.build.directory}/jaxws/stale/wsdl.tooling.done</staleFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.flossware</groupId>
+            <artifactId>jCore</artifactId>
+            <version>${org.flossware_jCore_version}</version>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit_junit_version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-solenopsis-maven</id>
+            <name>solenopsis-maven-Keraiai</name>
+            <url>https://api.bintray.com/maven/solenopsis/maven/Keraia/;publish=1</url>
+        </repository>
+    </distributionManagement>
+</project>
