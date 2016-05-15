@@ -41,6 +41,6 @@ public class UnproxiedSessionPortFactory extends AbstractSessionPortFactory {
      */
     @Override
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, Service service, Class<P> portType, String name) {
-        return (P) createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, getSecurityMgr().getSession().getSessionId());
+        return (P) logAndReturnPort("Created unproxied session", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, getSecurityMgr().getSession().getSessionId()));
     }
 }

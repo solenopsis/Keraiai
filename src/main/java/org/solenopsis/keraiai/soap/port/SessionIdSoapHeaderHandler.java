@@ -18,12 +18,12 @@ package org.solenopsis.keraiai.soap.port;
 
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPException;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.SoapUtils;
@@ -33,12 +33,7 @@ import org.flossware.jcore.utils.soap.SoapUtils;
  *
  * @author sfloess
  */
-class SessionIdSoapHeaderHandler implements SOAPHandler<SOAPMessageContext> {
-
-    /**
-     * Our logger.
-     */
-    private final Logger logger;
+class SessionIdSoapHeaderHandler extends AbstractCommonBase implements SOAPHandler<SOAPMessageContext> {
 
     /**
      * Name where we will place the session id element.
@@ -61,15 +56,6 @@ class SessionIdSoapHeaderHandler implements SOAPHandler<SOAPMessageContext> {
     SessionIdSoapHeaderHandler(final QName sessionHeaderName, final String sessionId) {
         this.sessionHeaderName = ObjectUtils.ensureObject(sessionHeaderName, "Must provide a session header QName!");
         this.sessionId = StringUtils.ensureString(sessionId, "Must provide a session Id!");
-
-        this.logger = Logger.getLogger(getClass().getName());
-    }
-
-    /**
-     * Return the logger.
-     */
-    private Logger getLogger() {
-        return logger;
     }
 
     /**
@@ -105,10 +91,14 @@ class SessionIdSoapHeaderHandler implements SOAPHandler<SOAPMessageContext> {
     public boolean handleMessage(SOAPMessageContext msgContext) {
         //if this is a request, true for outbound messages, false for inbound
         if (!SoapUtils.isRequest(msgContext)) {
+            getLogger().log(Level.FINEST, "SOAP Message is not a request");
+
             return true;
         }
 
         try {
+            getLogger().log(Level.FINE, "Setting session id [{0}] in SOAP header", getSessionId());
+
             SessionIdUtils.setSessionId(SoapUtils.getSoapHeader(msgContext), getSessionHeaderName(), getSessionId());
             msgContext.getMessage().saveChanges();
         } catch (final SOAPException soapException) {
@@ -123,6 +113,8 @@ class SessionIdSoapHeaderHandler implements SOAPHandler<SOAPMessageContext> {
      */
     @Override
     public boolean handleFault(SOAPMessageContext msgContext) {
+        getLogger().log(Level.WARNING, "Received a SOAP fault for SOAPMessageContext:  {0}", msgContext);
+
         return true;
     }
 

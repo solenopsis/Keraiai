@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.partner;
 
+import java.util.logging.Level;
 import org.solenopsis.keraiai.soap.credentials.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
 import org.solenopsis.keraiai.soap.security.LoginContext;
@@ -55,6 +56,8 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected LoginContext doLogin(Soap port) throws Exception {
+        getLogger().log(Level.FINEST, "Performing login on [{0}]", port);
+
         return new PartnerLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
 
@@ -63,6 +66,8 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected void doLogout(Soap port) throws Exception {
+        getLogger().log(Level.FINEST, "Performing logout on [{0}]", port);
+
         port.logout();
     }
 }

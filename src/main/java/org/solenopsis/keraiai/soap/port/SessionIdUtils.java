@@ -18,6 +18,8 @@ package org.solenopsis.keraiai.soap.port;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
@@ -33,6 +35,20 @@ import org.flossware.jcore.utils.StringUtils;
  * @author sfloess
  */
 class SessionIdUtils {
+
+    /**
+     * Used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(SessionIdUtils.class.getName());
+
+    /**
+     * Return our logger.
+     *
+     * @return our logger.
+     */
+    private static Logger getLogger() {
+        return logger;
+    }
 
     /**
      * When setting up the soap header, we need to set the session header using this attribute.
@@ -72,6 +88,8 @@ class SessionIdUtils {
         ObjectUtils.ensureObject(sessionHeaderName, "Must provide a QName!");
         StringUtils.ensureString(sessionId, "Must provide a session id");
 
+        getLogger().log(Level.FINEST, "Setting session id [{0}] for QName [{1}] in SOAP header {3}", new Object[]{sessionId, sessionHeaderName, soapHeader});
+
         soapHeader.addChildElement(sessionHeaderName).addChildElement(SESSION_ID).addTextNode(sessionId);
     }
 
@@ -97,6 +115,8 @@ class SessionIdUtils {
         handlerChain.add(new SessionIdSoapHeaderHandler(computeSessionHeaderName(service), sessionId));
 
         ((BindingProvider) port).getBinding().setHandlerChain(handlerChain);
+
+        getLogger().log(Level.FINEST, "Setting session id [{0}] for Service [{1}] and Port [{3}]", new Object[]{sessionId, service, port});
 
         return port;
     }

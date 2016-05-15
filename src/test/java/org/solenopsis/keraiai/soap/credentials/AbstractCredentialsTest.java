@@ -25,51 +25,51 @@ import org.junit.Test;
  * @author Scot P. Floess
  */
 public class AbstractCredentialsTest {
-
+    
     volatile static int id = 0;
 
     /**
      * Stub class for testing.
      */
     class AbstractCredentialsStub extends AbstractCredentials {
-
+        
         int myId;
-
+        
         String password;
         String token;
-
+        
         AbstractCredentialsStub(final String password, final String token) {
             this.password = password;
             this.token = token;
             this.myId = (id++);
         }
-
+        
         AbstractCredentialsStub() {
             this.myId = (id++);
             this.password = "password" + myId;
             this.token = "token" + myId;
         }
-
+        
         @Override
         public String getUrl() {
             return "url" + myId;
         }
-
+        
         @Override
         public String getUserName() {
             return "user" + myId;
         }
-
+        
         @Override
         public String getPassword() {
             return password;
         }
-
+        
         @Override
         public String getToken() {
             return token;
         }
-
+        
         @Override
         public String getApiVersion() {
             return "api" + myId;
@@ -83,12 +83,15 @@ public class AbstractCredentialsTest {
     public void test_equals() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
         AbstractCredentialsStub stub2 = new AbstractCredentialsStub();
-
+        
         Assert.assertTrue("Should be equal", stub1.equals(stub1));
         Assert.assertTrue("Should be equal", stub2.equals(stub2));
-
+        
         Assert.assertFalse("Should not be equal", stub1.equals(stub2));
         Assert.assertFalse("Should not be equal", stub2.equals(stub1));
+        
+        Assert.assertFalse("Should not be equal", stub1.equals(null));
+        Assert.assertFalse("Should not be equals", stub2.equals(new byte[0]));
     }
 
     /**
@@ -97,7 +100,7 @@ public class AbstractCredentialsTest {
     @Test
     public void test_hashCode() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-
+        
         Assert.assertEquals("Should be equal", stub1.getUserName().hashCode(), stub1.hashCode());
     }
 
@@ -161,7 +164,7 @@ public class AbstractCredentialsTest {
     @Test
     public void test_getSecurityPassword() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-
+        
         Assert.assertFalse("Should not be blank", stub1.getSecurityPassword().trim().isEmpty());
         Assert.assertEquals("Should be equal", stub1.getPassword() + stub1.getToken(), stub1.getSecurityPassword());
     }

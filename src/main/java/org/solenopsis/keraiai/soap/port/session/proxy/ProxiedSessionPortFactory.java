@@ -54,7 +54,7 @@ public class ProxiedSessionPortFactory extends AbstractSessionPortFactory {
         ObjectUtils.ensureObject(portType, "Should have a port type");
         ObjectUtils.ensureObject(loginContext, "Should have a login context");
 
-        return createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, loginContext.getSessionId());
+        return logAndReturnPort("Created for a proxy", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, loginContext.getSessionId()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class ProxiedSessionPortFactory extends AbstractSessionPortFactory {
      */
     @Override
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, Service service, Class<P> portType, String name) {
-        return (P) (Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name)));
+        return (P) logAndReturnPort("Created a proxy", (Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name))));
     }
 
     /**

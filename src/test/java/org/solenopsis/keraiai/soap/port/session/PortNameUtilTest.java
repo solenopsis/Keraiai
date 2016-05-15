@@ -16,7 +16,6 @@
  */
 package org.solenopsis.keraiai.soap.port.session;
 
-import org.solenopsis.keraiai.soap.port.session.PortNameUtil;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,28 +30,38 @@ import org.solenopsis.keraiai.soap.security.SecurityMgr;
 import org.solenopsis.keraiai.wsdl.enterprise.SforceService;
 
 /**
- * Tests the PortNameUtil utility class.
+ * Tests the PortNameUtils utility class.
  *
  * @author Scot P. Floess
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PortNameUtilTest {
-
+    
     @Mock
     SecurityMgr securityMgr;
-
+    
     @Mock
     Credentials credentials;
-
+    
     String apiVersion;
-
+    
     @Before
     public void setup() {
         Mockito.when(securityMgr.getCredentials()).thenReturn(credentials);
-
+        
         apiVersion = TestUtils.generateUniqueStr("api");
         Mockito.when(credentials.getApiVersion()).thenReturn(apiVersion);
+        
+    }
 
+    /**
+     * Tests logging the computed port name.
+     */
+    @Test
+    public void test_logAndReturnComputedPortName() {
+        final String portName = TestUtils.generateUniqueStr("MyPort");
+        
+        Assert.assertSame("Should be the same port name", portName, PortNameUtils.logAndReturnComputedPortName(portName));
     }
 
     /**
@@ -61,7 +70,7 @@ public class PortNameUtilTest {
     @Test
     public void test_computePortName() {
         final SforceService service = new SforceService(getClass().getClassLoader().getResource("wsdl/Keraiai-enterprise.wsdl"));
-        Assert.assertEquals("Should be the correct port name", "Soap", PortNameUtil.computePortName(WebServiceTypeEnum.CUSTOM_TYPE, service, securityMgr));
-        Assert.assertEquals("Should be the correct port name", apiVersion, PortNameUtil.computePortName(WebServiceTypeEnum.ENTERPRISE_TYPE, service, securityMgr));
+        Assert.assertEquals("Should be the correct port name", "Soap", PortNameUtils.computePortName(WebServiceTypeEnum.CUSTOM_TYPE, service, securityMgr));
+        Assert.assertEquals("Should be the correct port name", apiVersion, PortNameUtils.computePortName(WebServiceTypeEnum.ENTERPRISE_TYPE, service, securityMgr));
     }
 }

@@ -16,8 +16,9 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
-import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.xml.ws.Service;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
 
@@ -31,27 +32,25 @@ import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
  *
  * @author Scot P. Floess
  */
-public abstract class AbstractPortFactory {
-
-    /**
-     * Used for logging.
-     */
-    private final Logger logger;
+public abstract class AbstractPortFactory extends AbstractCommonBase {
 
     /**
      * Default constructor.
      */
     protected AbstractPortFactory() {
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     /**
-     * Return the logger.
+     * Log and return the created session port.
      *
-     * @return the logger.
+     * @param port is the created session port.
+     *
+     * @return the port.
      */
-    protected final Logger getLogger() {
-        return logger;
+    protected <P> P logAndReturnPort(final String msg, final P port) {
+        getLogger().log(Level.FINEST, "{0} port [{1}]", new Object[]{msg, port});
+
+        return port;
     }
 
     /**
@@ -69,7 +68,9 @@ public abstract class AbstractPortFactory {
      * @return a usable port to call on a web service.
      */
     protected <P> P createPort(WebServiceTypeEnum webServiceType, final String serverUrl, Service service, Class<P> portType, String name) {
-        return UrlUtils.setUrl(ObjectUtils.ensureObject(service, "Must present a service").getPort(portType), serverUrl, webServiceType.getPartialUrl(), name);
+        getLogger().log(Level.FINEST, "Creating port for WebServiceTypeEnum [{0}], serverUrl [{1}], service [{2}], portType [{3}], name [{4}]", new Object[]{webServiceType, serverUrl, service, name});
+
+        return logAndReturnPort("Created", UrlUtils.setUrl(ObjectUtils.ensureObject(service, "Must present a service").getPort(portType), serverUrl, webServiceType.getPartialUrl(), name));
     }
 
     /**
@@ -88,6 +89,8 @@ public abstract class AbstractPortFactory {
      * @return a usable port to call on a web service that has <code>sessionId</code> in the SOAP header.
      */
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, final String serverUrl, final Service service, final Class<P> portType, final String name, final String sessionId) {
-        return (P) SessionIdUtils.setSessionId(service, createPort(webServiceType, serverUrl, service, portType, name), sessionId);
+        getLogger().log(Level.FINEST, "Creating session port for WebServiceTypeEnum[{0}], serverUrl [{1}], service [{2}], portType [{3}], name [{4}]", new Object[]{webServiceType, serverUrl, service, name});
+
+        return (P) logAndReturnPort("Created session", SessionIdUtils.setSessionId(service, createPort(webServiceType, serverUrl, service, portType, name), sessionId));
     }
 }

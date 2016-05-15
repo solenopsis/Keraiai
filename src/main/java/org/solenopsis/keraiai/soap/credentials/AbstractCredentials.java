@@ -34,11 +34,10 @@ public abstract class AbstractCredentials implements Credentials {
      */
     @Override
     public boolean equals(final Object object) {
-        if (!(object instanceof Credentials)) {
-            return false;
-        }
-
-        return hashCode() == object.hashCode() && getUserName().equals(((Credentials) object).getUserName());
+        return null != object
+                && (object instanceof Credentials)
+                && hashCode() == object.hashCode()
+                && getUserName().equals(((Credentials) object).getUserName());
     }
 
     /**

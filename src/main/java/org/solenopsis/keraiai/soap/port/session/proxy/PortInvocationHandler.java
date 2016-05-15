@@ -20,27 +20,23 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.ws.Service;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
 import org.solenopsis.keraiai.soap.security.LoginContext;
 
 /**
+ * Acts as a proxy to call methods on ports. This is the real place that autologins, retries, etc happen.
  *
  * @author Scot P. Floess
  */
-class PortInvocationHandler implements InvocationHandler {
+class PortInvocationHandler extends AbstractCommonBase implements InvocationHandler {
 
     /**
      * Total number of retries until we fail a call.
      */
     public static final int MAX_RETRIES = 4;
-
-    /**
-     * Used for logging.
-     */
-    private final Logger logger;
 
     /**
      * The port factory for whom we make calls to ports.
@@ -111,15 +107,6 @@ class PortInvocationHandler implements InvocationHandler {
     }
 
     /**
-     * Return the logger.
-     *
-     * @return the logger.
-     */
-    protected final Logger getLogger() {
-        return logger;
-    }
-
-    /**
      * This constructor all one needs to provide proxy calls for autologins and retries.
      *
      * @param sessionPortFactory can create ports in which we can make actual web service calls.
@@ -135,8 +122,6 @@ class PortInvocationHandler implements InvocationHandler {
         this.webServiceType = ObjectUtils.ensureObject(webServiceType, "WebServiceEnum cannot be null!");
         this.service = ObjectUtils.ensureObject(service, "Service cannot be null!");
         this.portType = ObjectUtils.ensureObject(portType, "Class for port type cannot be null!");
-
-        this.logger = Logger.getLogger(getClass().getName());
 
         this.name = name;
     }
@@ -159,9 +144,11 @@ class PortInvocationHandler implements InvocationHandler {
      */
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+        ObjectUtils.ensureObject(proxy, "Must have a proxy object in which to call methods!");
+
         int totalCalls = 0;
 
-        getLogger().log(Level.FINE, "Calling [{0}]", method.getName());
+        getLogger().log(Level.FINE, "Calling [{0}.{1}]", new Object[]{proxy.getClass(), method.getName()});
         LoginContext loginContext = null;
         Throwable toRaise = null;
 

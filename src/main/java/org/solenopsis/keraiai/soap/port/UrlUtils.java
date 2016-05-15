@@ -44,6 +44,19 @@ class UrlUtils {
     }
 
     /**
+     * Will log the computed server URL.
+     *
+     * @param serverUrl the computed server URL.
+     *
+     * @return the server URL.
+     */
+    static String logAndReturnComputedUrl(final String serverUrl) {
+        getLogger().log(Level.FINEST, "Computed URL [{0}]]", serverUrl);
+
+        return serverUrl;
+    }
+
+    /**
      * Using protocol, host and name, return a URL string.
      *
      * @param protocol the web protocol like https.
@@ -53,7 +66,7 @@ class UrlUtils {
      * @return a URL string.
      */
     static String computeUrlString(final String protocol, final String host, final String partialUrl, final String name) {
-        return new StringBuilder().append(protocol).append("://").append(host).append('/').append(partialUrl).append('/').append(name).toString();
+        return logAndReturnComputedUrl(new StringBuilder().append(protocol).append("://").append(host).append('/').append(partialUrl).append('/').append(name).toString());
     }
 
     /**
@@ -67,7 +80,7 @@ class UrlUtils {
      * @return
      */
     static String computeUrlString(final URL serverUrl, final String partialUrl, final String name) {
-        return UrlUtils.computeUrlString(serverUrl.getProtocol(), serverUrl.getHost(), partialUrl, name);
+        return computeUrlString(serverUrl.getProtocol(), serverUrl.getHost(), partialUrl, name);
     }
 
     /**
@@ -97,6 +110,8 @@ class UrlUtils {
      * @throws IllegalArgumentException if svcUrl is null or blank.
      */
     static <P> P setUrl(final P port, final String serverUrl, final String partialUrl, final String name) {
+        getLogger().log(Level.FINEST, "Setting url on port [{0}], using serverUrl [{1}], for partialUrl [{2}] and name [{3}]", new Object[]{port, serverUrl, partialUrl, name});
+
         ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, computeUrlString(serverUrl, partialUrl, name));
 
         return port;

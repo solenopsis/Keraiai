@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
+import java.util.logging.Level;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.credentials.Credentials;
 import org.solenopsis.keraiai.soap.port.AbstractPortFactory;
@@ -57,6 +58,8 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      */
     synchronized LoginContext setLoginContext(final LoginContext loginContext) {
         this.loginContext = loginContext;
+
+        getLogger().log(Level.FINEST, "Setting loging context to [{0}]", loginContext);
 
         return loginContext;
     }
@@ -132,6 +135,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     @Override
     public synchronized LoginContext resetSession(final LoginContext loginContext) {
         if (this.loginContext != loginContext) {
+            getLogger().log(Level.FINEST, "Not resetting as old context [{0}] != new context [{1}]", new Object[]{this.loginContext, loginContext});
             return this.loginContext;
         }
 
@@ -143,6 +147,8 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      */
     @Override
     public synchronized LoginContext login() {
+        getLogger().log(Level.FINEST, "Requesting login");
+
         try {
             return setLoginContext(doLogin(
                     (P) createPort(
@@ -164,6 +170,8 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      */
     @Override
     public synchronized void logout() {
+        getLogger().log(Level.FINEST, "Requesting logout");
+
         try {
             doLogout((P) createSessionPort(
                     getLoginWebServiceType().getApiWebServiceType().getWebServiceType(),

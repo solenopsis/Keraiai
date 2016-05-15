@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap.port.session;
 
 import java.net.URL;
+import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
@@ -74,7 +75,9 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Service service) {
-        return (P) createSessionPort(webServiceType, service, ServiceUtils.getPortType(service.getClass()), PortNameUtil.computePortName(webServiceType, service, securityMgr));
+        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0} and Service [{1}]", new Object[]{webServiceType, service});
+
+        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, service, ServiceUtils.getPortType(service.getClass()), PortNameUtils.computePortName(webServiceType, service, securityMgr)));
     }
 
     /**
@@ -82,7 +85,9 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <S extends Service, P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Class<S> serviceClass, final URL wsdlResource) {
-        return (P) createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource));
+        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0}, Class [{1}] and URL [{2}]", new Object[]{webServiceType, serviceClass, wsdlResource});
+
+        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)));
     }
 
     /**
@@ -90,6 +95,8 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <S extends Service, P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Class<S> serviceClass, final String wsdlResource) {
-        return (P) createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource));
+        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0}, Class [{1}] and String URL [{2}]", new Object[]{webServiceType, serviceClass, wsdlResource});
+
+        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)));
     }
 }

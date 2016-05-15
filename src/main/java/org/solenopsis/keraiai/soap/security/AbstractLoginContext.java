@@ -16,7 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
-import java.util.logging.Logger;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.credentials.Credentials;
 
@@ -25,12 +25,7 @@ import org.solenopsis.keraiai.soap.credentials.Credentials;
  *
  * @author Scot P. Floess
  */
-public abstract class AbstractLoginContext implements LoginContext {
-
-    /**
-     * Used for logging.
-     */
-    private final Logger logger;
+public abstract class AbstractLoginContext extends AbstractCommonBase implements LoginContext {
 
     /**
      * Credentials for login.
@@ -46,16 +41,6 @@ public abstract class AbstractLoginContext implements LoginContext {
      */
     protected AbstractLoginContext(final Credentials credentials) {
         this.credentials = ObjectUtils.ensureObject(credentials, "Credentials must not be null");
-        this.logger = Logger.getLogger(getClass().getName());
-    }
-
-    /**
-     * Return the logger.
-     *
-     * @return the logger.
-     */
-    protected final Logger getLogger() {
-        return logger;
     }
 
     /**
