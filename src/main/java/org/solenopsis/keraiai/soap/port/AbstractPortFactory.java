@@ -41,19 +41,6 @@ public abstract class AbstractPortFactory extends AbstractCommonBase {
     }
 
     /**
-     * Log and return the created session port.
-     *
-     * @param port is the created session port.
-     *
-     * @return the port.
-     */
-    protected <P> P logAndReturnPort(final String msg, final P port) {
-        getLogger().log(Level.FINEST, "{0} port [{1}]", new Object[]{msg, port});
-
-        return port;
-    }
-
-    /**
      * Create a usable web service port.
      *
      * @param <P> the port type desired.
@@ -68,9 +55,11 @@ public abstract class AbstractPortFactory extends AbstractCommonBase {
      * @return a usable port to call on a web service.
      */
     protected <P> P createPort(WebServiceTypeEnum webServiceType, final String serverUrl, Service service, Class<P> portType, String name) {
-        getLogger().log(Level.FINEST, "Creating port for WebServiceTypeEnum [{0}], serverUrl [{1}], service [{2}], portType [{3}], name [{4}]", new Object[]{webServiceType, serverUrl, service, name});
-
-        return logAndReturnPort("Created", UrlUtils.setUrl(ObjectUtils.ensureObject(service, "Must present a service").getPort(portType), serverUrl, webServiceType.getPartialUrl(), name));
+        return logAndReturn(
+                Level.FINEST, "Created port [{0}] for WebServiceTypeEnum [{1}], serverUrl [{2}], service [{3}], name [{4}]",
+                UrlUtils.setUrl(ObjectUtils.ensureObject(service, "Must present a service").getPort(portType), serverUrl, webServiceType.getPartialUrl(), name),
+                webServiceType, serverUrl, service, name
+        );
     }
 
     /**
@@ -89,8 +78,10 @@ public abstract class AbstractPortFactory extends AbstractCommonBase {
      * @return a usable port to call on a web service that has <code>sessionId</code> in the SOAP header.
      */
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, final String serverUrl, final Service service, final Class<P> portType, final String name, final String sessionId) {
-        getLogger().log(Level.FINEST, "Creating session port for WebServiceTypeEnum[{0}], serverUrl [{1}], service [{2}], portType [{3}], name [{4}]", new Object[]{webServiceType, serverUrl, service, name});
-
-        return (P) logAndReturnPort("Created session", SessionIdUtils.setSessionId(service, createPort(webServiceType, serverUrl, service, portType, name), sessionId));
+        return logAndReturn(
+                Level.FINEST, "Created session port [{0}] for WebServiceTypeEnum[{0}], serverUrl [{1}], service [{2}], portType [{3}], name [{4}], sessionId [{5}]",
+                SessionIdUtils.setSessionId(service, createPort(webServiceType, serverUrl, service, portType, name), sessionId),
+                webServiceType, serverUrl, service, name, sessionId
+        );
     }
 }

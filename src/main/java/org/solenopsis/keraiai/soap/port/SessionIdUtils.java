@@ -26,6 +26,7 @@ import javax.xml.soap.SOAPHeader;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
 import javax.xml.ws.handler.Handler;
+import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 
@@ -88,7 +89,7 @@ class SessionIdUtils {
         ObjectUtils.ensureObject(sessionHeaderName, "Must provide a QName!");
         StringUtils.ensureString(sessionId, "Must provide a session id");
 
-        getLogger().log(Level.FINEST, "Setting session id [{0}] for QName [{1}] in SOAP header {3}", new Object[]{sessionId, sessionHeaderName, soapHeader});
+        LoggerUtils.log(getLogger(), Level.FINEST, "Setting session id [{0}] for QName [{1}] in SOAP header {3}", sessionId, sessionHeaderName, soapHeader);
 
         soapHeader.addChildElement(sessionHeaderName).addChildElement(SESSION_ID).addTextNode(sessionId);
     }
@@ -116,7 +117,7 @@ class SessionIdUtils {
 
         ((BindingProvider) port).getBinding().setHandlerChain(handlerChain);
 
-        getLogger().log(Level.FINEST, "Setting session id [{0}] for Service [{1}] and Port [{3}]", new Object[]{sessionId, service, port});
+        LoggerUtils.log(getLogger(), Level.FINEST, "Setting session id [{0}] for Service [{1}] and Port [{2}]", sessionId, service, port);
 
         return port;
     }

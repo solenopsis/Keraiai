@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap.port.session.proxy;
 
 import java.lang.reflect.Proxy;
+import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
@@ -54,7 +55,7 @@ public class ProxiedSessionPortFactory extends AbstractSessionPortFactory {
         ObjectUtils.ensureObject(portType, "Should have a port type");
         ObjectUtils.ensureObject(loginContext, "Should have a login context");
 
-        return logAndReturnPort("Created for a proxy", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, loginContext.getSessionId()));
+        return logAndReturn(Level.FINEST, "Created for a proxy port [{0}]", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, loginContext.getSessionId()));
     }
 
     /**
@@ -62,7 +63,7 @@ public class ProxiedSessionPortFactory extends AbstractSessionPortFactory {
      */
     @Override
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, Service service, Class<P> portType, String name) {
-        return (P) logAndReturnPort("Created a proxy", (Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name))));
+        return (P) logAndReturn(Level.FINEST, "Created for a proxy [{0}]", (Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name))));
     }
 
     /**

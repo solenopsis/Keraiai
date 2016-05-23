@@ -16,12 +16,14 @@
  */
 package org.solenopsis.keraiai.soap.credentials;
 
+import org.flossware.jcore.AbstractCommonBase;
+
 /**
  * Abstract base class for credentials.
  *
  * @author sfloess
  */
-public abstract class AbstractCredentials implements Credentials {
+public abstract class AbstractCredentials extends AbstractCommonBase implements Credentials {
 
     /**
      * Default constructor.

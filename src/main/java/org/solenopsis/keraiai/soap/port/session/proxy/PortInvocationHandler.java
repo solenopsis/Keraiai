@@ -136,7 +136,7 @@ class PortInvocationHandler extends AbstractCommonBase implements InvocationHand
     Object createCaller(final LoginContext loginContext) {
         ObjectUtils.ensureObject(loginContext, "Should have a login context");
 
-        return getProxiedSessionPortFactory().doCreateSessionPort(getWebServiceType(), getService(), getPortType(), getName(), loginContext);
+        return logAndReturn(Level.FINEST, "Created caller [{0]}", getProxiedSessionPortFactory().doCreateSessionPort(getWebServiceType(), getService(), getPortType(), getName(), loginContext));
     }
 
     /**
@@ -148,7 +148,8 @@ class PortInvocationHandler extends AbstractCommonBase implements InvocationHand
 
         int totalCalls = 0;
 
-        getLogger().log(Level.FINE, "Calling [{0}.{1}]", new Object[]{proxy.getClass(), method.getName()});
+        log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass(), method.getName());
+
         LoginContext loginContext = null;
         Throwable toRaise = null;
 

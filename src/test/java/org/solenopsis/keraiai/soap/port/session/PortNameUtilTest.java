@@ -36,32 +36,22 @@ import org.solenopsis.keraiai.wsdl.enterprise.SforceService;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PortNameUtilTest {
-    
+
     @Mock
     SecurityMgr securityMgr;
-    
+
     @Mock
     Credentials credentials;
-    
+
     String apiVersion;
-    
+
     @Before
     public void setup() {
         Mockito.when(securityMgr.getCredentials()).thenReturn(credentials);
-        
+
         apiVersion = TestUtils.generateUniqueStr("api");
         Mockito.when(credentials.getApiVersion()).thenReturn(apiVersion);
-        
-    }
 
-    /**
-     * Tests logging the computed port name.
-     */
-    @Test
-    public void test_logAndReturnComputedPortName() {
-        final String portName = TestUtils.generateUniqueStr("MyPort");
-        
-        Assert.assertSame("Should be the same port name", portName, PortNameUtils.logAndReturnComputedPortName(portName));
     }
 
     /**

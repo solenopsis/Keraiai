@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.ws.BindingProvider;
-import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,27 +36,17 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class UrlUtilsTest {
-    
+
     @Mock
     BindingProvider port;
-    
+
     Map<String, Object> requestContext;
-    
+
     @Before
     public void setup() {
         requestContext = new HashMap<>();
-        
-        Mockito.when(port.getRequestContext()).thenReturn(requestContext);
-    }
 
-    /**
-     * Test the log method.
-     */
-    @Test
-    public void test_logAndReturnComputedUrl() {
-        final String serverUrl = TestUtils.generateUniqueStr("http://foo.com");
-        
-        Assert.assertEquals("Should be the same string", serverUrl, UrlUtils.logAndReturnComputedUrl(serverUrl));
+        Mockito.when(port.getRequestContext()).thenReturn(requestContext);
     }
 
     /**
@@ -154,10 +143,10 @@ public class UrlUtilsTest {
     @Test
     public void test_setUrl() throws MalformedURLException {
         UrlUtils.setUrl(port, "http://foo.com/theta/apapapapa", "bar", "alpha");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "http://foo.com/bar/alpha", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 }

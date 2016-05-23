@@ -91,13 +91,13 @@ class SessionIdSoapHeaderHandler extends AbstractCommonBase implements SOAPHandl
     public boolean handleMessage(SOAPMessageContext msgContext) {
         //if this is a request, true for outbound messages, false for inbound
         if (!SoapUtils.isRequest(msgContext)) {
-            getLogger().log(Level.FINEST, "SOAP Message is not a request");
+            log(Level.FINEST, "SOAP Message is not a request");
 
             return true;
         }
 
         try {
-            getLogger().log(Level.FINE, "Setting session id [{0}] in SOAP header", getSessionId());
+            log(Level.FINE, "Setting session id [{0}] in SOAP header", getSessionId());
 
             SessionIdUtils.setSessionId(SoapUtils.getSoapHeader(msgContext), getSessionHeaderName(), getSessionId());
             msgContext.getMessage().saveChanges();
@@ -113,7 +113,7 @@ class SessionIdSoapHeaderHandler extends AbstractCommonBase implements SOAPHandl
      */
     @Override
     public boolean handleFault(SOAPMessageContext msgContext) {
-        getLogger().log(Level.WARNING, "Received a SOAP fault for SOAPMessageContext:  {0}", msgContext);
+        log(Level.WARNING, "Received a SOAP fault for SOAPMessageContext:  {0}", msgContext);
 
         return true;
     }
@@ -123,5 +123,6 @@ class SessionIdSoapHeaderHandler extends AbstractCommonBase implements SOAPHandl
      */
     @Override
     public void close(final MessageContext msgContext) {
+        log(Level.FINEST, "Request to close MessageContext:  {0}", msgContext);
     }
 }

@@ -59,7 +59,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     synchronized LoginContext setLoginContext(final LoginContext loginContext) {
         this.loginContext = loginContext;
 
-        getLogger().log(Level.FINEST, "Setting loging context to [{0}]", loginContext);
+        log(Level.FINEST, "Setting loging context to [{0}]", loginContext);
 
         return loginContext;
     }
@@ -135,7 +135,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     @Override
     public synchronized LoginContext resetSession(final LoginContext loginContext) {
         if (this.loginContext != loginContext) {
-            getLogger().log(Level.FINEST, "Not resetting as old context [{0}] != new context [{1}]", new Object[]{this.loginContext, loginContext});
+            log(Level.FINEST, "Not resetting as old context [{0}] != new context [{1}]", this.loginContext, loginContext);
             return this.loginContext;
         }
 
@@ -147,7 +147,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      */
     @Override
     public synchronized LoginContext login() {
-        getLogger().log(Level.FINEST, "Requesting login");
+        log(Level.FINEST, "Requesting login");
 
         try {
             return setLoginContext(doLogin(
@@ -170,7 +170,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      */
     @Override
     public synchronized void logout() {
-        getLogger().log(Level.FINEST, "Requesting logout");
+        log(Level.FINEST, "Requesting logout");
 
         try {
             doLogout((P) createSessionPort(

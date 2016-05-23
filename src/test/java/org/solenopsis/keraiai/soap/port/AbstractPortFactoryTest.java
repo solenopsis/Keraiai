@@ -50,82 +50,74 @@ public class AbstractPortFactoryTest {
      * Stub implementation to test against.
      */
     class AbstractPortFactoryStub extends AbstractPortFactory {
-        
+
     }
-    
+
     class BindingStub implements Binding {
-        
+
         List<Handler> handlerChain = new ArrayList<>();
-        
+
         @Override
         public List<Handler> getHandlerChain() {
             return handlerChain;
         }
-        
+
         @Override
         public void setHandlerChain(List<Handler> list) {
             handlerChain = list;
         }
-        
+
         @Override
         public String getBindingID() {
             return TestUtils.generateUniqueStr();
         }
-        
+
     }
-    
+
     @Mock
     QName serviceName;
-    
+
     @Mock
     SOAPHeader soapHeader;
-    
+
     @Mock
     SOAPElement headerSoapElement;
-    
+
     @Mock
     SOAPElement sessionIdSoapElement;
-    
+
     @Mock
     Service service;
-    
+
     @Mock
     BindingProvider port;
-    
+
     Binding binding;
-    
+
     String namespaceUri;
     String sessionId;
-    
+
     Map<String, Object> requestContext;
-    
+
     @Before
     public void setup() throws SOAPException {
         namespaceUri = TestUtils.generateUniqueStr("namespace", "uri");
         sessionId = TestUtils.generateUniqueStr("session", "id");
         binding = new BindingStub();
-        
+
         Mockito.when(service.getServiceName()).thenReturn(serviceName);
         Mockito.when(serviceName.getNamespaceURI()).thenReturn(namespaceUri);
-        
+
         Mockito.when(soapHeader.addChildElement((QName) Mockito.anyObject())).thenReturn(headerSoapElement);
         Mockito.when(headerSoapElement.addChildElement(Mockito.anyString())).thenReturn(sessionIdSoapElement);
-        
-        Mockito.when(port.getBinding()).thenReturn(binding);
-        
-        Mockito.when(service.getPort((Class) Mockito.any())).thenReturn(port);
-        
-        requestContext = new HashMap<>();
-        
-        Mockito.when(port.getRequestContext()).thenReturn(requestContext);
-    }
 
-    /**
-     * Test logging a port.
-     */
-    @Test
-    public void test_logAnReturnPort() {
-        Assert.assertSame("Should be the same port", port, new AbstractPortFactoryStub().logAndReturnPort("My test", port));
+        Mockito.when(port.getBinding()).thenReturn(binding);
+
+        Mockito.when(service.getPort((Class) Mockito.any())).thenReturn(port);
+
+        requestContext = new HashMap<>();
+
+        Mockito.when(port.getRequestContext()).thenReturn(requestContext);
     }
 
     /**
@@ -174,10 +166,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_apex() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.APEX_TYPE, "https://foo1.com/bar/alpha", service, Object.class, "myApex");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo1.com/services/Soap/s/myApex", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -187,10 +179,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_custom() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.CUSTOM_TYPE, "https://foo2.com/bar/alpha", service, Object.class, "myCustom");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo2.com/services/Soap/class/myCustom", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -200,10 +192,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_enterprise() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.ENTERPRISE_TYPE, "https://foo3.com/bar/alpha", service, Object.class, "myEnterprise");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo3.com/services/Soap/c/myEnterprise", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -213,10 +205,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_metadata() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.METADATA_TYPE, "https://foo4.com/bar/alpha", service, Object.class, "myMetadata");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo4.com/services/Soap/m/myMetadata", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -226,10 +218,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_partner() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.PARTNER_TYPE, "https://foo5.com/bar/alpha", service, Object.class, "myPartner");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo5.com/services/Soap/u/myPartner", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -239,10 +231,10 @@ public class AbstractPortFactoryTest {
     @Test
     public void test_createPort_tooling() {
         new AbstractPortFactoryStub().createPort(WebServiceTypeEnum.TOOLING_TYPE, "https://foo6.com/bar/alpha", service, Object.class, "myTooling");
-        
+
         Assert.assertFalse("Should contain data", requestContext.isEmpty());
         Assert.assertEquals("Should only be one element", 1, requestContext.size());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo6.com/services/Soap/T/myTooling", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -260,11 +252,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_apex() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.APEX_TYPE, "https://foo7.com/bar/alpha", service, Object.class, "myApex1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo7.com/services/Soap/s/myApex1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -274,11 +266,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_custom() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.CUSTOM_TYPE, "https://foo8.com/bar/alpha", service, Object.class, "myCustom1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo8.com/services/Soap/class/myCustom1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -288,11 +280,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_enterprise() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.ENTERPRISE_TYPE, "https://foo9.com/bar/alpha", service, Object.class, "myEnterprise1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo9.com/services/Soap/c/myEnterprise1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -302,11 +294,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_metadata() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.METADATA_TYPE, "https://foo10.com/bar/alpha", service, Object.class, "myMetadata1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo10.com/services/Soap/m/myMetadata1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -316,11 +308,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_partner() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.PARTNER_TYPE, "https://foo11.com/bar/alpha", service, Object.class, "myPartner1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo11.com/services/Soap/u/myPartner1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 
@@ -330,11 +322,11 @@ public class AbstractPortFactoryTest {
     @Test()
     public void test_createSessionPort_tooling() {
         final BindingProvider bindingProvider = (BindingProvider) new AbstractPortFactoryStub().createSessionPort(WebServiceTypeEnum.TOOLING_TYPE, "https://foo12.com/bar/alpha", service, Object.class, "myTooling1", sessionId);
-        
+
         Assert.assertNotNull("Should have a binding provider", bindingProvider);
         final SessionIdSoapHeaderHandler handler = (SessionIdSoapHeaderHandler) binding.getHandlerChain().get(0);
         Assert.assertEquals("Should be same session id", sessionId, handler.getSessionId());
-        
+
         Assert.assertEquals("Should be correct url", "https://foo12.com/services/Soap/T/myTooling1", requestContext.get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY));
     }
 }

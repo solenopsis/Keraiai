@@ -20,7 +20,7 @@
 
         <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
 
-        <org.flossware_jCore_version>1.0.3</org.flossware_jCore_version>
+        <org.flossware_jCore_version>1.0.6</org.flossware_jCore_version>
 
         <junit_junit_version>4.12</junit_junit_version>
 

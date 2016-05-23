@@ -19,6 +19,7 @@ package org.solenopsis.keraiai.soap.port.session;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.ws.Service;
+import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
 import org.solenopsis.keraiai.soap.security.SecurityMgr;
@@ -46,19 +47,6 @@ public class PortNameUtils {
     }
 
     /**
-     * Will log and return a port name.
-     *
-     * @param portName is the computed port name.
-     *
-     * @return the computed port name.
-     */
-    static String logAndReturnComputedPortName(final String portName) {
-        getLogger().log(Level.FINEST, "Computed port name [{0}]]", portName);
-
-        return portName;
-    }
-
-    /**
      * Computes a port name. If the web service type is custom, it's the port name on the service class. Otherwise its the AI
      * version found in the security mgr.
      *
@@ -70,6 +58,6 @@ public class PortNameUtils {
      * security mgr.
      */
     static String computePortName(final WebServiceTypeEnum webServiceType, final Service service, final SecurityMgr securityMgr) {
-        return logAndReturnComputedPortName(webServiceType == WebServiceTypeEnum.CUSTOM_TYPE ? ServiceUtils.getPortName(service.getClass()) : securityMgr.getCredentials().getApiVersion());
+        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Computed port name [{0}]]", (webServiceType == WebServiceTypeEnum.CUSTOM_TYPE ? ServiceUtils.getPortName(service.getClass()) : securityMgr.getCredentials().getApiVersion()));
     }
 }

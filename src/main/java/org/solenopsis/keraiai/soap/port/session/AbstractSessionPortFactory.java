@@ -75,9 +75,11 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Service service) {
-        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0} and Service [{1}]", new Object[]{webServiceType, service});
-
-        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, service, ServiceUtils.getPortType(service.getClass()), PortNameUtils.computePortName(webServiceType, service, securityMgr)));
+        return logAndReturn(
+                Level.FINEST, "Created session port [{0}] using WebServiceTypeEnum [{1}] and Service [{2}]",
+                createSessionPort(webServiceType, service, ServiceUtils.getPortType(service.getClass()), PortNameUtils.computePortName(webServiceType, service, securityMgr)),
+                webServiceType, service
+        );
     }
 
     /**
@@ -85,9 +87,10 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <S extends Service, P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Class<S> serviceClass, final URL wsdlResource) {
-        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0}, Class [{1}] and URL [{2}]", new Object[]{webServiceType, serviceClass, wsdlResource});
-
-        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)));
+        return (P) logAndReturn(Level.FINEST, "Created session port [{0}]  using WebServiceTypeEnum {0}, Class [{1}] and URL [{2}]",
+                createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)),
+                webServiceType, serviceClass, wsdlResource
+        );
     }
 
     /**
@@ -95,8 +98,10 @@ public abstract class AbstractSessionPortFactory extends AbstractPortFactory imp
      */
     @Override
     public <S extends Service, P> P createSessionPort(final WebServiceTypeEnum webServiceType, final Class<S> serviceClass, final String wsdlResource) {
-        getLogger().log(Level.FINEST, "Creating session port using WebServiceTypeEnum {0}, Class [{1}] and String URL [{2}]", new Object[]{webServiceType, serviceClass, wsdlResource});
-
-        return (P) logAndReturnPort("Created session", createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)));
+        return (P) logAndReturn(
+                Level.FINEST, "Created session port [{0}] using WebServiceTypeEnum {0}, Class [{1}] and String URL [{2}]",
+                createSessionPort(webServiceType, ServiceUtils.createService(serviceClass, wsdlResource)),
+                webServiceType, serviceClass, wsdlResource
+        );
     }
 }

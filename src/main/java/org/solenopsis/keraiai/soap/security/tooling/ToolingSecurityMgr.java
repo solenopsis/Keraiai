@@ -56,7 +56,7 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      */
     @Override
     protected LoginContext doLogin(SforceServicePortType port) throws Exception {
-        getLogger().log(Level.FINEST, "Performing login on [{0}]", port);
+        log(Level.FINEST, "Performing login on [{0}]", port);
 
         return new ToolingLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
@@ -66,7 +66,7 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      */
     @Override
     protected void doLogout(SforceServicePortType port) throws Exception {
-        getLogger().log(Level.FINEST, "Performing logout on [{0}]", port);
+        log(Level.FINEST, "Performing logout on [{0}]", port);
 
         port.logout();
     }

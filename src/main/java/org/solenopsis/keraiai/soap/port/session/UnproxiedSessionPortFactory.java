@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.port.session;
 
+import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.solenopsis.keraiai.soap.WebServiceTypeEnum;
 import org.solenopsis.keraiai.soap.security.SecurityMgr;
@@ -41,6 +42,6 @@ public class UnproxiedSessionPortFactory extends AbstractSessionPortFactory {
      */
     @Override
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, Service service, Class<P> portType, String name) {
-        return (P) logAndReturnPort("Created unproxied session", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, getSecurityMgr().getSession().getSessionId()));
+        return logAndReturn(Level.FINEST, "Created unproxied session [{0}]", createSessionPort(webServiceType, getSecurityMgr().getSession().getServerUrl(), service, portType, name, getSecurityMgr().getSession().getSessionId()));
     }
 }

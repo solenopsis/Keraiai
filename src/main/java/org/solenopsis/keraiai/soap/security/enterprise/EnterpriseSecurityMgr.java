@@ -52,7 +52,7 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected LoginContext doLogin(Soap port) throws Exception {
-        getLogger().log(Level.FINEST, "Performing login on [{0}]", port);
+        log(Level.FINEST, "Performing login on [{0}]", port);
 
         return new EnterpriseLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
@@ -62,7 +62,7 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected void doLogout(Soap port) throws Exception {
-        getLogger().log(Level.FINEST, "Performing logout on [{0}]", port);
+        log(Level.FINEST, "Performing logout on [{0}]", port);
 
         port.logout();
     }
