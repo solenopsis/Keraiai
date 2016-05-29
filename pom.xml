@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.solenopsis</groupId>
 	<artifactId>keraiai</artifactId>
-	<version>1.0.8</version>
+	<version>1.0.9</version>
 	<packaging>jar</packaging>
 
     <name>Keraiai SFDC Communication Library</name>
@@ -20,7 +20,7 @@
 
         <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
 
-        <org.flossware_jCore_version>1.0.9</org.flossware_jCore_version>
+        <org.flossware_jCore_version>1.0.10</org.flossware_jCore_version>
 
         <junit_junit_version>4.12</junit_junit_version>
 
