@@ -5,14 +5,31 @@
 	<groupId>org.solenopsis</groupId>
 	<artifactId>keraiai</artifactId>
 	<version>1.0.12</version>
+    <url>https://github.com/solenopsis/Keraiai</url>
+    
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
 	<packaging>jar</packaging>
 
     <name>Keraiai SFDC Communication Library</name>
+    <description>This project is a Java communication library for SFDC.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <org.apache.maven.plugins_maven-compiler-plugin_version>3.3</org.apache.maven.plugins_maven-compiler-plugin_version>
+        <java_version>1.7</java_version>
+
+        <com.github.github_site-maven-plugin_version>0.12</com.github.github_site-maven-plugin_version>
+        <org.apache.maven.plugins_maven-compiler-plugin_version>3.5.1</org.apache.maven.plugins_maven-compiler-plugin_version>
+        <org.apache.maven.plugins_maven-surefire-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-plugin_version>
+        <org.apache.maven.plugins_maven-project-info-reports-plugin_version>2.9</org.apache.maven.plugins_maven-project-info-reports-plugin_version>
+        <org.apache.maven.plugins_maven-javadoc-plugin_version>2.10.3</org.apache.maven.plugins_maven-javadoc-plugin_version>
 
         <java_version>1.7</java_version>
 
@@ -25,6 +42,8 @@
         <junit_junit_version>4.12</junit_junit_version>
 
 		<base.package>org.solenopsis.keraiai.wsdl</base.package>
+
+        <github.global.server>github</github.global.server>
     </properties>
 
     <developers>
@@ -54,6 +73,23 @@
 
         <plugins>
             <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${com.github.github_site-maven-plugin_version}</version>
+                <configuration>
+                    <message>Creating site for version ${project.version}</message>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${org.apache.maven.plugins_maven-compiler-plugin_version}</version>
@@ -67,7 +103,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14</version>
+                <version>${org.apache.maven.plugins_maven-surefire-plugin_version}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.config.file>
@@ -203,8 +239,38 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-javadoc-plugin_version}</version>
+
+                <configuration>
+                    <excludePackageNames>org.solenopsis.keraiai.wsdl.*</excludePackageNames>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-project-info-reports-plugin_version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-javadoc-plugin_version}</version>
+
+                <configuration>
+                    <excludePackageNames>org.solenopsis.keraiai.wsdl.*</excludePackageNames>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <dependencies>
         <dependency>
