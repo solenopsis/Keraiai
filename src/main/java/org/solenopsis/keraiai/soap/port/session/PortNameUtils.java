@@ -30,7 +30,7 @@ import org.solenopsis.keraiai.soap.security.SecurityMgr;
  *
  * @author Scot P. Floess
  */
-public class PortNameUtils {
+class PortNameUtils {
 
     /**
      * Our logger.
