@@ -2,8 +2,6 @@
 
 Welcome to Keraiai - a Java communication library for SFDC.
 
-containing things like [wsimport] (https://docs.oracle.com/javase/6/docs/technotes/tools/share/wsimport.html) generated WSDLs for the enterprise, partner, metadata and tooling API.  Please note the WSDLs are simply from an empty Developer org but can be used for logins (to gain session ids), and to invoke the metadata or tooling APIs.
-
 ## Keraiai vs Lasius?
 
 Currently, [Lasius] (https://github.com/solenopsis/Lasius) contains WSDLs for the Enterprise, Partner, Metadata and Tooling APIs...as well as similar communications functionality as found here.  However, we decided to simplifiy the libraries:
