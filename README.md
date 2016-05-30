@@ -19,3 +19,4 @@ Like all [Solenopsis] (https://github.com/solenopsis) themes, we wanted to choos
 You may find the following links useful:
 * [Maven Site Information] (http://solenopsis.github.io/Keraiai/)
 * [Java Docs] (http://solenopsis.github.io/Keraiai/apidocs/)
+* [Test Java Docs] (http://solenopsis.github.io/Keraiai/testapidocs/)
