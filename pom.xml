@@ -30,11 +30,10 @@
         <org.apache.maven.plugins_maven-surefire-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-plugin_version>
         <org.apache.maven.plugins_maven-project-info-reports-plugin_version>2.9</org.apache.maven.plugins_maven-project-info-reports-plugin_version>
         <org.apache.maven.plugins_maven-javadoc-plugin_version>2.10.3</org.apache.maven.plugins_maven-javadoc-plugin_version>
-
-        <java_version>1.7</java_version>
-
-		<org.codehaus.mojo_jaxws-maven-plugin_version>1.12</org.codehaus.mojo_jaxws-maven-plugin_version>
-
+        <org.apache.maven.plugins_maven-surefire-report-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-report-plugin_version>
+        <org.codehaus.mojo_cobertura-maven-plugin_version>2.7</org.codehaus.mojo_cobertura-maven-plugin_version>
+        <org.apache.maven.plugins_maven-pmd-plugin_version>3.6</org.apache.maven.plugins_maven-pmd-plugin_version>
+        <org.codehaus.mojo_findbugs-maven-plugin_version>3.0.3</org.codehaus.mojo_findbugs-maven-plugin_version>
         <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
 
         <org.flossware_jCore_version>1.0.16</org.flossware_jCore_version>
@@ -249,6 +248,67 @@
                     <excludePackageNames>org.solenopsis.keraiai.wsdl.*</excludePackageNames>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${org.codehaus.mojo_cobertura-maven-plugin_version}</version>
+                <configuration>
+                    <instrumentation>
+                        <ignores>
+                            <ignore>org.solenopsis.keraiai.wsdl.*</ignore>
+                        </ignores>
+
+                        <excludes>
+                            <exclude>org/solenopsis/keraiai/wsdl/**/*.class</exclude>
+                            <exclude>org/solenopsis/keraiai/**/*Test.class</exclude>
+                        </excludes>
+                    </instrumentation>
+
+                    <check>
+                        <branchRate>50</branchRate>
+                        <lineRate>50</lineRate>
+                        <haltOnFailure>false</haltOnFailure>
+                        <totalBranchRate>50</totalBranchRate>
+                        <totalLineRate>50</totalLineRate>
+                        <packageLineRate>50</packageLineRate>
+                        <packageBranchRate>50</packageBranchRate>
+
+                        <regexes>
+                            <regex>
+                                <pattern>org.solenopsis.keraiai.*</pattern>
+                                <branchRate>90</branchRate>
+                                <lineRate>80</lineRate>
+                            </regex>
+                        </regexes>
+                    </check>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>clean</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>instrument</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>instrument</goal>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-pmd-plugin_version}</version>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -267,6 +327,41 @@
 
                 <configuration>
                     <excludePackageNames>org.solenopsis.keraiai.wsdl.*</excludePackageNames>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-surefire-report-plugin_version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${org.codehaus.mojo_cobertura-maven-plugin_version}</version>
+
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-pmd-plugin_version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${org.codehaus.mojo_findbugs-maven-plugin_version}</version>
+
+                <configuration>
+                    <onlyAnalyze>org.solenopsis.keraiai.*</onlyAnalyze>
                 </configuration>
             </plugin>
         </plugins>
