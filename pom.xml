@@ -297,7 +297,6 @@
                         <phase>site</phase>
                         <goals>
                             <goal>instrument</goal>
-                            <goal>cobertura</goal>
                         </goals>
                     </execution>
                 </executions>
