@@ -256,6 +256,7 @@
                 <configuration>
                     <instrumentation>
                         <ignores>
+                            <ignore>org.flossware.*</ignore>
                             <ignore>org.solenopsis.keraiai.wsdl.*</ignore>
                         </ignores>
 
