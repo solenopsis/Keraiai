@@ -63,7 +63,7 @@ public class ToolingLoginContextTest {
     public void test_constructor() {
         final ToolingLoginContext context = new ToolingLoginContext(loginResult, credentials);
 
-        Assert.assertSame("Should be the same login result", loginResult, context.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginResult, context.getToolingLoginResult());
         Assert.assertSame("Should be the same credentials", credentials, context.getCredentials());
     }
 

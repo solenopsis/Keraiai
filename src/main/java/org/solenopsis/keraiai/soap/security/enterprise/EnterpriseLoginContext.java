@@ -38,7 +38,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      *
      * @return our login result.
      */
-    LoginResult getLoginResult() {
+    LoginResult getEnterpriseLoginResult() {
         return loginResult;
     }
 
@@ -47,7 +47,6 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      *
      * @param loginContext result of login.
      * @param credentials the credentials used for login.
-     * @param securityMgr security manager who created self.
      *
      * @throws IllegalArgumentException if loginContext or credentials are null.
      */
@@ -62,7 +61,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getMetadataServerUrl() {
-        return getLoginResult().getMetadataServerUrl();
+        return getEnterpriseLoginResult().getMetadataServerUrl();
     }
 
     /**
@@ -70,7 +69,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isPasswordExpired() {
-        return getLoginResult().isPasswordExpired();
+        return getEnterpriseLoginResult().isPasswordExpired();
     }
 
     /**
@@ -78,7 +77,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isSandbox() {
-        return getLoginResult().isSandbox();
+        return getEnterpriseLoginResult().isSandbox();
     }
 
     /**
@@ -86,7 +85,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getSessionId() {
-        return getLoginResult().getSessionId();
+        return getEnterpriseLoginResult().getSessionId();
     }
 
     /**
@@ -94,7 +93,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getUserId() {
-        return getLoginResult().getUserId();
+        return getEnterpriseLoginResult().getUserId();
     }
 
     /**
@@ -102,6 +101,6 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getServerUrl() {
-        return getLoginResult().getServerUrl();
+        return getEnterpriseLoginResult().getServerUrl();
     }
 }

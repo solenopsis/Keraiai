@@ -163,7 +163,7 @@ public class PartnerSecurityMgrTest {
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
-        Assert.assertSame("Should be the same login result", loginResult, loginContext.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginResult, loginContext.getPartnerLoginResult());
 
         Assert.assertSame("Should be the same metadata url", metadataServerUrl, loginContext.getMetadataServerUrl());
         Assert.assertSame("Should be the same password expired", isPasswordExpired, loginContext.isPasswordExpired());
@@ -200,7 +200,7 @@ public class PartnerSecurityMgrTest {
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
-        Assert.assertSame("Should be the correct login result", loginResult, loginContext1.getLoginResult());
+        Assert.assertSame("Should be the correct login result", loginResult, loginContext1.getPartnerLoginResult());
 
         final PartnerLoginContext loginContext2 = (PartnerLoginContext) securityMgr.getSession();
 
@@ -208,7 +208,7 @@ public class PartnerSecurityMgrTest {
 
         Assert.assertSame("Should be the same login context", loginContext1, loginContext2);
 
-        Assert.assertSame("Should be the same login result", loginContext1.getLoginResult(), loginContext2.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginContext1.getPartnerLoginResult(), loginContext2.getPartnerLoginResult());
 
     }
 
@@ -249,7 +249,7 @@ public class PartnerSecurityMgrTest {
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
-        Assert.assertSame("Should be the same login result", loginResult, loginContext.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginResult, loginContext.getPartnerLoginResult());
 
         Assert.assertSame("Should be the same metadata url", metadataServerUrl, loginContext.getMetadataServerUrl());
         Assert.assertSame("Should be the same password expired", isPasswordExpired, loginContext.isPasswordExpired());

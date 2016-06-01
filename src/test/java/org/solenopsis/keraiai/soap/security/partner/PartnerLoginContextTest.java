@@ -63,7 +63,7 @@ public class PartnerLoginContextTest {
     public void test_constructor() {
         final PartnerLoginContext context = new PartnerLoginContext(loginResult, credentials);
 
-        Assert.assertSame("Should be the same login result", loginResult, context.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginResult, context.getPartnerLoginResult());
         Assert.assertSame("Should be the same credentials", credentials, context.getCredentials());
     }
 

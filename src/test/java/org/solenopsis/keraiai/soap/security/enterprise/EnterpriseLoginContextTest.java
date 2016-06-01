@@ -63,7 +63,7 @@ public class EnterpriseLoginContextTest {
     public void test_constructor() {
         final EnterpriseLoginContext context = new EnterpriseLoginContext(loginResult, credentials);
 
-        Assert.assertSame("Should be the same login result", loginResult, context.getLoginResult());
+        Assert.assertSame("Should be the same login result", loginResult, context.getEnterpriseLoginResult());
         Assert.assertSame("Should be the same credentials", credentials, context.getCredentials());
     }
 

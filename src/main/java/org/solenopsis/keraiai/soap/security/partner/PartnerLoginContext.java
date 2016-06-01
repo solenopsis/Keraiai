@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.partner;
 
+import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.soap.credentials.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractLoginContext;
 import org.solenopsis.keraiai.wsdl.partner.LoginResult;
@@ -37,7 +38,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      *
      * @return our login result.
      */
-    LoginResult getLoginResult() {
+    LoginResult getPartnerLoginResult() {
         return loginResult;
     }
 
@@ -52,11 +53,7 @@ class PartnerLoginContext extends AbstractLoginContext {
     PartnerLoginContext(final LoginResult loginResult, final Credentials credentials) {
         super(credentials);
 
-        if (null == loginResult) {
-            throw new IllegalArgumentException("LoginResult must not be null");
-        }
-
-        this.loginResult = loginResult;
+        this.loginResult = ObjectUtils.ensureObject(loginResult, "LoginResult must not be null");
     }
 
     /**
@@ -64,7 +61,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getMetadataServerUrl() {
-        return getLoginResult().getMetadataServerUrl();
+        return getPartnerLoginResult().getMetadataServerUrl();
     }
 
     /**
@@ -72,7 +69,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isPasswordExpired() {
-        return getLoginResult().isPasswordExpired();
+        return getPartnerLoginResult().isPasswordExpired();
     }
 
     /**
@@ -80,7 +77,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isSandbox() {
-        return getLoginResult().isSandbox();
+        return getPartnerLoginResult().isSandbox();
     }
 
     /**
@@ -88,7 +85,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getSessionId() {
-        return getLoginResult().getSessionId();
+        return getPartnerLoginResult().getSessionId();
     }
 
     /**
@@ -96,7 +93,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getUserId() {
-        return getLoginResult().getUserId();
+        return getPartnerLoginResult().getUserId();
     }
 
     /**
@@ -104,6 +101,6 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getServerUrl() {
-        return getLoginResult().getServerUrl();
+        return getPartnerLoginResult().getServerUrl();
     }
 }
