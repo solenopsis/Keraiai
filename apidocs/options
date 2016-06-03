@@ -1,0 +1,24 @@
+-classpath
+'/var/lib/openshift/540b2c664382ec0a4f000622/.m2/repository/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar:/var/lib/openshift/540b2c664382ec0a4f000622/.m2/repository/org/flossware/jCore/1.0.19/jCore-1.0.19.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/src/main/java:/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/jaxws/wsimport:/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2016. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Keraiai SFDC Communication Library 1.0.20 API'
+-linkoffline
+'http://docs.oracle.com/javase/7/docs/api' '/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'Keraiai SFDC Communication Library 1.0.20 API'
