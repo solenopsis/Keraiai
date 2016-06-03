@@ -348,6 +348,14 @@
                         <format>html</format>
                         <format>xml</format>
                     </formats>
+
+                    <instrumentation>
+                        <excludes>
+                            <exclude>org/flossware/jcore/**/*</exclude>
+                            <exclude>org/solenopsis/keraiai/wsdl/**/*</exclude>
+                            <exclude>org/solenopsis/keraiai/**/*Test.class</exclude>
+                        </excludes>
+                    </instrumentation>
                 </configuration>
             </plugin>
 
