@@ -390,6 +390,9 @@
 
                 <configuration>
                     <onlyAnalyze>org.solenopsis.keraiai.*</onlyAnalyze>
+
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
                 </configuration>
             </plugin>
         </plugins>
