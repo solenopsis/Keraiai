@@ -15,10 +15,10 @@
 -docencoding
 'UTF-8'
 -doctitle
-'Keraiai SFDC Communication Library 1.0.20 API'
+'Keraiai SFDC Communication Library 1.0.21 API'
 -linkoffline
 'http://docs.oracle.com/javase/7/docs/api' '/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
-'Keraiai SFDC Communication Library 1.0.20 API'
+'Keraiai SFDC Communication Library 1.0.21 API'
