@@ -367,6 +367,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${org.apache.maven.plugins_maven-jxr-plugin_version}</version>
+
+                <configuration>
+                    <excludes>
+                        <exclude>org/solenopsis/keraiai/wsdl/**/*.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
             <plugin>
