@@ -59,7 +59,7 @@ public class ExceptionUtils {
     static boolean isExceptionMsgContained(final String toCompare, final String message) {
         return LoggerUtils.logAndReturn(
                 getLogger(), Level.FINEST, "Exception messsage contained result [{0}] for [{1}] message [{2}]",
-                ((null == toCompare || null == message) ? false : message.contains(toCompare)), toCompare, message);
+                null == toCompare || null == message ? false : message.contains(toCompare), toCompare, message);
     }
 
     /**
@@ -156,7 +156,7 @@ public class ExceptionUtils {
      * @return true if relogin is necessary.
      */
     public static boolean isReloginException(final Throwable failure) {
-        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", (isInvalidSessionId(failure) || containsIOException(failure)), failure);
+        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", isInvalidSessionId(failure) || containsIOException(failure), failure);
     }
 
     /**

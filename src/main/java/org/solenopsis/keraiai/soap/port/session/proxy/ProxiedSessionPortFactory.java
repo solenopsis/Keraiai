@@ -63,7 +63,7 @@ public class ProxiedSessionPortFactory extends AbstractSessionPortFactory {
      */
     @Override
     protected <P> P createSessionPort(WebServiceTypeEnum webServiceType, Service service, Class<P> portType, String name) {
-        return (P) logAndReturn(Level.FINEST, "Created for a proxy [{0}]", (Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name))));
+        return (P) logAndReturn(Level.FINEST, "Created for a proxy [{0}]", Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{portType}, new PortInvocationHandler(this, webServiceType, service, portType, name)));
     }
 
     /**

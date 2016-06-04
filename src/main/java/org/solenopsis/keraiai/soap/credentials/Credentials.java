@@ -30,40 +30,40 @@ public interface Credentials {
      *
      * @return the server url for login.
      */
-    public String getUrl();
+    String getUrl();
 
     /**
      * Return the user name.
      *
      * @return the user name.
      */
-    public String getUserName();
+    String getUserName();
 
     /**
      * Return the password.
      *
      * @return the password.
      */
-    public String getPassword();
+    String getPassword();
 
     /**
      * Return the token.
      *
      * @return the token.
      */
-    public String getToken();
+    String getToken();
 
     /**
      * Return the computed security password (password plus token).
      *
      * @return the computed security password.
      */
-    public String getSecurityPassword();
+    String getSecurityPassword();
 
     /**
      * Return the API version.
      *
      * @return the API version.
      */
-    public String getApiVersion();
+    String getApiVersion();
 }

@@ -37,7 +37,7 @@ public abstract class AbstractCredentials extends AbstractCommonBase implements 
     @Override
     public boolean equals(final Object object) {
         return null != object
-                && (object instanceof Credentials)
+                && object instanceof Credentials
                 && hashCode() == object.hashCode()
                 && getUserName().equals(((Credentials) object).getUserName());
     }
