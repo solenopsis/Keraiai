@@ -67,7 +67,7 @@
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isExceptionMsgContained(<strong class="jxr_keyword">final</strong> String toCompare, <strong class="jxr_keyword">final</strong> String message) {
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          <strong class="jxr_keyword">return</strong> LoggerUtils.logAndReturn(
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>                  getLogger(), Level.FINEST, <span class="jxr_string">"Exception messsage contained result [{0}] for [{1}] message [{2}]"</span>,
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  ((<strong class="jxr_keyword">null</strong> == toCompare || <strong class="jxr_keyword">null</strong> == message) ? false : message.contains(toCompare)), toCompare, message);
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <strong class="jxr_keyword">null</strong> == toCompare || <strong class="jxr_keyword">null</strong> == message ? false : message.contains(toCompare), toCompare, message);
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
@@ -164,7 +164,7 @@
 <a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     * @return true if relogin is necessary.</em>
 <a class="jxr_linenumber" name="L157" href="#L157">157</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isReloginException(<strong class="jxr_keyword">final</strong> Throwable failure) {
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">return</strong> LoggerUtils.logAndReturn(getLogger(), Level.FINEST, <span class="jxr_string">"Result of is relogin exception [{0}] for throwable {1}"</span>, (isInvalidSessionId(failure) || containsIOException(failure)), failure);
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">return</strong> LoggerUtils.logAndReturn(getLogger(), Level.FINEST, <span class="jxr_string">"Result of is relogin exception [{0}] for throwable {1}"</span>, isInvalidSessionId(failure) || containsIOException(failure), failure);
 <a class="jxr_linenumber" name="L160" href="#L160">160</a>     }
 <a class="jxr_linenumber" name="L161" href="#L161">161</a> 
 <a class="jxr_linenumber" name="L162" href="#L162">162</a>     <em class="jxr_javadoccomment">/**</em>
