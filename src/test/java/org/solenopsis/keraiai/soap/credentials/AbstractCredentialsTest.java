@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.credentials;
 
+import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,55 +26,110 @@ import org.junit.Test;
  * @author Scot P. Floess
  */
 public class AbstractCredentialsTest {
-    
+
     volatile static int id = 0;
 
     /**
      * Stub class for testing.
      */
     class AbstractCredentialsStub extends AbstractCredentials {
-        
+
         int myId;
-        
+
+        String user;
         String password;
         String token;
-        
-        AbstractCredentialsStub(final String password, final String token) {
-            this.password = password;
-            this.token = token;
-            this.myId = (id++);
-        }
-        
-        AbstractCredentialsStub() {
-            this.myId = (id++);
+        String url;
+        String api;
+
+        AbstractCredentialsStub(int myId) {
+            this.myId = myId;
+
+            this.user = "user" + myId;
             this.password = "password" + myId;
             this.token = "token" + myId;
+            this.url = "url" + myId;
+            this.api = "api" + myId;
         }
-        
-        @Override
-        public String getUrl() {
-            return "url" + myId;
+
+        AbstractCredentialsStub() {
+            this(id++);
         }
-        
+
+        AbstractCredentialsStub(final String password, final String token) {
+            this();
+
+            this.password = password;
+            this.token = token;
+        }
+
         @Override
         public String getUserName() {
-            return "user" + myId;
+            return user;
         }
-        
+
         @Override
         public String getPassword() {
             return password;
         }
-        
+
         @Override
         public String getToken() {
             return token;
         }
-        
+
+        @Override
+        public String getUrl() {
+            return url;
+        }
+
         @Override
         public String getApiVersion() {
-            return "api" + myId;
+            return api;
         }
+    }
+
+    /**
+     * Test equality.
+     */
+    @Test
+    public void test_equalsCredentials() {
+        AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
+
+        Assert.assertFalse("Should not be equal", stub1.equalsCredentials(null));
+        Assert.assertTrue("Should be equals", stub1.equalsCredentials(stub1));
+
+        final int myId = (int) System.currentTimeMillis();
+
+        AbstractCredentialsStub stub3 = new AbstractCredentialsStub(myId);
+        AbstractCredentialsStub stub4 = new AbstractCredentialsStub(myId);
+
+        Assert.assertTrue("Should be equal", stub3.equalsCredentials(stub4));
+        Assert.assertTrue("Should be equal", stub4.equalsCredentials(stub3));
+
+        stub3.api = "api";
+        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
+        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
+        stub3.api = stub4.api;
+
+        stub3.url = "url";
+        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
+        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
+        stub3.url = stub4.url;
+
+        stub3.token = "token";
+        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
+        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
+        stub3.token = stub4.token;
+
+        stub3.password = "password";
+        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
+        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
+        stub3.password = stub4.password;
+
+        stub3.user = "user";
+        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
+        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
     }
 
     /**
@@ -82,16 +138,35 @@ public class AbstractCredentialsTest {
     @Test
     public void test_equals() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-        AbstractCredentialsStub stub2 = new AbstractCredentialsStub();
-        
-        Assert.assertTrue("Should be equal", stub1.equals(stub1));
-        Assert.assertTrue("Should be equal", stub2.equals(stub2));
-        
-        Assert.assertFalse("Should not be equal", stub1.equals(stub2));
-        Assert.assertFalse("Should not be equal", stub2.equals(stub1));
-        
-        Assert.assertFalse("Should not be equal", stub1.equals(null));
-        Assert.assertFalse("Should not be equals", stub2.equals(new byte[0]));
+
+        Assert.assertFalse("Should not be equal", stub1.equals(TestUtils.generateUniqueStr()));
+        Assert.assertFalse("Should not be equal", stub1.equals((String) null));
+        Assert.assertFalse("Should not be equal", stub1.equals((Credentials) null));
+
+        Assert.assertTrue("Should not be equal", stub1.equals(stub1));
+
+        final int myId = (int) System.currentTimeMillis();
+
+        AbstractCredentialsStub stub3 = new AbstractCredentialsStub(myId);
+        AbstractCredentialsStub stub4 = new AbstractCredentialsStub(myId);
+
+        Assert.assertTrue("Should be equal", stub3.equals(stub4));
+        Assert.assertTrue("Should be equal", stub4.equals(stub3));
+
+        stub3.password = "password";
+        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
+        stub3.password = stub4.password;
+
+        stub3.token = "token";
+        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
+        stub3.token = stub4.token;
+
+        stub3.url = "url";
+        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
+        stub3.url = stub4.url;
+
+        stub3.api = "api";
+        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
     }
 
     /**
@@ -100,8 +175,14 @@ public class AbstractCredentialsTest {
     @Test
     public void test_hashCode() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-        
-        Assert.assertEquals("Should be equal", stub1.getUserName().hashCode(), stub1.hashCode());
+
+        final int hashCode = stub1.getUserName().hashCode()
+                + stub1.getPassword().hashCode()
+                + stub1.getToken().hashCode()
+                + stub1.getUrl().hashCode()
+                + stub1.getApiVersion().hashCode();
+
+        Assert.assertEquals("Should be equal", hashCode, stub1.hashCode());
     }
 
     /**
@@ -164,7 +245,7 @@ public class AbstractCredentialsTest {
     @Test
     public void test_getSecurityPassword() {
         AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-        
+
         Assert.assertFalse("Should not be blank", stub1.getSecurityPassword().trim().isEmpty());
         Assert.assertEquals("Should be equal", stub1.getPassword() + stub1.getToken(), stub1.getSecurityPassword());
     }

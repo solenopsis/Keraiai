@@ -92,7 +92,13 @@ public class StringCredentialsTest {
     public void test_hashCode() {
         StringCredentials creds1 = createCredentials();
 
-        Assert.assertEquals("Should be equal", creds1.getUserName().hashCode(), creds1.hashCode());
+        final int hashCode = creds1.getUserName().hashCode()
+                + creds1.getPassword().hashCode()
+                + creds1.getToken().hashCode()
+                + creds1.getUrl().hashCode()
+                + creds1.getApiVersion().hashCode();
+
+        Assert.assertEquals("Should be equal", hashCode, creds1.hashCode());
     }
 
     /**

@@ -147,7 +147,13 @@ public class PropertiesCredentialsTest {
     public void test_hashCode_userDefinedPropertyNames() {
         PropertiesCredentials creds1 = createCredentials();
 
-        Assert.assertEquals("Should be equal", creds1.getUserName().hashCode(), creds1.hashCode());
+        final int hashCode = creds1.getUserName().hashCode()
+                + creds1.getPassword().hashCode()
+                + creds1.getToken().hashCode()
+                + creds1.getUrl().hashCode()
+                + creds1.getApiVersion().hashCode();
+
+        Assert.assertEquals("Should be equal", hashCode, creds1.hashCode());
     }
 
     /**
@@ -157,7 +163,13 @@ public class PropertiesCredentialsTest {
     public void test_hashCode_defaultPropertyNames() {
         PropertiesCredentials creds1 = createDefaultCredentials();
 
-        Assert.assertEquals("Should be equal", creds1.getUserName().hashCode(), creds1.hashCode());
+        final int hashCode = creds1.getUserName().hashCode()
+                + creds1.getPassword().hashCode()
+                + creds1.getToken().hashCode()
+                + creds1.getUrl().hashCode()
+                + creds1.getApiVersion().hashCode();
+
+        Assert.assertEquals("Should be equal", hashCode, creds1.hashCode());
     }
 
     /**

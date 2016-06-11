@@ -26,6 +26,23 @@ import org.flossware.jcore.AbstractCommonBase;
 public abstract class AbstractCredentials extends AbstractCommonBase implements Credentials {
 
     /**
+     * Tests a credentials object for equality.
+     *
+     * @param credentials to compare self to.
+     *
+     * @return true if same reference as self or members are equal.
+     */
+    boolean equalsCredentials(final Credentials credentials) {
+        return null == credentials ? false
+                : this == credentials ? true
+                        : getUserName().equals(credentials.getUserName())
+                        && getPassword().equals(credentials.getPassword())
+                        && getToken().equals(credentials.getToken())
+                        && getUrl().equals(credentials.getUrl())
+                        && getApiVersion().equals(credentials.getApiVersion());
+    }
+
+    /**
      * Default constructor.
      */
     protected AbstractCredentials() {
@@ -36,10 +53,7 @@ public abstract class AbstractCredentials extends AbstractCommonBase implements 
      */
     @Override
     public boolean equals(final Object object) {
-        return null != object
-                && object instanceof Credentials
-                && hashCode() == object.hashCode()
-                && getUserName().equals(((Credentials) object).getUserName());
+        return object instanceof Credentials && hashCode() == object.hashCode() ? equalsCredentials((Credentials) object) : false;
     }
 
     /**
@@ -47,7 +61,11 @@ public abstract class AbstractCredentials extends AbstractCommonBase implements 
      */
     @Override
     public int hashCode() {
-        return getUserName().hashCode();
+        return getUserName().hashCode()
+                + getPassword().hashCode()
+                + getToken().hashCode()
+                + getUrl().hashCode()
+                + getApiVersion().hashCode();
     }
 
     /**
