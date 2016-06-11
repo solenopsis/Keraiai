@@ -48,4 +48,10 @@ class CredentialsUtils {
     static String computeSecurityPassword(final Credentials credentials) {
         return computeSecurityPassword(credentials.getPassword(), credentials.getToken());
     }
+
+    /**
+     * Default constructor not allowed.
+     */
+    private CredentialsUtils() {
+    }
 }

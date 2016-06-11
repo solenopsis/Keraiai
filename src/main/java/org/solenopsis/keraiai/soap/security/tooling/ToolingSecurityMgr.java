@@ -40,12 +40,8 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
     }
 
     /**
-     * Default constructor.
+     * {@inheritDoc}
      */
-    public ToolingSecurityMgr() {
-        this(null);
-    }
-
     @Override
     protected LoginWebServiceTypeEnum getLoginWebServiceType() {
         return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE;

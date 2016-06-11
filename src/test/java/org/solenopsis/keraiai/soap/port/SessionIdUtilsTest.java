@@ -16,6 +16,8 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.namespace.QName;
@@ -99,6 +101,18 @@ public class SessionIdUtilsTest {
         Mockito.when(headerSoapElement.addChildElement(Mockito.anyString())).thenReturn(sessionIdSoapElement);
 
         Mockito.when(port.getBinding()).thenReturn(binding);
+    }
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = SessionIdUtils.class.getDeclaredConstructor(new Class[0]);
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
+
+        System.out.println("C -> " + constructor);
     }
 
     /**

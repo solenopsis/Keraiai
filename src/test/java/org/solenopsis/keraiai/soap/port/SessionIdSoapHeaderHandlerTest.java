@@ -23,6 +23,7 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
+import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
@@ -83,6 +84,17 @@ public class SessionIdSoapHeaderHandlerTest {
         Mockito.when(serviceName.getNamespaceURI()).thenReturn(namespaceUri);
     }
 
+//    /**
+//     * Tests the constructor.
+//     */
+//    @Test
+//    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//        final Constructor constructor = SessionIdSoapHeaderHandler.class.getDeclaredConstructor(new Class[0]);
+//        constructor.setAccessible(true);
+//        constructor.newInstance(new Object[0]);
+//
+//        System.out.println("C -> " + constructor);
+//    }
     /**
      * Test a null session header name.
      */
@@ -133,7 +145,7 @@ public class SessionIdSoapHeaderHandlerTest {
     public void test_handleMessage_noRequest() throws SOAPException {
         final SessionIdSoapHeaderHandler sessionIdSoapHeaderHandler = new SessionIdSoapHeaderHandler(serviceName, sessionId);
 
-        Mockito.when(msgContext.get(Mockito.anyString())).thenReturn(null);
+        Mockito.when(msgContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).thenReturn(false);
 
         Assert.assertTrue("Should return true", sessionIdSoapHeaderHandler.handleMessage(msgContext));
 
@@ -143,13 +155,32 @@ public class SessionIdSoapHeaderHandlerTest {
     }
 
     /**
+     * Test request where we get a SOAPException saving changes.
+     */
+    @Test
+    public void test_handleMessage_SOAPException() throws SOAPException {
+        final SessionIdSoapHeaderHandler sessionIdSoapHeaderHandler = new SessionIdSoapHeaderHandler(serviceName, sessionId);
+
+        Mockito.when(msgContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).thenReturn(true);
+        Mockito.doThrow(new SOAPException()).when(soapMessage).saveChanges();
+
+        Assert.assertTrue("Should return true", sessionIdSoapHeaderHandler.handleMessage(msgContext));
+
+        Mockito.verify(msgContext, Mockito.atLeastOnce()).getMessage();
+        Mockito.verify(soapMessage, Mockito.times(1)).saveChanges();
+        Mockito.verify(soapHeader).addChildElement(serviceName);
+        Mockito.verify(headerSoapElement).addChildElement(SessionIdUtils.SESSION_ID);
+        Mockito.verify(sessionIdSoapElement).addTextNode(sessionId);
+    }
+
+    /**
      * Test request.
      */
     @Test
     public void test_handleMessage() throws SOAPException {
         final SessionIdSoapHeaderHandler sessionIdSoapHeaderHandler = new SessionIdSoapHeaderHandler(serviceName, sessionId);
 
-        Mockito.when(msgContext.get(Mockito.anyString())).thenReturn(true);
+        Mockito.when(msgContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)).thenReturn(true);
 
         Assert.assertTrue("Should return true", sessionIdSoapHeaderHandler.handleMessage(msgContext));
 

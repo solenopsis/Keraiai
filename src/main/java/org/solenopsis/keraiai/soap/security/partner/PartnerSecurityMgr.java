@@ -40,12 +40,8 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
     }
 
     /**
-     * Default constructor.
+     * {@inheritDoc}
      */
-    public PartnerSecurityMgr() {
-        this(null);
-    }
-
     @Override
     protected LoginWebServiceTypeEnum getLoginWebServiceType() {
         return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE;

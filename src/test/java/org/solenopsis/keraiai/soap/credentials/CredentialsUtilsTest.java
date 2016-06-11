@@ -16,6 +16,9 @@
  */
 package org.solenopsis.keraiai.soap.credentials;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +28,16 @@ import org.junit.Test;
  * @author sfloess
  */
 public class CredentialsUtilsTest {
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = CredentialsUtils.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
+    }
 
     /**
      * Test computing the security password with a null password.
@@ -83,5 +96,18 @@ public class CredentialsUtilsTest {
         final String token = "token" + System.currentTimeMillis();
 
         Assert.assertEquals("Should be the same", password + token, CredentialsUtils.computeSecurityPassword(password, token));
+    }
+
+    /**
+     * Test computing the security password with credentials.
+     */
+    @Test
+    public void test_computeSecurityPassword_Credentials() {
+        final String password = TestUtils.generateUniqueStr("password");
+        final String token = TestUtils.generateUniqueStr("token");
+
+        final StringCredentials creds = new StringCredentials("http://foo.bar", "myUser", password, token, "31.0");
+
+        Assert.assertEquals("Should be correct security password", password + token, CredentialsUtils.computeSecurityPassword(creds));
     }
 }

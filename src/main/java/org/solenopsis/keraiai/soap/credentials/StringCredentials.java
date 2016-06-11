@@ -62,7 +62,9 @@ public class StringCredentials extends AbstractCredentials {
      * @param apiVersion the API version.
      */
     public StringCredentials(final String url, final String userName, final String password, final String token, final String apiVersion) {
-        this.url = (StringUtils.ensureString(url, "Must have a URL!").endsWith("/") ? url : url + "/");
+        StringUtils.ensureString(url, "Must have a URL!");
+
+        this.url = url.endsWith("/") ? url : url + "/";
         this.userName = userName;
         this.password = password;
         this.token = token;

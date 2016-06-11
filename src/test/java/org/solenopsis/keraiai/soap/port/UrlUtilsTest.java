@@ -16,6 +16,8 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -47,6 +49,18 @@ public class UrlUtilsTest {
         requestContext = new HashMap<>();
 
         Mockito.when(port.getRequestContext()).thenReturn(requestContext);
+    }
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = UrlUtils.class.getDeclaredConstructor(new Class[0]);
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
+
+        System.out.println("C -> " + constructor);
     }
 
     /**
