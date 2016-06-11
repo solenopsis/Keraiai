@@ -16,6 +16,8 @@
  */
 package org.solenopsis.keraiai.soap.port.session;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,6 +54,16 @@ public class PortNameUtilTest {
         apiVersion = TestUtils.generateUniqueStr("api");
         Mockito.when(credentials.getApiVersion()).thenReturn(apiVersion);
 
+    }
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = PortNameUtils.class.getDeclaredConstructor(new Class[0]);
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
     }
 
     /**
