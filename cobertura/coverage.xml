@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.8501291989664083" branch-rate="0.7027027027027027" lines-covered="329" lines-valid="387" branches-covered="52" branches-valid="74" complexity="1.2530864197530864" version="2.1.1" timestamp="1465655898898">
+<coverage line-rate="0.8505154639175257" branch-rate="0.75" lines-covered="330" lines-valid="388" branches-covered="63" branches-valid="84" complexity="1.2822085889570551" version="2.1.1" timestamp="1465666857097">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -15,9 +15,9 @@
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="38" hits="246" branch="false"/>
-								<line number="39" hits="246" branch="false"/>
-								<line number="40" hits="246" branch="false"/>
+								<line number="38" hits="250" branch="false"/>
+								<line number="39" hits="250" branch="false"/>
+								<line number="40" hits="250" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -48,9 +48,9 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="38" hits="246" branch="false"/>
-						<line number="39" hits="246" branch="false"/>
-						<line number="40" hits="246" branch="false"/>
+						<line number="38" hits="250" branch="false"/>
+						<line number="39" hits="250" branch="false"/>
+						<line number="40" hits="250" branch="false"/>
 						<line number="48" hits="206" branch="false"/>
 						<line number="59" hits="120" branch="false"/>
 						<line number="60" hits="120" branch="false"/>
@@ -317,24 +317,24 @@
 						</method>
 						<method name="generateUniqueStr" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="55" hits="45" branch="false"/>
+								<line number="55" hits="46" branch="false"/>
 							</lines>
 						</method>
 						<method name="generateUniqueStr" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="46" hits="440" branch="false"/>
+								<line number="46" hits="441" branch="false"/>
 							</lines>
 						</method>
 						<method name="generateUniqueStr" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="35" hits="706" branch="false"/>
+								<line number="35" hits="707" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="35" hits="706" branch="false"/>
-						<line number="46" hits="440" branch="false"/>
-						<line number="55" hits="45" branch="false"/>
+						<line number="35" hits="707" branch="false"/>
+						<line number="46" hits="441" branch="false"/>
+						<line number="55" hits="46" branch="false"/>
 						<line number="61" hits="0" branch="false"/>
 						<line number="62" hits="0" branch="false"/>
 					</lines>
@@ -633,72 +633,94 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.credentials" line-rate="1.0" branch-rate="0.9" complexity="1.1666666666666667">
+		<package name="org.solenopsis.keraiai.soap.credentials" line-rate="1.0" branch-rate="1.0" complexity="1.36">
 			<classes>
-				<class name="org.solenopsis.keraiai.soap.credentials.AbstractCredentials" filename="org/solenopsis/keraiai/soap/credentials/AbstractCredentials.java" line-rate="1.0" branch-rate="0.875" complexity="1.6">
+				<class name="org.solenopsis.keraiai.soap.credentials.AbstractCredentials" filename="org/solenopsis/keraiai/soap/credentials/AbstractCredentials.java" line-rate="1.0" branch-rate="1.0" complexity="2.3333333333333335">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="31" hits="56" branch="false"/>
-								<line number="32" hits="56" branch="false"/>
+								<line number="48" hits="60" branch="false"/>
+								<line number="49" hits="60" branch="false"/>
 							</lines>
 						</method>
-						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="0.875" complexity="0">
+						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="39" hits="18" branch="true" condition-coverage="87% (7/8)">
+								<line number="56" hits="22" branch="true" condition-coverage="100% (4/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+						<method name="equalsCredentials" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="36" hits="23" branch="true" condition-coverage="100% (14/14)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 										<condition number="1" type="jump" coverage="100%"/>
 										<condition number="2" type="jump" coverage="100%"/>
-										<condition number="3" type="jump" coverage="50%"/>
+										<condition number="3" type="jump" coverage="100%"/>
+										<condition number="4" type="jump" coverage="100%"/>
+										<condition number="5" type="jump" coverage="100%"/>
+										<condition number="6" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
 							</lines>
 						</method>
 						<method name="getSecurityPassword" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="58" hits="30" branch="false"/>
+								<line number="76" hits="30" branch="false"/>
 							</lines>
 						</method>
 						<method name="hashCode" signature="()I" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="50" hits="36" branch="false"/>
+								<line number="64" hits="42" branch="false"/>
 							</lines>
 						</method>
 						<method name="toString" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="66" hits="4" branch="false"/>
-								<line number="68" hits="4" branch="false"/>
-								<line number="69" hits="4" branch="false"/>
-								<line number="70" hits="4" branch="false"/>
-								<line number="71" hits="4" branch="false"/>
-								<line number="72" hits="4" branch="false"/>
-								<line number="73" hits="4" branch="false"/>
-								<line number="75" hits="4" branch="false"/>
+								<line number="84" hits="4" branch="false"/>
+								<line number="86" hits="4" branch="false"/>
+								<line number="87" hits="4" branch="false"/>
+								<line number="88" hits="4" branch="false"/>
+								<line number="89" hits="4" branch="false"/>
+								<line number="90" hits="4" branch="false"/>
+								<line number="91" hits="4" branch="false"/>
+								<line number="93" hits="4" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="31" hits="56" branch="false"/>
-						<line number="32" hits="56" branch="false"/>
-						<line number="39" hits="18" branch="true" condition-coverage="87% (7/8)">
+						<line number="36" hits="23" branch="true" condition-coverage="100% (14/14)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 								<condition number="1" type="jump" coverage="100%"/>
 								<condition number="2" type="jump" coverage="100%"/>
-								<condition number="3" type="jump" coverage="50%"/>
+								<condition number="3" type="jump" coverage="100%"/>
+								<condition number="4" type="jump" coverage="100%"/>
+								<condition number="5" type="jump" coverage="100%"/>
+								<condition number="6" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="50" hits="36" branch="false"/>
-						<line number="58" hits="30" branch="false"/>
-						<line number="66" hits="4" branch="false"/>
-						<line number="68" hits="4" branch="false"/>
-						<line number="69" hits="4" branch="false"/>
-						<line number="70" hits="4" branch="false"/>
-						<line number="71" hits="4" branch="false"/>
-						<line number="72" hits="4" branch="false"/>
-						<line number="73" hits="4" branch="false"/>
-						<line number="75" hits="4" branch="false"/>
+						<line number="48" hits="60" branch="false"/>
+						<line number="49" hits="60" branch="false"/>
+						<line number="56" hits="22" branch="true" condition-coverage="100% (4/4)">
+							<conditions>
+								<condition number="0" type="jump" coverage="100%"/>
+								<condition number="1" type="jump" coverage="100%"/>
+							</conditions>
+						</line>
+						<line number="64" hits="42" branch="false"/>
+						<line number="76" hits="30" branch="false"/>
+						<line number="84" hits="4" branch="false"/>
+						<line number="86" hits="4" branch="false"/>
+						<line number="87" hits="4" branch="false"/>
+						<line number="88" hits="4" branch="false"/>
+						<line number="89" hits="4" branch="false"/>
+						<line number="90" hits="4" branch="false"/>
+						<line number="91" hits="4" branch="false"/>
+						<line number="93" hits="4" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.credentials.Credentials" filename="org/solenopsis/keraiai/soap/credentials/Credentials.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
@@ -821,27 +843,27 @@
 						</method>
 						<method name="getApiVersion" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="111" hits="4" branch="false"/>
+								<line number="111" hits="34" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPassword" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="95" hits="29" branch="false"/>
+								<line number="95" hits="59" branch="false"/>
 							</lines>
 						</method>
 						<method name="getToken" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="103" hits="29" branch="false"/>
+								<line number="103" hits="59" branch="false"/>
 							</lines>
 						</method>
 						<method name="getUrl" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="79" hits="10" branch="false"/>
+								<line number="79" hits="40" branch="false"/>
 							</lines>
 						</method>
 						<method name="getUserName" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="87" hits="46" branch="false"/>
+								<line number="87" hits="34" branch="false"/>
 							</lines>
 						</method>
 					</methods>
@@ -858,11 +880,11 @@
 						<line number="70" hits="36" branch="false"/>
 						<line number="71" hits="36" branch="false"/>
 						<line number="72" hits="36" branch="false"/>
-						<line number="79" hits="10" branch="false"/>
-						<line number="87" hits="46" branch="false"/>
-						<line number="95" hits="29" branch="false"/>
-						<line number="103" hits="29" branch="false"/>
-						<line number="111" hits="4" branch="false"/>
+						<line number="79" hits="40" branch="false"/>
+						<line number="87" hits="34" branch="false"/>
+						<line number="95" hits="59" branch="false"/>
+						<line number="103" hits="59" branch="false"/>
+						<line number="111" hits="34" branch="false"/>
 					</lines>
 				</class>
 			</classes>
