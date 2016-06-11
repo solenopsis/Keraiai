@@ -103,6 +103,15 @@ public class AbstractSecurityMgrTest {
     }
 
     /**
+     * Tests the default onstructor.
+     */
+//    @Test
+//    public void test_constructor_default() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//        final Constructor constructor = AbstractSecurityMgr.class.getDeclaredConstructor();
+//        constructor.setAccessible(true);
+//        constructor.newInstance();
+//    }
+    /**
      * Tests the constructor with null credentials.
      */
     @Test(expected = IllegalArgumentException.class)
@@ -263,13 +272,19 @@ public class AbstractSecurityMgrTest {
     /**
      * Tests login where an exception is raised.
      */
-    @Test(expected = LoginException.class)
+    @Test
     public void test_login_exception() {
         Mockito.when(credentials.getUrl()).thenReturn("http://foo.bar");
 
         abstractSecurityMgrStub.toThrowException = new BogustException();
 
-        abstractSecurityMgrStub.login();
+        try {
+            abstractSecurityMgrStub.login();
+        } catch (final LoginException loginException) {
+            Assert.assertEquals("Should be a BogustException", BogustException.class, loginException.getCause().getClass());
+        } catch (final Throwable throwable) {
+            Assert.fail("Should have failed with a LoginException whose cause was a BogustException");
+        }
     }
 
     /**
@@ -304,12 +319,22 @@ public class AbstractSecurityMgrTest {
     /**
      * Tests logout where an exception is raised.
      */
-    @Test(expected = LoginException.class)
+    @Test
     public void test_logout_exception() {
         Mockito.when(credentials.getUrl()).thenReturn("http://foo.bar");
+        Mockito.when(loginContext.getServerUrl()).thenReturn("http://foo.bar");
+        Mockito.when(loginContext.getSessionId()).thenReturn(TestUtils.generateUniqueStr());
+
+        abstractSecurityMgrStub.setLoginContext(loginContext);
 
         abstractSecurityMgrStub.toThrowException = new BogustException();
 
-        abstractSecurityMgrStub.logout();
+        try {
+            abstractSecurityMgrStub.logout();
+        } catch (final LogoutException logoutException) {
+            Assert.assertEquals("Should be a BogustException", BogustException.class, logoutException.getCause().getClass());
+        } catch (final Throwable throwable) {
+            Assert.fail("Should have failed with a LogoutException whose cause was a BogustException");
+        }
     }
 }

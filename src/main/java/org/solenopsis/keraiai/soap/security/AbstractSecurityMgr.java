@@ -103,13 +103,6 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     }
 
     /**
-     * Default constructor.
-     */
-    protected AbstractSecurityMgr() {
-        this(null);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
