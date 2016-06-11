@@ -84,17 +84,6 @@ public class SessionIdSoapHeaderHandlerTest {
         Mockito.when(serviceName.getNamespaceURI()).thenReturn(namespaceUri);
     }
 
-//    /**
-//     * Tests the constructor.
-//     */
-//    @Test
-//    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//        final Constructor constructor = SessionIdSoapHeaderHandler.class.getDeclaredConstructor(new Class[0]);
-//        constructor.setAccessible(true);
-//        constructor.newInstance(new Object[0]);
-//
-//        System.out.println("C -> " + constructor);
-//    }
     /**
      * Test a null session header name.
      */

@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
@@ -28,6 +29,16 @@ import org.junit.Test;
  * @author Scot P. Floess
  */
 public class ExceptionUtilsTest {
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = ExceptionUtils.class.getDeclaredConstructor(new Class[0]);
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
+    }
 
     /**
      * Tests if an exception message is contained.

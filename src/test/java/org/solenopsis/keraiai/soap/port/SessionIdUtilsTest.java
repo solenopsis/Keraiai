@@ -111,8 +111,6 @@ public class SessionIdUtilsTest {
         final Constructor constructor = SessionIdUtils.class.getDeclaredConstructor(new Class[0]);
         constructor.setAccessible(true);
         constructor.newInstance(new Object[0]);
-
-        System.out.println("C -> " + constructor);
     }
 
     /**

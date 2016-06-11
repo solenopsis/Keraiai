@@ -59,8 +59,6 @@ public class UrlUtilsTest {
         final Constructor constructor = UrlUtils.class.getDeclaredConstructor(new Class[0]);
         constructor.setAccessible(true);
         constructor.newInstance(new Object[0]);
-
-        System.out.println("C -> " + constructor);
     }
 
     /**
