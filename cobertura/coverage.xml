@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.7699115044247787" branch-rate="0.7105263157894737" lines-covered="261" lines-valid="339" branches-covered="54" branches-valid="76" complexity="1.2654320987654322" version="2.1.1" timestamp="1465059630945">
+<coverage line-rate="0.8376288659793815" branch-rate="0.6973684210526315" lines-covered="325" lines-valid="388" branches-covered="53" branches-valid="76" complexity="1.2670807453416149" version="2.1.1" timestamp="1465651142399">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -15,20 +15,20 @@
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="38" hits="244" branch="false"/>
-								<line number="39" hits="244" branch="false"/>
-								<line number="40" hits="244" branch="false"/>
+								<line number="38" hits="246" branch="false"/>
+								<line number="39" hits="246" branch="false"/>
+								<line number="40" hits="246" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="48" hits="204" branch="false"/>
+								<line number="48" hits="206" branch="false"/>
 							</lines>
 						</method>
 						<method name="log" signature="(Ljava/util/logging/Level;Ljava/lang/String;[Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="59" hits="119" branch="false"/>
-								<line number="60" hits="119" branch="false"/>
+								<line number="59" hits="120" branch="false"/>
+								<line number="60" hits="120" branch="false"/>
 							</lines>
 						</method>
 						<method name="logAndReturn" signature="(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -48,12 +48,12 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="38" hits="244" branch="false"/>
-						<line number="39" hits="244" branch="false"/>
-						<line number="40" hits="244" branch="false"/>
-						<line number="48" hits="204" branch="false"/>
-						<line number="59" hits="119" branch="false"/>
-						<line number="60" hits="119" branch="false"/>
+						<line number="38" hits="246" branch="false"/>
+						<line number="39" hits="246" branch="false"/>
+						<line number="40" hits="246" branch="false"/>
+						<line number="48" hits="206" branch="false"/>
+						<line number="59" hits="120" branch="false"/>
+						<line number="60" hits="120" branch="false"/>
 						<line number="74" hits="19" branch="false"/>
 						<line number="91" hits="0" branch="false"/>
 						<line number="106" hits="61" branch="false"/>
@@ -61,7 +61,7 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.flossware.jcore.utils" line-rate="0.4523809523809524" branch-rate="0.3333333333333333" complexity="0.0">
+		<package name="org.flossware.jcore.utils" line-rate="0.4318181818181818" branch-rate="0.3333333333333333" complexity="0.0">
 			<classes>
 				<class name="org.flossware.jcore.utils.LoggerUtils" filename="org/flossware/jcore/utils/LoggerUtils.java" line-rate="0.7777777777777778" branch-rate="1.0" complexity="0.0">
 					<methods>
@@ -73,8 +73,8 @@
 						</method>
 						<method name="log" signature="(Ljava/util/logging/Logger;Ljava/util/logging/Level;Ljava/lang/String;[Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="82" hits="669" branch="false"/>
-								<line number="83" hits="669" branch="false"/>
+								<line number="82" hits="679" branch="false"/>
+								<line number="83" hits="679" branch="false"/>
 							</lines>
 						</method>
 						<method name="logAndReturn" signature="(Ljava/util/logging/Logger;Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -85,33 +85,34 @@
 						</method>
 						<method name="logAndReturn" signature="(Ljava/util/logging/Logger;Ljava/util/logging/Level;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="135" hits="371" branch="false"/>
+								<line number="135" hits="379" branch="false"/>
 							</lines>
 						</method>
 						<method name="logAndReturnByIndex" signature="(Ljava/util/logging/Logger;Ljava/util/logging/Level;Ljava/lang/String;I[Ljava/lang/Object;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="117" hits="371" branch="false"/>
-								<line number="119" hits="371" branch="false"/>
+								<line number="117" hits="379" branch="false"/>
+								<line number="119" hits="379" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="82" hits="669" branch="false"/>
-						<line number="83" hits="669" branch="false"/>
+						<line number="82" hits="679" branch="false"/>
+						<line number="83" hits="679" branch="false"/>
 						<line number="98" hits="65" branch="false"/>
 						<line number="100" hits="65" branch="false"/>
-						<line number="117" hits="371" branch="false"/>
-						<line number="119" hits="371" branch="false"/>
-						<line number="135" hits="371" branch="false"/>
+						<line number="117" hits="379" branch="false"/>
+						<line number="119" hits="379" branch="false"/>
+						<line number="135" hits="379" branch="false"/>
 						<line number="141" hits="0" branch="false"/>
 						<line number="142" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.flossware.jcore.utils.ObjectUtils" filename="org/flossware/jcore/utils/ObjectUtils.java" line-rate="0.5" branch-rate="1.0" complexity="0.0">
+				<class name="org.flossware.jcore.utils.ObjectUtils" filename="org/flossware/jcore/utils/ObjectUtils.java" line-rate="0.42857142857142855" branch-rate="1.0" complexity="0.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="10" hits="0" branch="false"/>
+								<line number="66" hits="0" branch="false"/>
+								<line number="67" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="ensureObject" signature="(Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
@@ -121,13 +122,13 @@
 						</method>
 						<method name="ensureObject" signature="(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="30" hits="442" branch="true" condition-coverage="100% (2/2)">
+								<line number="30" hits="445" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
 								<line number="31" hits="34" branch="false"/>
-								<line number="34" hits="408" branch="false"/>
+								<line number="34" hits="411" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPackage" signature="(Ljava/lang/Object;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
@@ -137,16 +138,17 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="10" hits="0" branch="false"/>
-						<line number="30" hits="442" branch="true" condition-coverage="100% (2/2)">
+						<line number="30" hits="445" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
 						<line number="31" hits="34" branch="false"/>
-						<line number="34" hits="408" branch="false"/>
+						<line number="34" hits="411" branch="false"/>
 						<line number="49" hits="0" branch="false"/>
 						<line number="60" hits="0" branch="false"/>
+						<line number="66" hits="0" branch="false"/>
+						<line number="67" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.flossware.jcore.utils.StringUtils" filename="org/flossware/jcore/utils/StringUtils.java" line-rate="0.2608695652173913" branch-rate="0.2727272727272727" complexity="0.0">
@@ -211,23 +213,23 @@
 						</method>
 						<method name="ensureString" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="69" hits="157" branch="true" condition-coverage="100% (2/2)">
+								<line number="69" hits="162" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
 								<line number="70" hits="42" branch="false"/>
-								<line number="73" hits="115" branch="false"/>
+								<line number="73" hits="120" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="39" hits="157" branch="false"/>
+								<line number="39" hits="162" branch="false"/>
 							</lines>
 						</method>
 						<method name="isBlank" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="55" hits="157" branch="true" condition-coverage="100% (4/4)">
+								<line number="55" hits="162" branch="true" condition-coverage="100% (4/4)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 										<condition number="1" type="jump" coverage="100%"/>
@@ -249,20 +251,20 @@
 					</methods>
 					<lines>
 						<line number="33" hits="1" branch="false"/>
-						<line number="39" hits="157" branch="false"/>
-						<line number="55" hits="157" branch="true" condition-coverage="100% (4/4)">
+						<line number="39" hits="162" branch="false"/>
+						<line number="55" hits="162" branch="true" condition-coverage="100% (4/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 								<condition number="1" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="69" hits="157" branch="true" condition-coverage="100% (2/2)">
+						<line number="69" hits="162" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
 						<line number="70" hits="42" branch="false"/>
-						<line number="73" hits="115" branch="false"/>
+						<line number="73" hits="120" branch="false"/>
 						<line number="86" hits="0" branch="false"/>
 						<line number="99" hits="0" branch="true" condition-coverage="0% (0/6)">
 							<conditions>
@@ -305,11 +307,12 @@
 						<line number="162" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.flossware.jcore.utils.TestUtils" filename="org/flossware/jcore/utils/TestUtils.java" line-rate="0.75" branch-rate="1.0" complexity="0.0">
+				<class name="org.flossware.jcore.utils.TestUtils" filename="org/flossware/jcore/utils/TestUtils.java" line-rate="0.6" branch-rate="1.0" complexity="0.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="24" hits="0" branch="false"/>
+								<line number="61" hits="0" branch="false"/>
+								<line number="62" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="generateUniqueStr" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -319,25 +322,26 @@
 						</method>
 						<method name="generateUniqueStr" signature="(Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="46" hits="437" branch="false"/>
+								<line number="46" hits="439" branch="false"/>
 							</lines>
 						</method>
 						<method name="generateUniqueStr" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="35" hits="699" branch="false"/>
+								<line number="35" hits="705" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="24" hits="0" branch="false"/>
-						<line number="35" hits="699" branch="false"/>
-						<line number="46" hits="437" branch="false"/>
+						<line number="35" hits="705" branch="false"/>
+						<line number="46" hits="439" branch="false"/>
 						<line number="55" hits="45" branch="false"/>
+						<line number="61" hits="0" branch="false"/>
+						<line number="62" hits="0" branch="false"/>
 					</lines>
 				</class>
 			</classes>
 		</package>
-		<package name="org.flossware.jcore.utils.soap" line-rate="0.59375" branch-rate="0.6" complexity="0.0">
+		<package name="org.flossware.jcore.utils.soap" line-rate="0.59375" branch-rate="0.5" complexity="0.0">
 			<classes>
 				<class name="org.flossware.jcore.utils.soap.ServiceUtils" filename="org/flossware/jcore/utils/soap/ServiceUtils.java" line-rate="0.5652173913043478" branch-rate="0.5" complexity="0.0">
 					<methods>
@@ -459,7 +463,7 @@
 						<line number="195" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.flossware.jcore.utils.soap.SoapUtils" filename="org/flossware/jcore/utils/soap/SoapUtils.java" line-rate="0.6666666666666666" branch-rate="0.75" complexity="0.0">
+				<class name="org.flossware.jcore.utils.soap.SoapUtils" filename="org/flossware/jcore/utils/soap/SoapUtils.java" line-rate="0.6666666666666666" branch-rate="0.5" complexity="0.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -468,59 +472,59 @@
 						</method>
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="87" hits="0" branch="false"/>
-								<line number="88" hits="0" branch="false"/>
+								<line number="90" hits="0" branch="false"/>
+								<line number="91" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="45" hits="5" branch="false"/>
+								<line number="45" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="getSoapHeader" signature="(Ljavax/xml/ws/handler/soap/SOAPMessageContext;)Ljavax/xml/soap/SOAPHeader;" line-rate="0.6666666666666666" branch-rate="0.5" complexity="0">
 							<lines>
-								<line number="80" hits="1" branch="true" condition-coverage="50% (1/2)">
+								<line number="80" hits="2" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
-								<line number="81" hits="1" branch="false"/>
+								<line number="81" hits="2" branch="false"/>
 								<line number="84" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="isRequest" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+						<method name="isRequest" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="0.5" complexity="0">
 							<lines>
-								<line number="56" hits="2" branch="true" condition-coverage="100% (2/2)">
+								<line number="56" hits="3" branch="true" condition-coverage="50% (1/2)">
 									<conditions>
-										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="0" type="jump" coverage="50%"/>
 									</conditions>
 								</line>
 							</lines>
 						</method>
 						<method name="isRequest" signature="(Ljavax/xml/ws/handler/soap/SOAPMessageContext;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="67" hits="2" branch="false"/>
+								<line number="67" hits="3" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="37" hits="1" branch="false"/>
-						<line number="45" hits="5" branch="false"/>
-						<line number="56" hits="2" branch="true" condition-coverage="100% (2/2)">
-							<conditions>
-								<condition number="0" type="jump" coverage="100%"/>
-							</conditions>
-						</line>
-						<line number="67" hits="2" branch="false"/>
-						<line number="80" hits="1" branch="true" condition-coverage="50% (1/2)">
+						<line number="45" hits="8" branch="false"/>
+						<line number="56" hits="3" branch="true" condition-coverage="50% (1/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="50%"/>
 							</conditions>
 						</line>
-						<line number="81" hits="1" branch="false"/>
+						<line number="67" hits="3" branch="false"/>
+						<line number="80" hits="2" branch="true" condition-coverage="50% (1/2)">
+							<conditions>
+								<condition number="0" type="jump" coverage="50%"/>
+							</conditions>
+						</line>
+						<line number="81" hits="2" branch="false"/>
 						<line number="84" hits="0" branch="false"/>
-						<line number="87" hits="0" branch="false"/>
-						<line number="88" hits="0" branch="false"/>
+						<line number="90" hits="0" branch="false"/>
+						<line number="91" hits="0" branch="false"/>
 					</lines>
 				</class>
 			</classes>
@@ -629,13 +633,14 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.credentials" line-rate="0.925" branch-rate="0.9" complexity="1.173913043478261">
+		<package name="org.solenopsis.keraiai.soap.credentials" line-rate="1.0" branch-rate="0.9" complexity="1.1666666666666667">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.credentials.AbstractCredentials" filename="org/solenopsis/keraiai/soap/credentials/AbstractCredentials.java" line-rate="1.0" branch-rate="0.875" complexity="1.6">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="32" hits="55" branch="false"/>
+								<line number="31" hits="56" branch="false"/>
+								<line number="32" hits="56" branch="false"/>
 							</lines>
 						</method>
 						<method name="equals" signature="(Ljava/lang/Object;)Z" line-rate="1.0" branch-rate="0.875" complexity="0">
@@ -674,7 +679,8 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="32" hits="55" branch="false"/>
+						<line number="31" hits="56" branch="false"/>
+						<line number="32" hits="56" branch="false"/>
 						<line number="39" hits="18" branch="true" condition-coverage="87% (7/8)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
@@ -747,22 +753,30 @@
 						<line number="52" hits="108" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.credentials.CredentialsUtils" filename="org/solenopsis/keraiai/soap/credentials/CredentialsUtils.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.credentials.CredentialsUtils" filename="org/solenopsis/keraiai/soap/credentials/CredentialsUtils.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="27" hits="0" branch="false"/>
+								<line number="55" hits="1" branch="false"/>
+								<line number="56" hits="1" branch="false"/>
 							</lines>
 						</method>
-						<method name="computeSecurityPassword" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="computeSecurityPassword" signature="(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="49" hits="0" branch="false"/>
+								<line number="38" hits="38" branch="false"/>
+							</lines>
+						</method>
+						<method name="computeSecurityPassword" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="49" hits="1" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="27" hits="0" branch="false"/>
-						<line number="49" hits="0" branch="false"/>
+						<line number="38" hits="38" branch="false"/>
+						<line number="49" hits="1" branch="false"/>
+						<line number="55" hits="1" branch="false"/>
+						<line number="56" hits="1" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.credentials.PropertiesCredentials" filename="org/solenopsis/keraiai/soap/credentials/PropertiesCredentials.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
@@ -787,72 +801,85 @@
 						<line number="64" hits="7" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.credentials.StringCredentials" filename="org/solenopsis/keraiai/soap/credentials/StringCredentials.java" line-rate="0.9166666666666666" branch-rate="1.0" complexity="1.1666666666666667">
+				<class name="org.solenopsis.keraiai.soap.credentials.StringCredentials" filename="org/solenopsis/keraiai/soap/credentials/StringCredentials.java" line-rate="1.0" branch-rate="1.0" complexity="1.1666666666666667">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="64" hits="44" branch="false"/>
-								<line number="66" hits="35" branch="false"/>
-								<line number="67" hits="35" branch="false"/>
-								<line number="68" hits="35" branch="false"/>
-								<line number="69" hits="35" branch="false"/>
-								<line number="70" hits="35" branch="false"/>
+								<line number="64" hits="45" branch="false"/>
+								<line number="65" hits="45" branch="false"/>
+								<line number="67" hits="36" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+								<line number="68" hits="36" branch="false"/>
+								<line number="69" hits="36" branch="false"/>
+								<line number="70" hits="36" branch="false"/>
+								<line number="71" hits="36" branch="false"/>
+								<line number="72" hits="36" branch="false"/>
 							</lines>
 						</method>
 						<method name="getApiVersion" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="109" hits="4" branch="false"/>
+								<line number="111" hits="4" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPassword" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="93" hits="28" branch="false"/>
+								<line number="95" hits="29" branch="false"/>
 							</lines>
 						</method>
 						<method name="getToken" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="101" hits="28" branch="false"/>
+								<line number="103" hits="29" branch="false"/>
 							</lines>
 						</method>
 						<method name="getUrl" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="77" hits="10" branch="false"/>
+								<line number="79" hits="10" branch="false"/>
 							</lines>
 						</method>
 						<method name="getUserName" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="85" hits="46" branch="false"/>
+								<line number="87" hits="46" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="64" hits="44" branch="false"/>
-						<line number="65" hits="0" branch="true" condition-coverage="100% (2/2)">
+						<line number="64" hits="45" branch="false"/>
+						<line number="65" hits="45" branch="false"/>
+						<line number="67" hits="36" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="66" hits="35" branch="false"/>
-						<line number="67" hits="35" branch="false"/>
-						<line number="68" hits="35" branch="false"/>
-						<line number="69" hits="35" branch="false"/>
-						<line number="70" hits="35" branch="false"/>
-						<line number="77" hits="10" branch="false"/>
-						<line number="85" hits="46" branch="false"/>
-						<line number="93" hits="28" branch="false"/>
-						<line number="101" hits="28" branch="false"/>
-						<line number="109" hits="4" branch="false"/>
+						<line number="68" hits="36" branch="false"/>
+						<line number="69" hits="36" branch="false"/>
+						<line number="70" hits="36" branch="false"/>
+						<line number="71" hits="36" branch="false"/>
+						<line number="72" hits="36" branch="false"/>
+						<line number="79" hits="10" branch="false"/>
+						<line number="87" hits="46" branch="false"/>
+						<line number="95" hits="29" branch="false"/>
+						<line number="103" hits="29" branch="false"/>
+						<line number="111" hits="4" branch="false"/>
 					</lines>
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.8048780487804879" branch-rate="1.0" complexity="1.2857142857142858">
+		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.9827586206896551" branch-rate="1.0" complexity="1.2857142857142858">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.port.AbstractPortFactory" filename="org/solenopsis/keraiai/soap/port/AbstractPortFactory.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="40" hits="109" branch="false"/>
 								<line number="41" hits="109" branch="false"/>
+							</lines>
+						</method>
+						<method name="createPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljava/lang/String;Ljavax/xml/ws/Service;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="58" hits="40" branch="false"/>
 							</lines>
 						</method>
 						<method name="createSessionPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljava/lang/String;Ljavax/xml/ws/Service;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -862,15 +889,20 @@
 						</method>
 					</methods>
 					<lines>
+						<line number="40" hits="109" branch="false"/>
 						<line number="41" hits="109" branch="false"/>
+						<line number="58" hits="40" branch="false"/>
 						<line number="81" hits="18" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.port.SessionIdSoapHeaderHandler" filename="org/solenopsis/keraiai/soap/port/SessionIdSoapHeaderHandler.java" line-rate="0.7777777777777778" branch-rate="1.0" complexity="1.4285714285714286">
+				<class name="org.solenopsis.keraiai.soap.port.SessionIdSoapHeaderHandler" filename="org/solenopsis/keraiai/soap/port/SessionIdSoapHeaderHandler.java" line-rate="0.9545454545454546" branch-rate="1.0" complexity="1.4285714285714286">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Ljavax/xml/namespace/QName;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="59" hits="22" branch="false"/>
+								<line number="56" hits="27" branch="false"/>
+								<line number="57" hits="27" branch="false"/>
+								<line number="58" hits="26" branch="false"/>
+								<line number="59" hits="23" branch="false"/>
 							</lines>
 						</method>
 						<method name="close" signature="(Ljavax/xml/ws/handler/MessageContext;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -886,12 +918,12 @@
 						</method>
 						<method name="getSessionHeaderName" signature="()Ljavax/xml/namespace/QName;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="67" hits="4" branch="false"/>
+								<line number="67" hits="5" branch="false"/>
 							</lines>
 						</method>
 						<method name="getSessionId" signature="()Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="76" hits="10" branch="false"/>
+								<line number="76" hits="12" branch="false"/>
 							</lines>
 						</method>
 						<method name="handleFault" signature="(Ljavax/xml/ws/handler/MessageContext;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -909,101 +941,133 @@
 								<line number="36" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="handleMessage" signature="(Ljavax/xml/ws/handler/soap/SOAPMessageContext;)Z" line-rate="0.75" branch-rate="1.0" complexity="0">
+						<method name="handleMessage" signature="(Ljavax/xml/ws/handler/soap/SOAPMessageContext;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="93" hits="3" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
 								<line number="94" hits="1" branch="false"/>
 								<line number="96" hits="1" branch="false"/>
-								<line number="100" hits="1" branch="false"/>
-								<line number="103" hits="1" branch="false"/>
-								<line number="104" hits="0" branch="false"/>
-								<line number="105" hits="0" branch="false"/>
+								<line number="100" hits="2" branch="false"/>
+								<line number="102" hits="2" branch="false"/>
+								<line number="103" hits="2" branch="false"/>
+								<line number="104" hits="1" branch="false"/>
+								<line number="105" hits="1" branch="false"/>
 								<line number="106" hits="1" branch="false"/>
-								<line number="108" hits="1" branch="false"/>
+								<line number="108" hits="2" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="36" hits="0" branch="false"/>
-						<line number="59" hits="22" branch="false"/>
-						<line number="67" hits="4" branch="false"/>
-						<line number="76" hits="10" branch="false"/>
+						<line number="56" hits="27" branch="false"/>
+						<line number="57" hits="27" branch="false"/>
+						<line number="58" hits="26" branch="false"/>
+						<line number="59" hits="23" branch="false"/>
+						<line number="67" hits="5" branch="false"/>
+						<line number="76" hits="12" branch="false"/>
 						<line number="84" hits="3" branch="false"/>
-						<line number="93" hits="0" branch="true" condition-coverage="100% (2/2)">
+						<line number="93" hits="3" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
 						<line number="94" hits="1" branch="false"/>
 						<line number="96" hits="1" branch="false"/>
-						<line number="100" hits="1" branch="false"/>
-						<line number="103" hits="1" branch="false"/>
-						<line number="104" hits="0" branch="false"/>
-						<line number="105" hits="0" branch="false"/>
+						<line number="100" hits="2" branch="false"/>
+						<line number="102" hits="2" branch="false"/>
+						<line number="103" hits="2" branch="false"/>
+						<line number="104" hits="1" branch="false"/>
+						<line number="105" hits="1" branch="false"/>
 						<line number="106" hits="1" branch="false"/>
-						<line number="108" hits="1" branch="false"/>
+						<line number="108" hits="2" branch="false"/>
 						<line number="116" hits="1" branch="false"/>
 						<line number="118" hits="1" branch="false"/>
 						<line number="126" hits="1" branch="false"/>
 						<line number="127" hits="1" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.port.SessionIdUtils" filename="org/solenopsis/keraiai/soap/port/SessionIdUtils.java" line-rate="0.8" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.port.SessionIdUtils" filename="org/solenopsis/keraiai/soap/port/SessionIdUtils.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="43" hits="1" branch="false"/>
 							</lines>
 						</method>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="128" hits="0" branch="false"/>
-								<line number="129" hits="0" branch="false"/>
+								<line number="128" hits="1" branch="false"/>
+								<line number="129" hits="1" branch="false"/>
+							</lines>
+						</method>
+						<method name="computeSessionHeaderName" signature="(Ljavax/xml/ws/Service;)Ljavax/xml/namespace/QName;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="74" hits="20" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="51" hits="20" branch="false"/>
+								<line number="51" hits="21" branch="false"/>
 							</lines>
 						</method>
 						<method name="setSessionId" signature="(Ljavax/xml/soap/SOAPHeader;Ljavax/xml/namespace/QName;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="94" hits="2" branch="false"/>
-								<line number="95" hits="2" branch="false"/>
+								<line number="88" hits="8" branch="false"/>
+								<line number="89" hits="7" branch="false"/>
+								<line number="90" hits="6" branch="false"/>
+								<line number="92" hits="3" branch="false"/>
+								<line number="94" hits="3" branch="false"/>
+								<line number="95" hits="3" branch="false"/>
 							</lines>
 						</method>
 						<method name="setSessionId" signature="(Ljavax/xml/ws/Service;Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="111" hits="23" branch="false"/>
+								<line number="112" hits="22" branch="false"/>
+								<line number="113" hits="21" branch="false"/>
 								<line number="115" hits="18" branch="false"/>
 								<line number="116" hits="18" branch="false"/>
 								<line number="118" hits="18" branch="false"/>
+								<line number="120" hits="18" branch="false"/>
 								<line number="122" hits="18" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="43" hits="1" branch="false"/>
-						<line number="51" hits="20" branch="false"/>
-						<line number="94" hits="2" branch="false"/>
-						<line number="95" hits="2" branch="false"/>
+						<line number="51" hits="21" branch="false"/>
+						<line number="74" hits="20" branch="false"/>
+						<line number="88" hits="8" branch="false"/>
+						<line number="89" hits="7" branch="false"/>
+						<line number="90" hits="6" branch="false"/>
+						<line number="92" hits="3" branch="false"/>
+						<line number="94" hits="3" branch="false"/>
+						<line number="95" hits="3" branch="false"/>
+						<line number="111" hits="23" branch="false"/>
+						<line number="112" hits="22" branch="false"/>
+						<line number="113" hits="21" branch="false"/>
 						<line number="115" hits="18" branch="false"/>
 						<line number="116" hits="18" branch="false"/>
 						<line number="118" hits="18" branch="false"/>
+						<line number="120" hits="18" branch="false"/>
 						<line number="122" hits="18" branch="false"/>
-						<line number="128" hits="0" branch="false"/>
-						<line number="129" hits="0" branch="false"/>
+						<line number="128" hits="1" branch="false"/>
+						<line number="129" hits="1" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.port.UrlUtils" filename="org/solenopsis/keraiai/soap/port/UrlUtils.java" line-rate="0.8181818181818182" branch-rate="1.0" complexity="1.5">
+				<class name="org.solenopsis.keraiai.soap.port.UrlUtils" filename="org/solenopsis/keraiai/soap/port/UrlUtils.java" line-rate="1.0" branch-rate="1.0" complexity="1.5">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="36" hits="1" branch="false"/>
 							</lines>
 						</method>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="111" hits="0" branch="false"/>
-								<line number="112" hits="0" branch="false"/>
+								<line number="111" hits="1" branch="false"/>
+								<line number="112" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="computeUrlString" signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1012,6 +1076,11 @@
 								<line number="86" hits="12" branch="false"/>
 								<line number="87" hits="12" branch="false"/>
 								<line number="89" hits="12" branch="false"/>
+							</lines>
+						</method>
+						<method name="computeUrlString" signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="57" hits="38" branch="false"/>
 							</lines>
 						</method>
 						<method name="computeUrlString" signature="(Ljava/net/URL;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1026,6 +1095,7 @@
 						</method>
 						<method name="setUrl" signature="(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="101" hits="43" branch="false"/>
 								<line number="103" hits="43" branch="false"/>
 								<line number="105" hits="35" branch="false"/>
 							</lines>
@@ -1034,27 +1104,45 @@
 					<lines>
 						<line number="36" hits="1" branch="false"/>
 						<line number="44" hits="93" branch="false"/>
+						<line number="57" hits="38" branch="false"/>
 						<line number="71" hits="37" branch="false"/>
 						<line number="85" hits="48" branch="false"/>
 						<line number="86" hits="12" branch="false"/>
 						<line number="87" hits="12" branch="false"/>
 						<line number="89" hits="12" branch="false"/>
+						<line number="101" hits="43" branch="false"/>
 						<line number="103" hits="43" branch="false"/>
 						<line number="105" hits="35" branch="false"/>
-						<line number="111" hits="0" branch="false"/>
-						<line number="112" hits="0" branch="false"/>
+						<line number="111" hits="1" branch="false"/>
+						<line number="112" hits="1" branch="false"/>
 					</lines>
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.port.session" line-rate="0.8" branch-rate="1.0" complexity="1.0714285714285714">
+		<package name="org.solenopsis.keraiai.soap.port.session" line-rate="0.9285714285714286" branch-rate="1.0" complexity="1.0714285714285714">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.port.session.AbstractSessionPortFactory" filename="org/solenopsis/keraiai/soap/port/session/AbstractSessionPortFactory.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/security/SecurityMgr;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="47" hits="33" branch="false"/>
+								<line number="48" hits="33" branch="false"/>
 								<line number="49" hits="30" branch="false"/>
+							</lines>
+						</method>
+						<method name="createSessionPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="101" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="createSessionPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljava/lang/Class;Ljava/net/URL;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="90" hits="2" branch="false"/>
+							</lines>
+						</method>
+						<method name="createSessionPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljavax/xml/ws/Service;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="78" hits="6" branch="false"/>
 							</lines>
 						</method>
 						<method name="getSecurityMgr" signature="()Lorg/solenopsis/keraiai/soap/security/SecurityMgr;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1065,11 +1153,15 @@
 					</methods>
 					<lines>
 						<line number="47" hits="33" branch="false"/>
+						<line number="48" hits="33" branch="false"/>
 						<line number="49" hits="30" branch="false"/>
 						<line number="70" hits="23" branch="false"/>
+						<line number="78" hits="6" branch="false"/>
+						<line number="90" hits="2" branch="false"/>
+						<line number="101" hits="2" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.port.session.PortNameUtils" filename="org/solenopsis/keraiai/soap/port/session/PortNameUtils.java" line-rate="0.5" branch-rate="1.0" complexity="1.5">
+				<class name="org.solenopsis.keraiai.soap.port.session.PortNameUtils" filename="org/solenopsis/keraiai/soap/port/session/PortNameUtils.java" line-rate="0.75" branch-rate="1.0" complexity="1.5">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -1079,6 +1171,15 @@
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="33" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="computePortName" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljavax/xml/ws/Service;Lorg/solenopsis/keraiai/soap/security/SecurityMgr;)Ljava/lang/String;" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="61" hits="8" branch="true" condition-coverage="100% (2/2)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
 							</lines>
 						</method>
 						<method name="getLogger" signature="()Ljava/util/logging/Logger;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1091,7 +1192,7 @@
 						<line number="33" hits="0" branch="false"/>
 						<line number="38" hits="1" branch="false"/>
 						<line number="46" hits="8" branch="false"/>
-						<line number="61" hits="0" branch="true" condition-coverage="100% (2/2)">
+						<line number="61" hits="8" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
@@ -1126,18 +1227,24 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.port.session.proxy" line-rate="0.9444444444444444" branch-rate="0.875" complexity="1.5714285714285714">
+		<package name="org.solenopsis.keraiai.soap.port.session.proxy" line-rate="0.9574468085106383" branch-rate="0.875" complexity="1.5714285714285714">
 			<classes>
-				<class name="org.solenopsis.keraiai.soap.port.session.proxy.PortInvocationHandler" filename="org/solenopsis/keraiai/soap/port/session/proxy/PortInvocationHandler.java" line-rate="0.9565217391304348" branch-rate="0.75" complexity="1.75">
+				<class name="org.solenopsis.keraiai.soap.port.session.proxy.PortInvocationHandler" filename="org/solenopsis/keraiai/soap/port/session/proxy/PortInvocationHandler.java" line-rate="0.9666666666666667" branch-rate="0.75" complexity="1.75">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/port/session/proxy/ProxiedSessionPortFactory;Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljavax/xml/ws/Service;Ljava/lang/Class;Ljava/lang/String;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="120" hits="19" branch="false"/>
+								<line number="121" hits="19" branch="false"/>
+								<line number="122" hits="18" branch="false"/>
+								<line number="123" hits="16" branch="false"/>
+								<line number="124" hits="14" branch="false"/>
 								<line number="126" hits="12" branch="false"/>
 								<line number="127" hits="12" branch="false"/>
 							</lines>
 						</method>
 						<method name="createCaller" signature="(Lorg/solenopsis/keraiai/soap/security/LoginContext;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="137" hits="9" branch="false"/>
 								<line number="139" hits="8" branch="false"/>
 							</lines>
 						</method>
@@ -1166,8 +1273,9 @@
 								<line number="77" hits="8" branch="false"/>
 							</lines>
 						</method>
-						<method name="invoke" signature="(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.9333333333333333" branch-rate="0.75" complexity="0">
+						<method name="invoke" signature="(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object;" line-rate="0.9375" branch-rate="0.75" complexity="0">
 							<lines>
+								<line number="147" hits="4" branch="false"/>
 								<line number="149" hits="4" branch="false"/>
 								<line number="151" hits="4" branch="false"/>
 								<line number="153" hits="4" branch="false"/>
@@ -1200,9 +1308,16 @@
 						<line number="86" hits="8" branch="false"/>
 						<line number="95" hits="8" branch="false"/>
 						<line number="106" hits="8" branch="false"/>
+						<line number="120" hits="19" branch="false"/>
+						<line number="121" hits="19" branch="false"/>
+						<line number="122" hits="18" branch="false"/>
+						<line number="123" hits="16" branch="false"/>
+						<line number="124" hits="14" branch="false"/>
 						<line number="126" hits="12" branch="false"/>
 						<line number="127" hits="12" branch="false"/>
+						<line number="137" hits="9" branch="false"/>
 						<line number="139" hits="8" branch="false"/>
+						<line number="147" hits="4" branch="false"/>
 						<line number="149" hits="4" branch="false"/>
 						<line number="151" hits="4" branch="false"/>
 						<line number="153" hits="4" branch="false"/>
@@ -1243,11 +1358,19 @@
 						</method>
 						<method name="doCreateSessionPort" signature="(Lorg/solenopsis/keraiai/soap/WebServiceTypeEnum;Ljavax/xml/ws/Service;Ljava/lang/Class;Ljava/lang/String;Lorg/solenopsis/keraiai/soap/security/LoginContext;)Ljava/lang/Object;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="53" hits="13" branch="false"/>
+								<line number="54" hits="12" branch="false"/>
+								<line number="55" hits="11" branch="false"/>
+								<line number="56" hits="10" branch="false"/>
 								<line number="58" hits="9" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
+						<line number="53" hits="13" branch="false"/>
+						<line number="54" hits="12" branch="false"/>
+						<line number="55" hits="11" branch="false"/>
+						<line number="56" hits="10" branch="false"/>
 						<line number="58" hits="9" branch="false"/>
 						<line number="66" hits="4" branch="false"/>
 						<line number="77" hits="21" branch="false"/>
@@ -1316,12 +1439,14 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.security" line-rate="0.6842105263157895" branch-rate="1.0" complexity="1.3611111111111112">
+		<package name="org.solenopsis.keraiai.soap.security" line-rate="0.7" branch-rate="1.0" complexity="1.3611111111111112">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.security.AbstractLoginContext" filename="org/solenopsis/keraiai/soap/security/AbstractLoginContext.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="42" hits="35" branch="false"/>
+								<line number="43" hits="35" branch="false"/>
 								<line number="44" hits="31" branch="false"/>
 							</lines>
 						</method>
@@ -1332,11 +1457,13 @@
 						</method>
 					</methods>
 					<lines>
+						<line number="42" hits="35" branch="false"/>
+						<line number="43" hits="35" branch="false"/>
 						<line number="44" hits="31" branch="false"/>
 						<line number="51" hits="4" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.security.AbstractSecurityMgr" filename="org/solenopsis/keraiai/soap/security/AbstractSecurityMgr.java" line-rate="0.8709677419354839" branch-rate="1.0" complexity="2.0833333333333335">
+				<class name="org.solenopsis.keraiai.soap.security.AbstractSecurityMgr" filename="org/solenopsis/keraiai/soap/security/AbstractSecurityMgr.java" line-rate="0.875" branch-rate="1.0" complexity="2.0833333333333335">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -1347,6 +1474,7 @@
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="101" hits="58" branch="false"/>
+								<line number="102" hits="58" branch="false"/>
 								<line number="103" hits="54" branch="false"/>
 							</lines>
 						</method>
@@ -1420,6 +1548,7 @@
 						<line number="62" hits="33" branch="false"/>
 						<line number="64" hits="33" branch="false"/>
 						<line number="101" hits="58" branch="false"/>
+						<line number="102" hits="58" branch="false"/>
 						<line number="103" hits="54" branch="false"/>
 						<line number="109" hits="0" branch="false"/>
 						<line number="110" hits="0" branch="false"/>
@@ -1595,6 +1724,7 @@
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/wsdl/enterprise/LoginResult;Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="54" hits="11" branch="false"/>
+								<line number="56" hits="10" branch="false"/>
 								<line number="57" hits="9" branch="false"/>
 							</lines>
 						</method>
@@ -1607,6 +1737,7 @@
 					<lines>
 						<line number="42" hits="28" branch="false"/>
 						<line number="54" hits="11" branch="false"/>
+						<line number="56" hits="10" branch="false"/>
 						<line number="57" hits="9" branch="false"/>
 					</lines>
 				</class>
@@ -1656,13 +1787,14 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.security.partner" line-rate="0.8333333333333334" branch-rate="1.0" complexity="1.0">
+		<package name="org.solenopsis.keraiai.soap.security.partner" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.security.partner.PartnerLoginContext" filename="org/solenopsis/keraiai/soap/security/partner/PartnerLoginContext.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/wsdl/partner/LoginResult;Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="54" hits="11" branch="false"/>
+								<line number="56" hits="10" branch="false"/>
 								<line number="57" hits="9" branch="false"/>
 							</lines>
 						</method>
@@ -1675,17 +1807,12 @@
 					<lines>
 						<line number="42" hits="28" branch="false"/>
 						<line number="54" hits="11" branch="false"/>
+						<line number="56" hits="10" branch="false"/>
 						<line number="57" hits="9" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.security.partner.PartnerSecurityMgr" filename="org/solenopsis/keraiai/soap/security/partner/PartnerSecurityMgr.java" line-rate="0.7777777777777778" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.security.partner.PartnerSecurityMgr" filename="org/solenopsis/keraiai/soap/security/partner/PartnerSecurityMgr.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="46" hits="0" branch="false"/>
-								<line number="47" hits="0" branch="false"/>
-							</lines>
-						</method>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="39" hits="13" branch="false"/>
@@ -1699,7 +1826,7 @@
 						</method>
 						<method name="doLogin" signature="(Lorg/solenopsis/keraiai/wsdl/partner/Soap;)Lorg/solenopsis/keraiai/soap/security/LoginContext;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="59" hits="8" branch="false"/>
+								<line number="55" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="doLogout" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1708,13 +1835,13 @@
 						</method>
 						<method name="doLogout" signature="(Lorg/solenopsis/keraiai/wsdl/partner/Soap;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="69" hits="3" branch="false"/>
-								<line number="72" hits="2" branch="false"/>
+								<line number="65" hits="3" branch="false"/>
+								<line number="68" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLoginWebServiceType" signature="()Lorg/solenopsis/keraiai/soap/security/LoginWebServiceTypeEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="51" hits="28" branch="false"/>
+								<line number="47" hits="28" branch="false"/>
 							</lines>
 						</method>
 					</methods>
@@ -1722,23 +1849,22 @@
 						<line number="31" hits="9" branch="false"/>
 						<line number="39" hits="13" branch="false"/>
 						<line number="40" hits="12" branch="false"/>
-						<line number="46" hits="0" branch="false"/>
-						<line number="47" hits="0" branch="false"/>
-						<line number="51" hits="28" branch="false"/>
-						<line number="59" hits="8" branch="false"/>
-						<line number="69" hits="3" branch="false"/>
-						<line number="72" hits="2" branch="false"/>
+						<line number="47" hits="28" branch="false"/>
+						<line number="55" hits="8" branch="false"/>
+						<line number="65" hits="3" branch="false"/>
+						<line number="68" hits="2" branch="false"/>
 					</lines>
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.security.tooling" line-rate="0.8333333333333334" branch-rate="1.0" complexity="1.0">
+		<package name="org.solenopsis.keraiai.soap.security.tooling" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.security.tooling.ToolingLoginContext" filename="org/solenopsis/keraiai/soap/security/tooling/ToolingLoginContext.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/wsdl/tooling/LoginResult;Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="54" hits="11" branch="false"/>
+								<line number="56" hits="10" branch="false"/>
 								<line number="57" hits="9" branch="false"/>
 							</lines>
 						</method>
@@ -1751,17 +1877,12 @@
 					<lines>
 						<line number="42" hits="28" branch="false"/>
 						<line number="54" hits="11" branch="false"/>
+						<line number="56" hits="10" branch="false"/>
 						<line number="57" hits="9" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.security.tooling.ToolingSecurityMgr" filename="org/solenopsis/keraiai/soap/security/tooling/ToolingSecurityMgr.java" line-rate="0.7777777777777778" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.security.tooling.ToolingSecurityMgr" filename="org/solenopsis/keraiai/soap/security/tooling/ToolingSecurityMgr.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="46" hits="0" branch="false"/>
-								<line number="47" hits="0" branch="false"/>
-							</lines>
-						</method>
 						<method name="&lt;init&gt;" signature="(Lorg/solenopsis/keraiai/soap/credentials/Credentials;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="39" hits="13" branch="false"/>
@@ -1775,7 +1896,7 @@
 						</method>
 						<method name="doLogin" signature="(Lorg/solenopsis/keraiai/wsdl/tooling/SforceServicePortType;)Lorg/solenopsis/keraiai/soap/security/LoginContext;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="59" hits="8" branch="false"/>
+								<line number="55" hits="8" branch="false"/>
 							</lines>
 						</method>
 						<method name="doLogout" signature="(Ljava/lang/Object;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1784,13 +1905,13 @@
 						</method>
 						<method name="doLogout" signature="(Lorg/solenopsis/keraiai/wsdl/tooling/SforceServicePortType;)V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="69" hits="3" branch="false"/>
-								<line number="72" hits="2" branch="false"/>
+								<line number="65" hits="3" branch="false"/>
+								<line number="68" hits="2" branch="false"/>
 							</lines>
 						</method>
 						<method name="getLoginWebServiceType" signature="()Lorg/solenopsis/keraiai/soap/security/LoginWebServiceTypeEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="51" hits="28" branch="false"/>
+								<line number="47" hits="28" branch="false"/>
 							</lines>
 						</method>
 					</methods>
@@ -1798,19 +1919,17 @@
 						<line number="31" hits="9" branch="false"/>
 						<line number="39" hits="13" branch="false"/>
 						<line number="40" hits="12" branch="false"/>
-						<line number="46" hits="0" branch="false"/>
-						<line number="47" hits="0" branch="false"/>
-						<line number="51" hits="28" branch="false"/>
-						<line number="59" hits="8" branch="false"/>
-						<line number="69" hits="3" branch="false"/>
-						<line number="72" hits="2" branch="false"/>
+						<line number="47" hits="28" branch="false"/>
+						<line number="55" hits="8" branch="false"/>
+						<line number="65" hits="3" branch="false"/>
+						<line number="68" hits="2" branch="false"/>
 					</lines>
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.utils" line-rate="0.7777777777777778" branch-rate="1.0" complexity="2.1">
+		<package name="org.solenopsis.keraiai.soap.utils" line-rate="0.9259259259259259" branch-rate="1.0" complexity="2.1">
 			<classes>
-				<class name="org.solenopsis.keraiai.soap.utils.ExceptionUtils" filename="org/solenopsis/keraiai/soap/utils/ExceptionUtils.java" line-rate="0.7777777777777778" branch-rate="1.0" complexity="2.1">
+				<class name="org.solenopsis.keraiai.soap.utils.ExceptionUtils" filename="org/solenopsis/keraiai/soap/utils/ExceptionUtils.java" line-rate="0.9259259259259259" branch-rate="1.0" complexity="2.1">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -1839,6 +1958,7 @@
 								</line>
 								<line number="141" hits="8" branch="false"/>
 								<line number="143" hits="8" branch="false"/>
+								<line number="146" hits="12" branch="false"/>
 								<line number="148" hits="12" branch="false"/>
 							</lines>
 						</method>
@@ -1847,46 +1967,98 @@
 								<line number="50" hits="242" branch="false"/>
 							</lines>
 						</method>
+						<method name="isExceptionMsgContained" signature="(Ljava/lang/String;Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="60" hits="50" branch="true" condition-coverage="100% (4/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
 						<method name="isExceptionMsgContained" signature="(Ljava/lang/String;Ljava/lang/Throwable;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="71" hits="52" branch="false"/>
 								<line number="73" hits="52" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
+								<line number="74" hits="4" branch="false"/>
 								<line number="76" hits="4" branch="false"/>
 								<line number="79" hits="48" branch="true" condition-coverage="100% (2/2)">
 									<conditions>
 										<condition number="0" type="jump" coverage="100%"/>
 									</conditions>
 								</line>
+								<line number="80" hits="13" branch="false"/>
 								<line number="82" hits="13" branch="false"/>
+								<line number="85" hits="35" branch="false"/>
 								<line number="87" hits="35" branch="false"/>
+							</lines>
+						</method>
+						<method name="isInvalidSessionId" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="96" hits="5" branch="false"/>
+							</lines>
+						</method>
+						<method name="isInvalidSessionId" signature="(Ljava/lang/Throwable;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="114" hits="26" branch="false"/>
+							</lines>
+						</method>
+						<method name="isReloginException" signature="(Ljava/lang/Throwable;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="159" hits="21" branch="true" condition-coverage="100% (4/4)">
+									<conditions>
+										<condition number="0" type="jump" coverage="100%"/>
+										<condition number="1" type="jump" coverage="100%"/>
+									</conditions>
+								</line>
+							</lines>
+						</method>
+						<method name="isServerUnavailable" signature="(Ljava/lang/String;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="105" hits="5" branch="false"/>
+							</lines>
+						</method>
+						<method name="isServerUnavailable" signature="(Ljava/lang/Throwable;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="123" hits="5" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
 						<line number="34" hits="1" branch="false"/>
 						<line number="50" hits="242" branch="false"/>
-						<line number="60" hits="0" branch="true" condition-coverage="100% (4/4)">
+						<line number="60" hits="50" branch="true" condition-coverage="100% (4/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 								<condition number="1" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
+						<line number="71" hits="52" branch="false"/>
 						<line number="73" hits="52" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
+						<line number="74" hits="4" branch="false"/>
 						<line number="76" hits="4" branch="false"/>
 						<line number="79" hits="48" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
+						<line number="80" hits="13" branch="false"/>
 						<line number="82" hits="13" branch="false"/>
+						<line number="85" hits="35" branch="false"/>
 						<line number="87" hits="35" branch="false"/>
+						<line number="96" hits="5" branch="false"/>
+						<line number="105" hits="5" branch="false"/>
+						<line number="114" hits="26" branch="false"/>
+						<line number="123" hits="5" branch="false"/>
 						<line number="134" hits="26" branch="true" condition-coverage="100% (2/2)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
@@ -1901,8 +2073,9 @@
 						</line>
 						<line number="141" hits="8" branch="false"/>
 						<line number="143" hits="8" branch="false"/>
+						<line number="146" hits="12" branch="false"/>
 						<line number="148" hits="12" branch="false"/>
-						<line number="159" hits="0" branch="true" condition-coverage="100% (4/4)">
+						<line number="159" hits="21" branch="true" condition-coverage="100% (4/4)">
 							<conditions>
 								<condition number="0" type="jump" coverage="100%"/>
 								<condition number="1" type="jump" coverage="100%"/>
