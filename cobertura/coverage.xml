@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.8376288659793815" branch-rate="0.6973684210526315" lines-covered="325" lines-valid="388" branches-covered="53" branches-valid="76" complexity="1.2670807453416149" version="2.1.1" timestamp="1465651142399">
+<coverage line-rate="0.8427835051546392" branch-rate="0.6973684210526315" lines-covered="327" lines-valid="388" branches-covered="53" branches-valid="76" complexity="1.2670807453416149" version="2.1.1" timestamp="1465654283065">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -1927,19 +1927,19 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.utils" line-rate="0.9259259259259259" branch-rate="1.0" complexity="2.1">
+		<package name="org.solenopsis.keraiai.soap.utils" line-rate="1.0" branch-rate="1.0" complexity="2.1">
 			<classes>
-				<class name="org.solenopsis.keraiai.soap.utils.ExceptionUtils" filename="org/solenopsis/keraiai/soap/utils/ExceptionUtils.java" line-rate="0.9259259259259259" branch-rate="1.0" complexity="2.1">
+				<class name="org.solenopsis.keraiai.soap.utils.ExceptionUtils" filename="org/solenopsis/keraiai/soap/utils/ExceptionUtils.java" line-rate="1.0" branch-rate="1.0" complexity="2.1">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
 								<line number="34" hits="1" branch="false"/>
 							</lines>
 						</method>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="&lt;init&gt;" signature="()V" line-rate="1.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="165" hits="0" branch="false"/>
-								<line number="166" hits="0" branch="false"/>
+								<line number="165" hits="1" branch="false"/>
+								<line number="166" hits="1" branch="false"/>
 							</lines>
 						</method>
 						<method name="containsIOException" signature="(Ljava/lang/Throwable;)Z" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2081,8 +2081,8 @@
 								<condition number="1" type="jump" coverage="100%"/>
 							</conditions>
 						</line>
-						<line number="165" hits="0" branch="false"/>
-						<line number="166" hits="0" branch="false"/>
+						<line number="165" hits="1" branch="false"/>
+						<line number="166" hits="1" branch="false"/>
 					</lines>
 				</class>
 			</classes>
