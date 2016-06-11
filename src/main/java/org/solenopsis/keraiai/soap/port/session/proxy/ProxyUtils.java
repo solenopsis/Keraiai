@@ -73,4 +73,10 @@ class ProxyUtils {
 
         getLogger().log(Level.WARNING, "Received a relogin exception when calling [{0}] - initiating a new login", method.getName());
     }
+
+    /**
+     * Default constructor not allowed.
+     */
+    private ProxyUtils() {
+    }
 }

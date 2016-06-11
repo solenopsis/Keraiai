@@ -167,10 +167,6 @@ class PortInvocationHandler extends AbstractCommonBase implements InvocationHand
             getProxiedSessionPortFactory().getSecurityMgr().resetSession(loginContext);
         } while (ProxyUtils.isCallRetriable(++totalCalls));
 
-        if (null == toRaise) {
-            throw new IllegalStateException("Should have returned a value!");
-        }
-
         throw toRaise;
     }
 }

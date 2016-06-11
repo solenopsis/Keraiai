@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap.port.session.proxy;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.junit.Assert;
@@ -35,6 +36,16 @@ public class ProxyUtilsTest {
      */
     public void stubMethod() {
 
+    }
+
+    /**
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Constructor constructor = ProxyUtils.class.getDeclaredConstructor(new Class[0]);
+        constructor.setAccessible(true);
+        constructor.newInstance(new Object[0]);
     }
 
     /**
