@@ -353,7 +353,9 @@
 
                     <instrumentation>
                         <excludes>
+                            <exclude>org/flossware/jcore</exclude>
                             <exclude>org/flossware/jcore/**/*</exclude>
+                            <exclude>org.flossware.jcore</exclude>
                             <exclude>org/solenopsis/keraiai/wsdl/**/*</exclude>
                             <exclude>org/solenopsis/keraiai/**/*Test.class</exclude>
                         </excludes>

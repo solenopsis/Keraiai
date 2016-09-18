@@ -46,6 +46,13 @@ class SessionIdSoapHeaderHandler extends AbstractCommonBase implements SOAPHandl
     private final String sessionId;
 
     /**
+     * De
+     */
+//    private SessionIdSoapHeaderHandler() {
+//        sessionHeaderName = null;
+//        sessionId = null;
+//    }
+    /**
      * This constructor sets the name in the soap header for the session id and the session id itself.
      *
      * @param sessionHeaderName the name that will contain the session id element.
