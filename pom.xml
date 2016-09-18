@@ -257,9 +257,6 @@
                 <configuration>
                     <instrumentation>
                         <ignores>
-                            <!--
-                            <ignore>org.flossware.jcore.*</ignore>
-                            -->
                             <ignore>org.solenopsis.keraiai.wsdl.*</ignore>
                         </ignores>
 
@@ -354,6 +351,7 @@
                     <instrumentation>
                         <excludes>
                             <exclude>org/flossware/jcore/**/*</exclude>
+                            <exclude>org/flossware/jcore/**/*.class</exclude>
                             <exclude>org/solenopsis/keraiai/wsdl/**/*</exclude>
                             <exclude>org/solenopsis/keraiai/**/*Test.class</exclude>
                         </excludes>
