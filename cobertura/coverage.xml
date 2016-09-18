@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="301" branches-covered="0" branches-valid="50" complexity="1.2839506172839505" version="2.1.1" timestamp="1474222027719">
+<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="301" branches-covered="0" branches-valid="50" complexity="1.2839506172839505" version="2.1.1" timestamp="1474224434520">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
