@@ -16,39 +16,90 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
-import org.solenopsis.keraiai.soap.ApiWebServiceTypeEnum;
+import org.flossware.jcore.utils.ObjectUtils;
+import org.flossware.jcore.utils.StringUtils;
+import org.flossware.jcore.utils.soap.SoapUtils;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
 /**
- * Represents all login SOAP web service: enterprise, partner and tooling.
+ * Represents all login SOAP web service: enterprise, partner and tooling. Additionally provides the ability to create a usable
+ * login port for logins.
  *
  * @author Scot P. Floess
  */
 public enum LoginWebServiceTypeEnum {
-    ENTERPRISE_LOGIN_SERVICE(ApiWebServiceTypeEnum.ENTERPRISE_SERVICE),
-    PARTNER_LOGIN_SERVICE(ApiWebServiceTypeEnum.PARTNER_SERVICE),
-    TOOLING_LOGIN_SERVICE(ApiWebServiceTypeEnum.TOOLING_SERVICE);
+    ENTERPRISE_LOGIN_SERVICE(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE),
+    PARTNER_LOGIN_SERVICE(WebServiceTypeEnum.PARTNER_SERVICE_TYPE),
+    TOOLING_LOGIN_SERVICE(WebServiceTypeEnum.TOOLING_SERVICE_TYPE);
 
     /**
      * The actual web service type.
      */
-    private final ApiWebServiceTypeEnum apiWebserviceType;
+    private final WebServiceTypeEnum apiWebserviceType;
 
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
      *
      * @param webService the SFDC web service.
-     * @param portType the port for the web service.
+     * @param portType   the port for the web service.
      */
-    private LoginWebServiceTypeEnum(final ApiWebServiceTypeEnum loginWebserviceType) {
+    private LoginWebServiceTypeEnum(final WebServiceTypeEnum loginWebserviceType) {
         this.apiWebserviceType = loginWebserviceType;
     }
 
     /**
-     * Return the web service type.
+     * Return the login web service type.
      *
-     * @return the web service type.
+     * @return the login web service type.
      */
-    public ApiWebServiceTypeEnum getApiWebServiceType() {
+    public WebServiceTypeEnum getWebServiceType() {
         return apiWebserviceType;
+    }
+
+    /**
+     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
+     *
+     * @param credentials contains the "base" url and the API version used to construct the URL.
+     *
+     * @return a login URL.
+     *
+     * @throws IllegalArgumentException if <code>credentials</code> is null.
+     */
+    String computeLoginUrl(final Credentials credentials) {
+        ObjectUtils.ensureObject(credentials, "Must provide credentials!");
+
+        return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), getWebServiceType().getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());
+    }
+
+    /**
+     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
+     *
+     * @param securityMgr contains credentials whose "base" url and the API version used to construct the URL.
+     *
+     * @return a login URL.
+     *
+     * @throws IllegalArgumentException if <code>securityMgr</code> is null.
+     */
+    String computeLoginUrl(final SecurityMgr securityMgr) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+
+        return computeLoginUrl(securityMgr.getCredentials());
+    }
+
+    /**
+     * Creates a login port to an SFDC web service (either enterprise, partner or tooling).
+     *
+     * @param <P>         the type of port being created.
+     *
+     * @param securityMgr contains credentials whose "base" url and the API version used to construct the URL.
+     *
+     * @return a usable login port.
+     */
+    public <P> P createLoginPort(final SecurityMgr securityMgr) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+
+        return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), computeLoginUrl(securityMgr));
     }
 }

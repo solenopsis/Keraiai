@@ -1,0 +1,1 @@
+According to this, logging SOAP calls is a simple matter of defining the Java environment variable com.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true.

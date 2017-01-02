@@ -16,8 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.partner;
 
-import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
+import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractLoginContext;
 import org.solenopsis.keraiai.wsdl.partner.LoginResult;
 
@@ -26,34 +25,18 @@ import org.solenopsis.keraiai.wsdl.partner.LoginResult;
  *
  * @author Scot P. Floess
  */
-class PartnerLoginContext extends AbstractLoginContext {
-
-    /**
-     * Our login result.
-     */
-    private final LoginResult loginResult;
-
-    /**
-     * Return our login result.
-     *
-     * @return our login result.
-     */
-    LoginResult getPartnerLoginResult() {
-        return loginResult;
-    }
+final class PartnerLoginContext extends AbstractLoginContext<LoginResult> {
 
     /**
      * Constructor sets the login result and security manager who constructed self.
      *
      * @param loginContext result of login.
-     * @param credentials the credentials used for login.
+     * @param credentials  the credentials used for login.
      *
      * @throws IllegalArgumentException if loginContext or credentials are null.
      */
     PartnerLoginContext(final LoginResult loginResult, final Credentials credentials) {
-        super(credentials);
-
-        this.loginResult = ObjectUtils.ensureObject(loginResult, "LoginResult must not be null");
+        super(loginResult, credentials);
     }
 
     /**
@@ -61,7 +44,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getMetadataServerUrl() {
-        return getPartnerLoginResult().getMetadataServerUrl();
+        return getLoginResult().getMetadataServerUrl();
     }
 
     /**
@@ -69,7 +52,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isPasswordExpired() {
-        return getPartnerLoginResult().isPasswordExpired();
+        return getLoginResult().isPasswordExpired();
     }
 
     /**
@@ -77,7 +60,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isSandbox() {
-        return getPartnerLoginResult().isSandbox();
+        return getLoginResult().isSandbox();
     }
 
     /**
@@ -85,7 +68,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getSessionId() {
-        return getPartnerLoginResult().getSessionId();
+        return getLoginResult().getSessionId();
     }
 
     /**
@@ -93,7 +76,7 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getUserId() {
-        return getPartnerLoginResult().getUserId();
+        return getLoginResult().getUserId();
     }
 
     /**
@@ -101,6 +84,6 @@ class PartnerLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getServerUrl() {
-        return getPartnerLoginResult().getServerUrl();
+        return getLoginResult().getServerUrl();
     }
 }

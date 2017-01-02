@@ -16,8 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.enterprise;
 
-import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
+import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractLoginContext;
 import org.solenopsis.keraiai.wsdl.enterprise.LoginResult;
 
@@ -26,34 +25,18 @@ import org.solenopsis.keraiai.wsdl.enterprise.LoginResult;
  *
  * @author Scot P. Floess
  */
-class EnterpriseLoginContext extends AbstractLoginContext {
-
-    /**
-     * Our login result.
-     */
-    private final LoginResult loginResult;
-
-    /**
-     * Return our login result.
-     *
-     * @return our login result.
-     */
-    LoginResult getEnterpriseLoginResult() {
-        return loginResult;
-    }
+final class EnterpriseLoginContext extends AbstractLoginContext<LoginResult> {
 
     /**
      * Constructor sets the login result and security manager who constructed self.
      *
      * @param loginContext result of login.
-     * @param credentials the credentials used for login.
+     * @param credentials  the credentials used for login.
      *
      * @throws IllegalArgumentException if loginContext or credentials are null.
      */
     EnterpriseLoginContext(final LoginResult loginResult, final Credentials credentials) {
-        super(credentials);
-
-        this.loginResult = ObjectUtils.ensureObject(loginResult, "LoginResult must not be null");
+        super(loginResult, credentials);
     }
 
     /**
@@ -61,7 +44,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getMetadataServerUrl() {
-        return getEnterpriseLoginResult().getMetadataServerUrl();
+        return getLoginResult().getMetadataServerUrl();
     }
 
     /**
@@ -69,7 +52,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isPasswordExpired() {
-        return getEnterpriseLoginResult().isPasswordExpired();
+        return getLoginResult().isPasswordExpired();
     }
 
     /**
@@ -77,7 +60,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isSandbox() {
-        return getEnterpriseLoginResult().isSandbox();
+        return getLoginResult().isSandbox();
     }
 
     /**
@@ -85,7 +68,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getSessionId() {
-        return getEnterpriseLoginResult().getSessionId();
+        return getLoginResult().getSessionId();
     }
 
     /**
@@ -93,7 +76,7 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getUserId() {
-        return getEnterpriseLoginResult().getUserId();
+        return getLoginResult().getUserId();
     }
 
     /**
@@ -101,6 +84,6 @@ class EnterpriseLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getServerUrl() {
-        return getEnterpriseLoginResult().getServerUrl();
+        return getLoginResult().getServerUrl();
     }
 }

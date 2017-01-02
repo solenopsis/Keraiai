@@ -17,9 +17,9 @@
 package org.solenopsis.keraiai.soap.security.partner;
 
 import java.util.logging.Level;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
-import org.solenopsis.keraiai.soap.security.LoginContext;
 import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
 import org.solenopsis.keraiai.wsdl.partner.Soap;
 
@@ -36,15 +36,7 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public PartnerSecurityMgr(final Credentials credentials) {
-        super(credentials);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected LoginWebServiceTypeEnum getLoginWebServiceType() {
-        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE;
+        super(LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE, credentials);
     }
 
     /**

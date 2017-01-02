@@ -11,6 +11,7 @@ target
 # Netbeans
 nb-configuration.xml
 nb_jr_remoting.cfg
+nbactions.xml
 
 #JRebel
 rebel-remote.xml

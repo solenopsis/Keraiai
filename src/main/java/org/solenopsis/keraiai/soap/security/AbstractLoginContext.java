@@ -18,14 +18,27 @@ package org.solenopsis.keraiai.soap.security;
 
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.LoginContext;
 
 /**
- * Abstract base class for logins which include the Credentials used.
+ * Abstract base class for logins which include the Credentials used and the login result.
  *
  * @author Scot P. Floess
+ *
+ * @param <T> the type of login result.
  */
-public abstract class AbstractLoginContext extends AbstractCommonBase implements LoginContext {
+public abstract class AbstractLoginContext<T> extends AbstractCommonBase implements LoginContext {
+
+    /**
+     * The login result.
+     */
+    private final T loginResult;
+
+    /**
+     * Our base URL for the SFDC server to use.
+     */
+    private final String baseUrl;
 
     /**
      * Credentials for login.
@@ -35,19 +48,39 @@ public abstract class AbstractLoginContext extends AbstractCommonBase implements
     /**
      * Constructor to set result of login, credentials used and the security manager who created self.
      *
+     * @param loginResult the actual login result.
      * @param credentials credentials for login.
      *
      * @throws IllegalArgumentException if credentials is null.
      */
-    protected AbstractLoginContext(final Credentials credentials) {
+    protected AbstractLoginContext(final T loginResult, final Credentials credentials) {
+        this.loginResult = ObjectUtils.ensureObject(loginResult, "Must provide a login result");
         this.credentials = ObjectUtils.ensureObject(credentials, "Credentials must not be null");
+        this.baseUrl = SecurityUtils.computeUrlString(getServerUrl());
+    }
+
+    /**
+     * The login result.
+     *
+     * @return the login result.
+     */
+    protected final T getLoginResult() {
+        return loginResult;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Credentials getCredentials() {
+    public final String getBaseServerUrl() {
+        return baseUrl;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Credentials getCredentials() {
         return credentials;
     }
 }

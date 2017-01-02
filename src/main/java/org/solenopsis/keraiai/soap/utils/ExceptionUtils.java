@@ -23,10 +23,11 @@ import java.util.logging.Logger;
 import org.flossware.jcore.utils.LoggerUtils;
 
 /**
+ * Exception utility class.
  *
  * @author Scot P. Floess
  */
-public class ExceptionUtils {
+public final class ExceptionUtils {
 
     /**
      * Our logger.
@@ -54,12 +55,14 @@ public class ExceptionUtils {
      * Return true if message contains invalid session id.
      *
      * @param toCompare is the
-     * @param message is the message to examine for being an invalid session id.
+     * @param message   is the message to examine for being an invalid session id.
      */
     static boolean isExceptionMsgContained(final String toCompare, final String message) {
-        return LoggerUtils.logAndReturn(
-                getLogger(), Level.FINEST, "Exception messsage contained result [{0}] for [{1}] message [{2}]",
-                null == toCompare || null == message ? false : message.contains(toCompare), toCompare, message);
+        final boolean retVal = null == toCompare || null == message ? false : message.contains(toCompare);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Exception messsage contained result [{0}] for [{1}] message [{2}]", retVal, toCompare, message);
+
+        return retVal;
     }
 
     /**
@@ -93,7 +96,11 @@ public class ExceptionUtils {
      * @param message is the message to examine for being an invalid session id.
      */
     static boolean isInvalidSessionId(final String message) {
-        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of invalid sesssion id [{0}] for string [{1}]", isExceptionMsgContained(INVALID_SESSION_ID, message), message);
+        final boolean retVal = isExceptionMsgContained(INVALID_SESSION_ID, message);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of invalid sesssion id [{0}] for string [{1}]", retVal, message);
+
+        return retVal;
     }
 
     /**
@@ -102,7 +109,11 @@ public class ExceptionUtils {
      * @param message is the message to examine for being server unavailable.
      */
     static boolean isServerUnavailable(final String message) {
-        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of is server unavailable [{0}] for string [{1}]", isExceptionMsgContained(SERVER_UNAVAILABLE, message), message);
+        final boolean retVal = isExceptionMsgContained(SERVER_UNAVAILABLE, message);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is server unavailable [{0}] for string [{1}]", retVal, message);
+
+        return retVal;
     }
 
     /**
@@ -120,7 +131,11 @@ public class ExceptionUtils {
      * @param failure is the failure to examine for server unavailable.
      */
     public static boolean isServerUnavailable(final Throwable failure) {
-        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of is server unavailable [{0}] for throwable {1}", isExceptionMsgContained(SERVER_UNAVAILABLE, failure), failure);
+        final boolean retVal = isExceptionMsgContained(SERVER_UNAVAILABLE, failure);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is server unavailable [{0}] for throwable {1}", retVal, failure);
+
+        return retVal;
     }
 
     /**
@@ -131,21 +146,7 @@ public class ExceptionUtils {
      * @return if throwable or its root causes is an IOException, or false if not.
      */
     public static boolean containsIOException(final Throwable throwable) {
-        if (null == throwable) {
-            getLogger().log(Level.FINEST, "Null throwable - does not contain IOException");
-
-            return false;
-        }
-
-        if (throwable instanceof IOException) {
-            getLogger().log(Level.FINEST, "Throwable {0} is an instance of IOException", throwable);
-
-            return true;
-        }
-
-        LoggerUtils.log(getLogger(), Level.FINEST, "Examining the cause {0} of throwable {1} is an instance of IOException", throwable.getCause(), throwable);
-
-        return containsIOException(throwable.getCause());
+        return org.flossware.jcore.utils.ExceptionUtils.contains(throwable, IOException.class);
     }
 
     /**
@@ -156,7 +157,11 @@ public class ExceptionUtils {
      * @return true if relogin is necessary.
      */
     public static boolean isReloginException(final Throwable failure) {
-        return LoggerUtils.logAndReturn(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", isInvalidSessionId(failure) || containsIOException(failure), failure);
+        final boolean retVal = isInvalidSessionId(failure) || containsIOException(failure);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", retVal, failure);
+
+        return retVal;
     }
 
     /**

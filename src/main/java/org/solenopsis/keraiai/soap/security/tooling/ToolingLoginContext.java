@@ -16,8 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.tooling;
 
-import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
+import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractLoginContext;
 import org.solenopsis.keraiai.wsdl.tooling.LoginResult;
 
@@ -26,34 +25,18 @@ import org.solenopsis.keraiai.wsdl.tooling.LoginResult;
  *
  * @author Scot P. Floess
  */
-class ToolingLoginContext extends AbstractLoginContext {
-
-    /**
-     * Our login result.
-     */
-    private final LoginResult loginResult;
-
-    /**
-     * Return our login result.
-     *
-     * @return our login result.
-     */
-    LoginResult getToolingLoginResult() {
-        return loginResult;
-    }
+final class ToolingLoginContext extends AbstractLoginContext<LoginResult> {
 
     /**
      * Constructor sets the login result and security manager who constructed self.
      *
      * @param loginContext result of login.
-     * @param credentials the used for login.
+     * @param credentials  the used for login.
      *
      * @throws IllegalArgumentException if loginContext or credentials are null.
      */
     ToolingLoginContext(final LoginResult loginResult, final Credentials credentials) {
-        super(credentials);
-
-        this.loginResult = ObjectUtils.ensureObject(loginResult, "LoginResult must not be null");
+        super(loginResult, credentials);
     }
 
     /**
@@ -61,7 +44,7 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getMetadataServerUrl() {
-        return getToolingLoginResult().getMetadataServerUrl();
+        return getLoginResult().getMetadataServerUrl();
     }
 
     /**
@@ -69,7 +52,7 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isPasswordExpired() {
-        return getToolingLoginResult().isPasswordExpired();
+        return getLoginResult().isPasswordExpired();
     }
 
     /**
@@ -77,7 +60,7 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public boolean isSandbox() {
-        return getToolingLoginResult().isSandbox();
+        return getLoginResult().isSandbox();
     }
 
     /**
@@ -85,7 +68,7 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getSessionId() {
-        return getToolingLoginResult().getSessionId();
+        return getLoginResult().getSessionId();
     }
 
     /**
@@ -93,7 +76,7 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getUserId() {
-        return getToolingLoginResult().getUserId();
+        return getLoginResult().getUserId();
     }
 
     /**
@@ -101,6 +84,6 @@ class ToolingLoginContext extends AbstractLoginContext {
      */
     @Override
     public String getServerUrl() {
-        return getToolingLoginResult().getServerUrl();
+        return getLoginResult().getServerUrl();
     }
 }

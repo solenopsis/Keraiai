@@ -17,9 +17,11 @@
 package org.solenopsis.keraiai.soap.security;
 
 import java.util.logging.Level;
+import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.soap.credentials.Credentials;
-import org.solenopsis.keraiai.soap.port.AbstractPortFactory;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.LoginContext;
+import org.solenopsis.keraiai.SecurityMgr;
 
 /**
  * Represents a way to login and out of SFDC. Can be used to abstract out the enterprise, partner and tooling web services.
@@ -28,7 +30,12 @@ import org.solenopsis.keraiai.soap.port.AbstractPortFactory;
  *
  * @param <P> The type of port for login/logout.
  */
-public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory implements SecurityMgr {
+public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implements SecurityMgr {
+
+    /**
+     * Our login service type.
+     */
+    private final LoginWebServiceTypeEnum loginWebServiceType;
 
     /**
      * Used for session based logins.
@@ -39,6 +46,15 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
      * Login context used in sessions.
      */
     private LoginContext loginContext;
+
+    /**
+     * Return the login web service type.
+     *
+     * @return the login web service type.
+     */
+    private final LoginWebServiceTypeEnum getLoginWebServiceType() {
+        return loginWebServiceType;
+    }
 
     /**
      * Return the login context.
@@ -65,13 +81,6 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     }
 
     /**
-     * Return the login web service type.
-     *
-     * @return the login web service type.
-     */
-    protected abstract LoginWebServiceTypeEnum getLoginWebServiceType();
-
-    /**
      * Using port, perform a login with the supplied credentials.
      *
      * @param port the port to call a login on.
@@ -94,11 +103,13 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
     /**
      * This constructor sets the session credentials.
      *
-     * @param credentials the session credentials.
+     * @param loginWebServiceType the type of login web service we represent.
+     * @param credentials         the session credentials.
      *
      * @throws IllegalArgumentException if credentials is null.
      */
-    protected AbstractSecurityMgr(final Credentials credentials) {
+    protected AbstractSecurityMgr(final LoginWebServiceTypeEnum loginWebServiceType, final Credentials credentials) {
+        this.loginWebServiceType = ObjectUtils.ensureObject(loginWebServiceType, "Must have a login web service type");
         this.credentials = ObjectUtils.ensureObject(credentials, "Must have credentials");
     }
 
@@ -143,14 +154,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin(
-                    (P) createPort(
-                            getLoginWebServiceType().getApiWebServiceType().getWebServiceType(),
-                            getCredentials().getUrl(),
-                            getLoginWebServiceType().getApiWebServiceType().getWebService(),
-                            getLoginWebServiceType().getApiWebServiceType().getPortType(),
-                            getCredentials().getApiVersion())
-            ));
+            return setLoginContext(doLogin((P) getLoginWebServiceType().createLoginPort(this)));
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
@@ -166,14 +170,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractPortFactory impleme
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout((P) createSessionPort(
-                    getLoginWebServiceType().getApiWebServiceType().getWebServiceType(),
-                    getSession().getServerUrl(),
-                    getLoginWebServiceType().getApiWebServiceType().getWebService(),
-                    getLoginWebServiceType().getApiWebServiceType().getPortType(),
-                    getCredentials().getApiVersion(),
-                    getSession().getSessionId()
-            ));
+            doLogout((P) getLoginWebServiceType().getWebServiceType().createSessionPort(this, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType()));
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
