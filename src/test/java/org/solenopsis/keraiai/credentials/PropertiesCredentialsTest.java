@@ -89,7 +89,7 @@ public class PropertiesCredentialsTest {
         props2.setProperty("URL", "http://alpha/beta");
 
         final PropertiesCredentials creds2 = createCredentials(props2);
-        Assert.assertEquals("Should be correct url", "http://alpha/beta/", creds2.getUrl());
+        Assert.assertEquals("Should be correct url", "http://alpha/beta", creds2.getUrl());
     }
 
     /**
@@ -107,7 +107,7 @@ public class PropertiesCredentialsTest {
         props2.setProperty(CredentialsEnum.URL.getName(), "http://alpha/beta");
 
         final PropertiesCredentials creds2 = createDefaultCredentials(props2);
-        Assert.assertEquals("Should be correct url", "http://alpha/beta/", creds2.getUrl());
+        Assert.assertEquals("Should be correct url", "http://alpha/beta", creds2.getUrl());
     }
 
     /**

@@ -67,7 +67,7 @@ public class StringCredentialsTest {
         Assert.assertEquals("Should be correct url", "http://foo/bar/", creds1.getUrl());
 
         final StringCredentials creds2 = new StringCredentials("http://alpha/beta", "user", "password", "token", "api");
-        Assert.assertEquals("Should be correct url", "http://alpha/beta/", creds2.getUrl());
+        Assert.assertEquals("Should be correct url", "http://alpha/beta", creds2.getUrl());
     }
 
     /**
@@ -189,7 +189,7 @@ public class StringCredentialsTest {
 
         final StringCredentials creds1 = new StringCredentials(url, user, password, token, api);
 
-        Assert.assertEquals("Should be the same url", url + "/", creds1.getUrl());
+        Assert.assertEquals("Should be the same url", url, creds1.getUrl());
         Assert.assertEquals("Should be the same user name", user, creds1.getUserName());
         Assert.assertEquals("Should be the same password", password, creds1.getPassword());
         Assert.assertEquals("Should be the same token", token, creds1.getToken());
