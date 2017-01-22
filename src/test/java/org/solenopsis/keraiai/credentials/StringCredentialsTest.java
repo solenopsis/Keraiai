@@ -19,12 +19,15 @@ package org.solenopsis.keraiai.credentials;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Test the StringCredentials class.
  *
  * @author Scot P. Floess
  */
+@RunWith(MockitoJUnitRunner.class)
 public class StringCredentialsTest {
 
     volatile static int id = 0;

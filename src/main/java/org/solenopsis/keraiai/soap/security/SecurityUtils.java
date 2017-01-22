@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.flossware.jcore.utils.LoggerUtils;
+import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 
 /**
@@ -51,6 +52,9 @@ final class SecurityUtils {
      * @return a URL string.
      */
     static String computeUrlString(final String protocol, final String host) {
+        StringUtils.ensureString(protocol, "Must provide a protocol!");
+        StringUtils.ensureString(host, "Must provide a host!");
+
         final String retVal = StringUtils.concat(protocol, "://", host);
 
         LoggerUtils.log(getLogger(), Level.FINEST, "Computed URL [{]}]", retVal);
@@ -69,6 +73,8 @@ final class SecurityUtils {
      * @return
      */
     static String computeUrlString(final URL serverUrl) {
+        ObjectUtils.ensureObject(serverUrl, "Must provide a server URL!");
+
         return computeUrlString(serverUrl.getProtocol(), serverUrl.getHost());
     }
 
@@ -81,6 +87,8 @@ final class SecurityUtils {
      * @return a URL string for the web service.
      */
     static String computeUrlString(final String serverUrl) {
+        StringUtils.ensureString(serverUrl, "Must provide a string URL!");
+
         try {
             return computeUrlString(new URL(serverUrl));
         } catch (final MalformedURLException ex) {

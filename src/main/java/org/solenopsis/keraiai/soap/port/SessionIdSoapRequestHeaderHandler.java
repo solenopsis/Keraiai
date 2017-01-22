@@ -20,6 +20,8 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import org.flossware.jcore.soap.AbstractSoapRequestHeaderHandler;
 import org.flossware.jcore.utils.ObjectUtils;
+import org.flossware.jcore.utils.StringUtils;
+import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
 
 /**
@@ -47,24 +49,45 @@ class SessionIdSoapRequestHeaderHandler extends AbstractSoapRequestHeaderHandler
     /**
      * This constructor sets the name in the soap header for the session id and the session id itself.
      *
-     * @param sessionHeaderName the name that will contain the session id element.
      * @param sessionId         the actual session id.
+     * @param sessionHeaderName the name that will contain the session id element.
+     *
+     * @throws IllegalArgumentException if sessionHeaderName is null or if sessionId is null/empty/blank.
+     */
+    SessionIdSoapRequestHeaderHandler(final String sessionId, final QName sessionHeaderName) {
+        this.sessionId = StringUtils.ensureString(sessionId, "Must provide a session id!");
+        this.sessionHeaderName = ObjectUtils.ensureObject(sessionHeaderName, "Must provide a session header QName!");
+    }
+
+    /**
+     * This constructor sets the name in the soap header for the session id and the session id itself.
+     *
+     * @param session           contains the session id.
+     * @param sessionHeaderName the name that will contain the session id element.
+     *
+     * @throws IllegalArgumentException if sessionHeaderName is null or if sessionId is null/empty/blank.
+     */
+    SessionIdSoapRequestHeaderHandler(final LoginContext session, final QName sessionHeaderName) {
+        this(ObjectUtils.ensureObject(session, "Must provide a LoginContext!").getSessionId(), sessionHeaderName);
+    }
+
+    /**
+     * This constructor sets the name in the soap header for the session id and the session id itself.
+     *
+     * @param securityMgr       contains the session and session id.
+     * @param sessionHeaderName the name that will contain the session id element.
      *
      * @throws IllegalArgumentException if sessionHeaderName is null or if sessionId is null/empty/blank.
      */
     SessionIdSoapRequestHeaderHandler(final SecurityMgr securityMgr, final QName sessionHeaderName) {
-        this.sessionHeaderName = ObjectUtils.ensureObject(sessionHeaderName, "Must provide a session header QName!");
-
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager");
-
-        this.sessionId = securityMgr.getSession().getSessionId();
+        this(ObjectUtils.ensureObject(securityMgr, "Must provide a SecurityMgr!").getSession(), sessionHeaderName);
     }
 
     /**
      * This constructor gets the session id from <code>securityMgr</code> and the QName from the <code>service</code> needed to
      * make web service calls.
      *
-     * @param securityMgr contains the session id.
+     * @param securityMgr contains the session and session id.
      * @param service     contains the QName needed for the SOAP header.
      */
     SessionIdSoapRequestHeaderHandler(final SecurityMgr securityMgr, final Service service) {

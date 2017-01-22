@@ -7,18 +7,18 @@ Copyright 1999-2015 salesforce.com, inc.
 All Rights Reserved
 -->
 
-<definitions targetNamespace="urn:enterprise.soap.sforce.com"
+<definitions targetNamespace="urn:foo.bar"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             xmlns:tns="urn:enterprise.soap.sforce.com"
+             xmlns:tns="urn:foo.bar"
              xmlns:fns="urn:fault.enterprise.soap.sforce.com"
              xmlns:ens="urn:sobject.enterprise.soap.sforce.com">
     <types>
 
         <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:sobject.enterprise.soap.sforce.com">
 
-            <import namespace="urn:enterprise.soap.sforce.com"/>
+            <import namespace="urn:foo.bar"/>
 
 
             <!-- Base sObject (abstract) -->
@@ -13811,7 +13811,7 @@ All Rights Reserved
     </binding>
 
     <!-- Soap Service Endpoint -->
-    <service name="SforceService">
+    <service name="TestService">
         <documentation>Sforce SOAP API</documentation>
         <port binding="tns:SoapBinding" name="Soap">
             <soap:address location="https://login.salesforce.com/services/Soap/c/35.0"/>

@@ -52,7 +52,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      *
      * @return the login web service type.
      */
-    private final LoginWebServiceTypeEnum getLoginWebServiceType() {
+    final LoginWebServiceTypeEnum getLoginWebServiceType() {
         return loginWebServiceType;
     }
 
@@ -173,6 +173,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
             doLogout((P) getLoginWebServiceType().getWebServiceType().createSessionPort(this, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType()));
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
+            runtimeException.printStackTrace();
             throw runtimeException;
         } catch (final Throwable throwable) {
             throw new LogoutException(throwable);

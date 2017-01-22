@@ -21,12 +21,15 @@ import java.lang.reflect.InvocationTargetException;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Tests the CredentialsUtils utility class.
  *
  * @author sfloess
  */
+@RunWith(MockitoJUnitRunner.class)
 public class CredentialsUtilsTest {
 
     /**

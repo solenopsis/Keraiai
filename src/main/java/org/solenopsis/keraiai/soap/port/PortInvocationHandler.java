@@ -93,7 +93,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
     /**
      * This constructor all one needs to provide proxy calls for autologins and retries.
      *
-     * @param securityMgr    used for login, relogin, etc.
+     * @param securityMgr    used for login, re-login, etc.
      * @param webServiceType the type of web service being used.
      * @param service        the web service to call.
      * @param portType       used to retrieve a port from the service.
@@ -102,9 +102,9 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      */
     <P> PortInvocationHandler(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service, final Class portType) {
         this.securityMgr = ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
-        this.url = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!").computeSessionUrl(securityMgr, service);
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
+        this.url = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!").computeSessionUrl(securityMgr, service);
     }
 
     /**
@@ -113,6 +113,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         ObjectUtils.ensureObject(proxy, "Must have a proxy object in which to call methods!");
+        ObjectUtils.ensureObject(method, "Must provide a method to call!");
 
         log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass(), method.getName());
 

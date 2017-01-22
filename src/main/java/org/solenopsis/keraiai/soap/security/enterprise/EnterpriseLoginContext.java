@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security.enterprise;
 
+import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.soap.security.AbstractLoginContext;
 import org.solenopsis.keraiai.wsdl.enterprise.LoginResult;
@@ -36,7 +37,7 @@ final class EnterpriseLoginContext extends AbstractLoginContext<LoginResult> {
      * @throws IllegalArgumentException if loginContext or credentials are null.
      */
     EnterpriseLoginContext(final LoginResult loginResult, final Credentials credentials) {
-        super(loginResult, credentials);
+        super(ObjectUtils.ensureObject(loginResult, "Must provide a login result!"), credentials, loginResult.getServerUrl());
     }
 
     /**

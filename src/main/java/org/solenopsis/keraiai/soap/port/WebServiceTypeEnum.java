@@ -19,8 +19,10 @@ package org.solenopsis.keraiai.soap.port;
 import java.lang.reflect.Proxy;
 import java.net.URL;
 import javax.xml.ws.Service;
+import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
+import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.WebServiceEnum;
 import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
@@ -101,6 +103,44 @@ public enum WebServiceTypeEnum {
     }
 
     /**
+     * Compute the session URL using <code<>baseURL</code>, the partial URL for a web service and the name of the port. By port
+     * name, for custom services it is the name of the QName of the port for service, otherwise it is the API version for from the
+     * credentials as found in the <code>securityMgr</code>'s credentials.
+     *
+     * @param baseUrl     is the server URL from which we will make a web service call.
+     * @param securityMgr contains session id and credentials.
+     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
+     *                    it is the API version found in <code>securityMgr</code>'s session.
+     *
+     * @return the computed session URL.
+     */
+    String computeSessionUrl(final String baseUrl, final SecurityMgr securityMgr, final Service service) {
+        StringUtils.ensureString(baseUrl, "Must provide a base URL!");
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+        ObjectUtils.ensureObject(service, "Must provide a service!");
+
+        return StringUtils.concatWithSeparator(false, "/", baseUrl, getWebServiceSubUrl().getPartialUrl(), PortUtils.computePortName(this, securityMgr, service));
+    }
+
+    /**
+     * Compute the session URL using the base URL from the <code>loginContext</code>'s session, the partial URL for a web service
+     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
+     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
+     *
+     * @param loginContext contains the base URL of the server for whom we will make a web service call.
+     * @param securityMgr  contains session id and credentials.
+     * @param service      if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
+     *                     it is the API version found in <code>securityMgr</code>'s session.
+     *
+     * @return the computed session URL.
+     */
+    String computeSessionUrl(final LoginContext loginContext, final SecurityMgr securityMgr, final Service service) {
+        ObjectUtils.ensureObject(loginContext, "Must provide a login context!");
+
+        return computeSessionUrl(loginContext.getBaseServerUrl(), securityMgr, service);
+    }
+
+    /**
      * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
      * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
      * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
@@ -112,7 +152,9 @@ public enum WebServiceTypeEnum {
      * @return the computed session URL.
      */
     String computeSessionUrl(final SecurityMgr securityMgr, final Service service) {
-        return StringUtils.concatWithSeparator(false, "/", securityMgr.getSession().getBaseServerUrl(), getWebServiceSubUrl().getPartialUrl(), PortUtils.computePortName(this, securityMgr, service));
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+
+        return computeSessionUrl(securityMgr.getSession(), securityMgr, service);
     }
 
     /**
@@ -143,6 +185,8 @@ public enum WebServiceTypeEnum {
      * @return a session based port.
      */
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final S service) {
+        ObjectUtils.ensureObject(service, "Must provide a service!");
+
         return (P) createSessionPort(securityMgr, service, ServiceUtils.getPortType(service.getClass()));
     }
 
