@@ -140,6 +140,12 @@ public class ToolingSecurityMgrTest {
         Assert.assertSame("Should be the same session id", sessionId, loginContext.getSessionId());
         Assert.assertSame("Should be the same user id", userId, loginContext.getUserId());
         Assert.assertSame("Should be the same server url", serverUrl, loginContext.getServerUrl());
+
+        try {
+            securityMgr.login();    // Test coverage - this is silly.
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -31,15 +31,6 @@ import org.solenopsis.keraiai.wsdl.enterprise.Soap;
 public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
 
     /**
-     * This constructor will set credentials.
-     *
-     * @param credentials our credentials.
-     */
-    public EnterpriseSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -57,5 +48,14 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
         log(Level.FINEST, "Performing logout on [{0}]", port);
 
         port.logout();
+    }
+
+    /**
+     * This constructor will set credentials.
+     *
+     * @param credentials our credentials.
+     */
+    public EnterpriseSecurityMgr(final Credentials credentials) {
+        super(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
     }
 }
