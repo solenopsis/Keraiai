@@ -25,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
 import org.solenopsis.keraiai.wsdl.enterprise.LoginResult;
 import org.solenopsis.keraiai.wsdl.enterprise.Soap;
 
@@ -40,6 +41,15 @@ public class EnterpriseSecurityMgrTest {
 
     }
 
+    class StubEnterpriseSecurityMgr extends EnterpriseSecurityMgr {
+
+        LoginWebServiceTypeEnum loginWebServiceTypeEnum;
+
+        public StubEnterpriseSecurityMgr(final Credentials credentials) {
+            super(credentials);
+        }
+    }
+
     @Mock
     Credentials credentials;
 
@@ -48,6 +58,9 @@ public class EnterpriseSecurityMgrTest {
 
     @Mock
     LoginResult loginResult;
+
+    @Mock
+    LoginWebServiceTypeEnum loginWebServiceTypeEnum;
 
     String url;
     String userName;
