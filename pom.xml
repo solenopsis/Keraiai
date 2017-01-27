@@ -36,6 +36,7 @@
         <org.apache.maven.plugins_maven-jxr-plugin_version>2.5</org.apache.maven.plugins_maven-jxr-plugin_version>
         <org.codehaus.mojo_findbugs-maven-plugin_version>3.0.4</org.codehaus.mojo_findbugs-maven-plugin_version>
         <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
+        <net.sourceforge.cobertura_cobertura_version>2.1.1</net.sourceforge.cobertura_cobertura_version>
         <org.flossware_jCore_version>1.0.33</org.flossware_jCore_version>
 
         <junit_junit_version>4.12</junit_junit_version>
@@ -400,6 +401,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit_junit_version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.cobertura</groupId>
+            <artifactId>cobertura</artifactId>
+            <version>${net.sourceforge.cobertura_cobertura_version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
