@@ -43,10 +43,16 @@ public class EnterpriseSecurityMgrTest {
 
     class StubEnterpriseSecurityMgr extends EnterpriseSecurityMgr {
 
-        LoginWebServiceTypeEnum loginWebServiceTypeEnum;
+        private final LoginWebServiceTypeEnum loginWebServiceTypeEnum;
 
-        public StubEnterpriseSecurityMgr(final Credentials credentials) {
+        @Override
+        protected LoginWebServiceTypeEnum getLoginWebServiceType() {
+            return this.loginWebServiceTypeEnum;
+        }
+
+        public StubEnterpriseSecurityMgr(final LoginWebServiceTypeEnum loginWebServiceTypeEnum, final Credentials credentials) {
             super(credentials);
+            this.loginWebServiceTypeEnum = loginWebServiceTypeEnum;
         }
     }
 
@@ -139,7 +145,19 @@ public class EnterpriseSecurityMgrTest {
     }
 
     /**
-     * Tests login.
+     * Test login.
+     */
+    @Test
+    public void test_login() throws Exception {
+        Mockito.when(loginWebServiceTypeEnum.createLoginPort(securityMgr)).thenReturn(soap);
+
+        final StubEnterpriseSecurityMgr securityMgr = new StubEnterpriseSecurityMgr(loginWebServiceTypeEnum, credentials);
+
+        securityMgr.login();
+    }
+
+    /**
+     * Tests do_Login.
      */
     @Test
     public void test_doLogin() throws Exception {
@@ -153,12 +171,6 @@ public class EnterpriseSecurityMgrTest {
         Assert.assertSame("Should be the same session id", sessionId, loginContext.getSessionId());
         Assert.assertSame("Should be the same user id", userId, loginContext.getUserId());
         Assert.assertSame("Should be the same server url", serverUrl, loginContext.getServerUrl());
-
-        try {
-            securityMgr.login();    // Test coverage - this is silly.
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

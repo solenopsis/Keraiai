@@ -52,7 +52,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      *
      * @return the login web service type.
      */
-    final LoginWebServiceTypeEnum getLoginWebServiceType() {
+    protected LoginWebServiceTypeEnum getLoginWebServiceType() {
         return loginWebServiceType;
     }
 
