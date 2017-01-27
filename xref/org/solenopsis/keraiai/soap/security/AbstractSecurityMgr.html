@@ -60,7 +60,7 @@
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment">     * @return the login web service type.</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../org/solenopsis/keraiai/soap/security/LoginWebServiceTypeEnum.html">LoginWebServiceTypeEnum</a> getLoginWebServiceType() {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">final</strong> <a href="../../../../../org/solenopsis/keraiai/soap/security/LoginWebServiceTypeEnum.html">LoginWebServiceTypeEnum</a> getLoginWebServiceType() {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          <strong class="jxr_keyword">return</strong> loginWebServiceType;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      }
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  
@@ -181,12 +181,13 @@
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>             doLogout((P) getLoginWebServiceType().getWebServiceType().createSessionPort(<strong class="jxr_keyword">this</strong>, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType()));
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>             setLoginContext(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> RuntimeException runtimeException) {
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>             <strong class="jxr_keyword">throw</strong> runtimeException;
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Throwable throwable) {
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/solenopsis/keraiai/soap/security/LogoutException.html">LogoutException</a>(throwable);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         }
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>     }
-<a class="jxr_linenumber" name="L181" href="#L181">181</a> }
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>             runtimeException.printStackTrace();
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">throw</strong> runtimeException;
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> Throwable throwable) {
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/solenopsis/keraiai/soap/security/LogoutException.html">LogoutException</a>(throwable);
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         }
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>     }
+<a class="jxr_linenumber" name="L182" href="#L182">182</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>
