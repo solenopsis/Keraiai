@@ -341,6 +341,7 @@
                 <version>${org.apache.maven.plugins_maven-surefire-report-plugin_version}</version>
             </plugin>
 
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
@@ -353,6 +354,7 @@
                     </formats>
                 </configuration>
             </plugin>
+            -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
