@@ -39,7 +39,7 @@
         <!--
         <net.sourceforge.cobertura_cobertura_version>2.1.1</net.sourceforge.cobertura_cobertura_version>
         -->
-        <org.flossware_jCore_version>1.0.36</org.flossware_jCore_version>
+        <org.flossware_jCore_version>1.0.37</org.flossware_jCore_version>
 
         <junit_junit_version>4.12</junit_junit_version>
 
