@@ -169,7 +169,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
             doLogout(createSessionPort());
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
-            runtimeException.printStackTrace();
+            getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);
             throw runtimeException;
         } catch (final Throwable throwable) {
             throw new LogoutException(throwable);
