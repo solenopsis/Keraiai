@@ -67,11 +67,11 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     }
 
     /**
-     * Return the login port factory.
+     * Create a login port.
      *
-     * @return the port factory.
+     * @return a login port.
      */
-    protected abstract LoginPortFactory getLoginPortFactory();
+    protected abstract P createLoginPort();
 
     /**
      * Return the session service
@@ -150,7 +150,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin((P) getLoginPortFactory().createLoginPort(this)));
+            return setLoginContext(doLogin(createLoginPort()));
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
