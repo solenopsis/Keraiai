@@ -62,7 +62,7 @@ import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
  *
  * @author Scot P. Floess
  */
-public enum WebServiceTypeEnum {
+public enum WebServiceTypeEnum implements SessionPortFactory {
     APEX_SERVICE_TYPE(WebServiceEnum.APEX_SERVICE, WebServiceSubUrlEnum.APEX_TYPE),
     CUSTOM_SERVICE_TYPE(null, WebServiceSubUrlEnum.CUSTOM_TYPE),
     ENTERPRISE_SERVICE_TYPE(WebServiceEnum.ENTERPRISE_SERVICE, WebServiceSubUrlEnum.ENTERPRISE_TYPE),
@@ -158,32 +158,17 @@ public enum WebServiceTypeEnum {
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>         the type of web service being used.
-     * @param <P>         the type of port desired.
-     *
-     * @param securityMgr used for logins and session ids.
-     * @param service     contains the port for web service calls.
-     * @param portType    the type of port to perform web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
+    @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
         return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{ portType }, new PortInvocationHandler(securityMgr, this, service, portType));
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>         the type of web service being used.
-     * @param <P>         the type of port desired.
-     *
-     * @param securityMgr used for logins and session ids.
-     * @param service     contains the port for web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
+    @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final S service) {
         ObjectUtils.ensureObject(service, "Must provide a service!");
 
@@ -191,33 +176,17 @@ public enum WebServiceTypeEnum {
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>          the type of web service being used.
-     * @param <P>          the type of port desired.
-     *
-     * @param securityMgr  used for logins and session ids.
-     * @param serviceClass the class of the service where instances contains the port for web service calls.
-     * @param wsdlResource the type of port to perform web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
+    @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource) {
         return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>          the type of web service being used.
-     * @param <P>          the type of port desired.
-     *
-     * @param securityMgr  used for logins and session ids.
-     * @param serviceClass the class of the service where instances contains the port for web service calls.
-     * @param wsdlResource the type of port to perform web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
+    @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource) {
         return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
     }

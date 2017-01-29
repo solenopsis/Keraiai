@@ -29,7 +29,7 @@ import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
  *
  * @author Scot P. Floess
  */
-public enum LoginWebServiceTypeEnum {
+public enum LoginWebServiceTypeEnum implements LoginPortFactory {
     ENTERPRISE_LOGIN_SERVICE(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE),
     PARTNER_LOGIN_SERVICE(WebServiceTypeEnum.PARTNER_SERVICE_TYPE),
     TOOLING_LOGIN_SERVICE(WebServiceTypeEnum.TOOLING_SERVICE_TYPE);
@@ -89,14 +89,9 @@ public enum LoginWebServiceTypeEnum {
     }
 
     /**
-     * Creates a login port to an SFDC web service (either enterprise, partner or tooling).
-     *
-     * @param <P>         the type of port being created.
-     *
-     * @param securityMgr contains credentials whose "base" url and the API version used to construct the URL.
-     *
-     * @return a usable login port.
+     * {@inheritDoc}
      */
+    @Override
     public <P> P createLoginPort(final SecurityMgr securityMgr) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
 

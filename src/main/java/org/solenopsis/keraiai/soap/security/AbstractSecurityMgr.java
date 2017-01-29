@@ -33,11 +33,6 @@ import org.solenopsis.keraiai.SecurityMgr;
 public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implements SecurityMgr {
 
     /**
-     * Our login service type.
-     */
-    private final LoginWebServiceTypeEnum loginWebServiceType;
-
-    /**
      * Used for session based logins.
      */
     private final Credentials credentials;
@@ -46,15 +41,6 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      * Login context used in sessions.
      */
     private LoginContext loginContext;
-
-    /**
-     * Return the login web service type.
-     *
-     * @return the login web service type.
-     */
-    protected LoginWebServiceTypeEnum getLoginWebServiceType() {
-        return loginWebServiceType;
-    }
 
     /**
      * Return the login context.
@@ -81,6 +67,18 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     }
 
     /**
+     * Return the login port factory.
+     *
+     * @return the port factory.
+     */
+    protected abstract LoginPortFactory getLoginPortFactory();
+
+    /**
+     * Return the session service
+     */
+    protected abstract P createSessionPort();
+
+    /**
      * Using port, perform a login with the supplied credentials.
      *
      * @param port the port to call a login on.
@@ -103,13 +101,11 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     /**
      * This constructor sets the session credentials.
      *
-     * @param loginWebServiceType the type of login web service we represent.
-     * @param credentials         the session credentials.
+     * @param credentials the session credentials.
      *
-     * @throws IllegalArgumentException if credentials is null.
+     * @throws IllegalArgumentException if any params are null.
      */
-    protected AbstractSecurityMgr(final LoginWebServiceTypeEnum loginWebServiceType, final Credentials credentials) {
-        this.loginWebServiceType = ObjectUtils.ensureObject(loginWebServiceType, "Must have a login web service type");
+    protected AbstractSecurityMgr(final Credentials credentials) {
         this.credentials = ObjectUtils.ensureObject(credentials, "Must have credentials");
     }
 
@@ -154,7 +150,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin((P) getLoginWebServiceType().createLoginPort(this)));
+            return setLoginContext(doLogin((P) getLoginPortFactory().createLoginPort(this)));
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
@@ -170,7 +166,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout((P) getLoginWebServiceType().getWebServiceType().createSessionPort(this, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType()));
+            doLogout(createSessionPort());
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
             runtimeException.printStackTrace();
