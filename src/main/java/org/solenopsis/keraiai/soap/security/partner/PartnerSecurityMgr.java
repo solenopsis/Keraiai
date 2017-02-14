@@ -21,6 +21,7 @@ import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
 import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
+import org.solenopsis.keraiai.wsdl.partner.SforceService;
 import org.solenopsis.keraiai.wsdl.partner.Soap;
 
 /**
@@ -36,7 +37,7 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public PartnerSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE, credentials);
+        super(credentials);
     }
 
     /**
@@ -57,5 +58,21 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
         log(Level.FINEST, "Performing logout on [{0}]", port);
 
         port.logout();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createLoginPort() {
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createSessionPort() {
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, SforceService.class, "/wsdl/Keraiai-partner.wsdl");
     }
 }

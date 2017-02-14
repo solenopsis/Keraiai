@@ -21,6 +21,7 @@ import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
 import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
+import org.solenopsis.keraiai.wsdl.enterprise.SforceService;
 import org.solenopsis.keraiai.wsdl.enterprise.Soap;
 
 /**
@@ -29,7 +30,6 @@ import org.solenopsis.keraiai.wsdl.enterprise.Soap;
  * @author Scot P. Floess
  */
 public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
-
     /**
      * {@inheritDoc}
      */
@@ -56,6 +56,22 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public EnterpriseSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
+        super(credentials);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createLoginPort() {
+        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createSessionPort() {
+        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, SforceService.class, "/wsdl/Keraiai-enterprise.wsdl");
     }
 }
