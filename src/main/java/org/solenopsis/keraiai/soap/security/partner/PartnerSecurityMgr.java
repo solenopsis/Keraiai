@@ -21,7 +21,6 @@ import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
 import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
-import org.solenopsis.keraiai.wsdl.partner.SforceService;
 import org.solenopsis.keraiai.wsdl.partner.Soap;
 
 /**
@@ -73,6 +72,6 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected Soap createSessionPort() {
-        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, SforceService.class, "/wsdl/Keraiai-partner.wsdl");
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().getWebService().getService());
     }
 }

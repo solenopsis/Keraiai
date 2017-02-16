@@ -36,7 +36,7 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      * @param credentials our credentials.
      */
     public ToolingSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE, credentials);
+        super(credentials);
     }
 
     /**
@@ -57,5 +57,21 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
         log(Level.FINEST, "Performing logout on [{0}]", port);
 
         port.logout();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected SforceServicePortType createLoginPort() {
+        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected SforceServicePortType createSessionPort() {
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.getWebServiceType().getWebService().getService());
     }
 }
