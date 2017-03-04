@@ -27,10 +27,8 @@ import org.solenopsis.keraiai.SecurityMgr;
  * Represents a way to login and out of SFDC. Can be used to abstract out the enterprise, partner and tooling web services.
  *
  * @author Scot P. Floess
- *
- * @param <P> The type of port for login/logout.
  */
-public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implements SecurityMgr {
+public abstract class AbstractSecurityMgr extends AbstractCommonBase implements SecurityMgr {
 
     /**
      * Used for session based logins.
@@ -67,27 +65,13 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     }
 
     /**
-     * Create a login port.
-     *
-     * @return a login port.
-     */
-    protected abstract P createLoginPort();
-
-    /**
-     * Return the session service
-     */
-    protected abstract P createSessionPort();
-
-    /**
      * Using port, perform a login with the supplied credentials.
-     *
-     * @param port the port to call a login on.
      *
      * @return the login context from a login.
      *
      * @throws Exception if any problems arise performing a login.
      */
-    protected abstract LoginContext doLogin(P port) throws Exception;
+    protected abstract LoginContext doLogin() throws Exception;
 
     /**
      * Using port, perform a logout.
@@ -96,7 +80,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      *
      * @throws Exception if any problems arise performing a logout.
      */
-    protected abstract void doLogout(P port) throws Exception;
+    protected abstract void doLogout() throws Exception;
 
     /**
      * This constructor sets the session credentials.
@@ -150,7 +134,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin(createLoginPort()));
+            return setLoginContext(doLogin());
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
@@ -166,7 +150,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout(createSessionPort());
+            doLogout();
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
             getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);

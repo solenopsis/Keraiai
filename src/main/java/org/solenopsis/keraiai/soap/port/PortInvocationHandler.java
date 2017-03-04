@@ -104,7 +104,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         this.securityMgr = ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        this.url = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!").computeSessionUrl(securityMgr, service);
+        this.url = PortUtils.computeSessionUrl(ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!"), securityMgr, service);
     }
 
     /**

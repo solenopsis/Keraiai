@@ -17,9 +17,7 @@
 package org.solenopsis.keraiai.soap.security;
 
 import org.flossware.jcore.utils.ObjectUtils;
-import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.SoapUtils;
-import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
@@ -59,52 +57,12 @@ public enum LoginWebServiceTypeEnum implements LoginPortFactory {
     }
 
     /**
-     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
-     *
-     * @param credentials contains the "base" url and the API version used to construct the URL.
-     *
-     * @return a login URL.
-     *
-     * @throws IllegalArgumentException if <code>credentials</code> is null.
-     */
-    String computeLoginUrl(final Credentials credentials) {
-        ObjectUtils.ensureObject(credentials, "Must provide credentials!");
-
-        return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), getWebServiceType().getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());
-    }
-
-    /**
-     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
-     *
-     * @param securityMgr contains credentials whose "base" url and the API version used to construct the URL.
-     *
-     * @return a login URL.
-     *
-     * @throws IllegalArgumentException if <code>securityMgr</code> is null.
-     */
-    String computeLoginUrl(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return computeLoginUrl(securityMgr.getCredentials());
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public <P> P createLoginPort(final SecurityMgr securityMgr) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
 
-        return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), computeLoginUrl(securityMgr));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <P> P createSessionPort(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), computeLoginUrl(securityMgr));
+        return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), SecurityUtils.computeLoginUrl(securityMgr, getWebServiceType()));
     }
 }

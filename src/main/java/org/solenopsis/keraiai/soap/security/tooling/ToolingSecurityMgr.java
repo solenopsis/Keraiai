@@ -16,7 +16,6 @@
  */
 package org.solenopsis.keraiai.soap.security.tooling;
 
-import java.util.logging.Level;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
@@ -28,7 +27,22 @@ import org.solenopsis.keraiai.wsdl.tooling.SforceServicePortType;
  *
  * @author Scot P. Floess
  */
-public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortType> {
+public class ToolingSecurityMgr extends AbstractSecurityMgr {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected LoginContext doLogin() throws Exception {
+        return new ToolingLoginContext(((SforceServicePortType) LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this)).login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doLogout() throws Exception {
+        ((SforceServicePortType) LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().getWebService().getService())).logout();
+    }
 
     /**
      * This constructor will set session based credentials.
@@ -37,41 +51,5 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      */
     public ToolingSecurityMgr(final Credentials credentials) {
         super(credentials);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected LoginContext doLogin(SforceServicePortType port) throws Exception {
-        log(Level.FINEST, "Performing login on [{0}]", port);
-
-        return new ToolingLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void doLogout(SforceServicePortType port) throws Exception {
-        log(Level.FINEST, "Performing logout on [{0}]", port);
-
-        port.logout();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected SforceServicePortType createLoginPort() {
-        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected SforceServicePortType createSessionPort() {
-        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.getWebServiceType().getWebService().getService());
     }
 }
