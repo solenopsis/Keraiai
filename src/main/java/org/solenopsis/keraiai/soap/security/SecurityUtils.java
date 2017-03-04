@@ -46,25 +46,6 @@ final class SecurityUtils {
     }
 
     /**
-     * Using protocol, host and name, return a URL string.
-     *
-     * @param protocol the web protocol like https.
-     * @param host     the host being called.
-     *
-     * @return a URL string.
-     */
-    static String computeUrlString(final String protocol, final String host) {
-        StringUtils.ensureString(protocol, "Must provide a protocol!");
-        StringUtils.ensureString(host, "Must provide a host!");
-
-        final String retVal = StringUtils.concat(protocol, "://", host);
-
-        LoggerUtils.log(getLogger(), Level.FINEST, "Computed URL [{]}]", retVal);
-
-        return retVal;
-    }
-
-    /**
      * Using the serverUrl, get the protcol and host plus the name to create a String version of the URL. The serverUrl may have
      * extraneous data. For example: http://na7.salesforce.com/alpha/beta. We want to compute http://na7.salesforce.com/ plus the
      * name.
@@ -77,7 +58,11 @@ final class SecurityUtils {
     static String computeUrlString(final URL serverUrl) {
         ObjectUtils.ensureObject(serverUrl, "Must provide a server URL!");
 
-        return computeUrlString(serverUrl.getProtocol(), serverUrl.getHost());
+        final String retVal = StringUtils.concat(serverUrl.getProtocol(), "://", serverUrl.getHost());
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Computed URL [{0}]", retVal);
+
+        return retVal;
     }
 
     /**
