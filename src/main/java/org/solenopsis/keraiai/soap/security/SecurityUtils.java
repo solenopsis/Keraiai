@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
-import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
@@ -104,23 +103,6 @@ final class SecurityUtils {
     /**
      * Compute the login URL from credentials - the API version from the credentials is used in the URL.
      *
-     * @param credentials    contains the "base" url and the API version used to construct the URL.
-     * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
-     *
-     * @return a login URL.
-     *
-     * @throws IllegalArgumentException if <code>credentials</code> or <code>webServiceType</code> are null.
-     */
-    static String computeLoginUrl(final Credentials credentials, final WebServiceTypeEnum webServiceType) {
-        ObjectUtils.ensureObject(credentials, "Must provide credentials!");
-        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
-
-        return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());
-    }
-
-    /**
-     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
-     *
      * @param securityMgr    contains credentials whose "base" url and the API version used to construct the URL.
      * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
      *
@@ -130,8 +112,9 @@ final class SecurityUtils {
      */
     static String computeLoginUrl(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
 
-        return computeLoginUrl(securityMgr.getCredentials(), webServiceType);
+        return StringUtils.concatWithSeparator(false, "/", securityMgr.getCredentials().getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), securityMgr.getCredentials().getApiVersion());
     }
 
     /**
