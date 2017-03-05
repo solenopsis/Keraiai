@@ -130,7 +130,7 @@ public class PartnerSecurityMgrTest {
      */
     @Test
     public void test_doLogin() throws Exception {
-        final PartnerLoginContext loginContext = (PartnerLoginContext) securityMgr.doLogin(soap);
+        final PartnerLoginContext loginContext = (PartnerLoginContext) securityMgr.doLogin();
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
@@ -153,7 +153,7 @@ public class PartnerSecurityMgrTest {
      */
     @Test
     public void test_doLogout() throws Exception {
-        securityMgr.doLogout(soap);
+        securityMgr.doLogout();
 
         Mockito.verify(soap, Mockito.times(1)).logout();
     }

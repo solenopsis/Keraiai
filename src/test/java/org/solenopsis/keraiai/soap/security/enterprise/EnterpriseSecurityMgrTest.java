@@ -25,7 +25,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.solenopsis.keraiai.Credentials;
-import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
 import org.solenopsis.keraiai.wsdl.enterprise.LoginResult;
 import org.solenopsis.keraiai.wsdl.enterprise.Soap;
 
@@ -43,16 +42,8 @@ public class EnterpriseSecurityMgrTest {
 
     class StubEnterpriseSecurityMgr extends EnterpriseSecurityMgr {
 
-        private final LoginWebServiceTypeEnum loginWebServiceTypeEnum;
-
-        @Override
-        protected LoginWebServiceTypeEnum getLoginWebServiceType() {
-            return this.loginWebServiceTypeEnum;
-        }
-
-        public StubEnterpriseSecurityMgr(final LoginWebServiceTypeEnum loginWebServiceTypeEnum, final Credentials credentials) {
+        public StubEnterpriseSecurityMgr(final Credentials credentials) {
             super(credentials);
-            this.loginWebServiceTypeEnum = loginWebServiceTypeEnum;
         }
     }
 
@@ -64,9 +55,6 @@ public class EnterpriseSecurityMgrTest {
 
     @Mock
     LoginResult loginResult;
-
-    @Mock
-    LoginWebServiceTypeEnum loginWebServiceTypeEnum;
 
     String url;
     String userName;
@@ -149,9 +137,7 @@ public class EnterpriseSecurityMgrTest {
      */
     @Test
     public void test_login() throws Exception {
-        Mockito.when(loginWebServiceTypeEnum.createLoginPort(securityMgr)).thenReturn(soap);
-
-        final StubEnterpriseSecurityMgr securityMgr = new StubEnterpriseSecurityMgr(loginWebServiceTypeEnum, credentials);
+        final StubEnterpriseSecurityMgr securityMgr = new StubEnterpriseSecurityMgr(credentials);
 
         securityMgr.login();
     }
@@ -161,7 +147,7 @@ public class EnterpriseSecurityMgrTest {
      */
     @Test
     public void test_doLogin() throws Exception {
-        final EnterpriseLoginContext loginContext = (EnterpriseLoginContext) securityMgr.doLogin(soap);
+        final EnterpriseLoginContext loginContext = (EnterpriseLoginContext) securityMgr.doLogin();
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
@@ -178,7 +164,7 @@ public class EnterpriseSecurityMgrTest {
      */
     @Test
     public void test_doLogout() throws Exception {
-        securityMgr.doLogout(soap);
+        securityMgr.doLogout();
 
         Mockito.verify(soap, Mockito.times(1)).logout();
     }

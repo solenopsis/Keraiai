@@ -130,7 +130,7 @@ public class ToolingSecurityMgrTest {
      */
     @Test
     public void test_doLogin() throws Exception {
-        final ToolingLoginContext loginContext = (ToolingLoginContext) securityMgr.doLogin(soap);
+        final ToolingLoginContext loginContext = (ToolingLoginContext) securityMgr.doLogin();
 
         Mockito.verify(soap, Mockito.times(1)).login(userName, securityPassword);
 
@@ -153,7 +153,7 @@ public class ToolingSecurityMgrTest {
      */
     @Test
     public void test_doLogout() throws Exception {
-        securityMgr.doLogout(soap);
+        securityMgr.doLogout();
 
         Mockito.verify(soap, Mockito.times(1)).logout();
     }
