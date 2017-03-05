@@ -49,15 +49,15 @@ public class AbstractSecurityMgrTest {
         RuntimeException toThrowRuntimeException;
         Exception toThrowException;
 
-        AbstractSecurityMgrStub(final LoginWebServiceTypeEnum loginWebServiceType, final Credentials credentials) {
-            super(loginWebServiceType, credentials);
+        AbstractSecurityMgrStub(final Credentials credentials) {
+            super(credentials);
 
             this.isLoginCalled = false;
             this.isLogoutCalled = false;
         }
 
         @Override
-        protected LoginContext doLogin(Object port) throws Exception {
+        protected LoginContext doLogin() throws Exception {
             if (null != toThrowRuntimeException) {
                 throw toThrowRuntimeException;
             } else if (null != toThrowException) {
@@ -69,7 +69,7 @@ public class AbstractSecurityMgrTest {
         }
 
         @Override
-        protected void doLogout(Object port) throws Exception {
+        protected void doLogout() throws Exception {
             if (null != toThrowRuntimeException) {
                 throw toThrowRuntimeException;
             } else if (null != toThrowException) {
@@ -93,7 +93,7 @@ public class AbstractSecurityMgrTest {
 
     @Before
     public void setup() {
-        abstractSecurityMgrStub = new AbstractSecurityMgrStub(LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE, credentials);
+        abstractSecurityMgrStub = new AbstractSecurityMgrStub(credentials);
 
         Mockito.when(credentials.getApiVersion()).thenReturn("34.0");
     }
@@ -102,16 +102,8 @@ public class AbstractSecurityMgrTest {
      * Tests the constructor with null credentials.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void test_constructor_LoginWebServiceTypeEnum_null() {
-        new AbstractSecurityMgrStub(null, credentials);
-    }
-
-    /**
-     * Tests the constructor with null credentials.
-     */
-    @Test(expected = IllegalArgumentException.class)
     public void test_constructor_Credentials_null() {
-        new AbstractSecurityMgrStub(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, null);
+        new AbstractSecurityMgrStub(null);
     }
 
     /**
@@ -119,12 +111,10 @@ public class AbstractSecurityMgrTest {
      */
     @Test
     public void test_constructor() {
-        final LoginWebServiceTypeEnum loginWebServiceType = LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE;
         final Credentials creds = new StringCredentials(TestUtils.generateUniqueStr(), TestUtils.generateUniqueStr(), TestUtils.generateUniqueStr(), TestUtils.generateUniqueStr(), TestUtils.generateUniqueStr());
 
-        final AbstractSecurityMgrStub stub = new AbstractSecurityMgrStub(loginWebServiceType, creds);
+        final AbstractSecurityMgrStub stub = new AbstractSecurityMgrStub(creds);
 
-        Assert.assertSame("Should be the same login web service type", loginWebServiceType, stub.getLoginWebServiceType());
         Assert.assertSame("Should be the same credentials", creds, stub.getCredentials());
     }
 

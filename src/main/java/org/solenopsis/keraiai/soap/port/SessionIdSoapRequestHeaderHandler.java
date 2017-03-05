@@ -91,7 +91,7 @@ class SessionIdSoapRequestHeaderHandler extends AbstractSoapRequestHeaderHandler
      * @param service     contains the QName needed for the SOAP header.
      */
     SessionIdSoapRequestHeaderHandler(final SecurityMgr securityMgr, final Service service) {
-        this(securityMgr, PortUtils.computeSessionHeaderName(service));
+        this(securityMgr, PortUtils.computeSessionHeaderNameForService(service));
     }
 
     /**

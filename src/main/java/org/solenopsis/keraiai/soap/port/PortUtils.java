@@ -26,6 +26,7 @@ import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.flossware.jcore.utils.soap.SoapUtils;
 import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
 import static org.solenopsis.keraiai.soap.port.WebServiceTypeEnum.CUSTOM_SERVICE_TYPE;
 import org.solenopsis.keraiai.soap.utils.ExceptionUtils;
@@ -68,7 +69,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if service is null.
      */
-    static QName computeSessionHeaderName(final String namespaceUri) {
+    static QName computeSessionHeaderNameForNamespace(final String namespaceUri) {
         StringUtils.ensureString(namespaceUri, "Must provide a namespace URI!");
 
         return new QName(namespaceUri, SESSION_HEADER);
@@ -83,10 +84,10 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if service is null.
      */
-    static QName computeSessionHeaderName(final QName serviceName) {
+    static QName computeSessionHeaderNameForQname(final QName serviceName) {
         ObjectUtils.ensureObject(serviceName, "Must provide a service QName!");
 
-        return computeSessionHeaderName(serviceName.getNamespaceURI());
+        return computeSessionHeaderNameForNamespace(serviceName.getNamespaceURI());
     }
 
     /**
@@ -98,10 +99,10 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if service is null.
      */
-    static QName computeSessionHeaderName(final Service service) {
+    static QName computeSessionHeaderNameForService(final Service service) {
         ObjectUtils.ensureObject(service, "Must provide a service!");
 
-        return computeSessionHeaderName(service.getServiceName());
+        return computeSessionHeaderNameForQname(service.getServiceName());
     }
 
     /**
@@ -140,7 +141,7 @@ final class PortUtils {
      *
      * @return true if <code>webServiceType</code> is a CUSTOM_SERVICE_TYPE or false if not.
      */
-    static boolean isWebServiceCustomService(final WebServiceTypeEnum webServiceType) {
+    static boolean isCustomWebService(final WebServiceTypeEnum webServiceType) {
         return webServiceType == CUSTOM_SERVICE_TYPE;
     }
 
@@ -148,58 +149,108 @@ final class PortUtils {
      * Compute the port name for the <code>service</code> - if self is a custom web service, it's the name of the QName of the port
      * on the service, otherwise it's the API versio.
      *
-     * @param webServiceType the type of web service.
      * @param apiVersion     the API version.
+     * @param webServiceType the type of web service.
      * @param service        contains the QName of the port and is used if self is a custom web service.
      *
      * @return the port name.
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortName(final WebServiceTypeEnum webServiceType, final String apiVersion, final Service service) {
-        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
+    static String computePortNameFromApiVersion(final String apiVersion, final WebServiceTypeEnum webServiceType, final Service service) {
         StringUtils.ensureString(apiVersion, "Must provide an API version!");
+        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
         ObjectUtils.ensureObject(service, "Must provide a service!");
 
-        return !isWebServiceCustomService(webServiceType) ? apiVersion : ServiceUtils.getPortName(service.getClass());
+        return !isCustomWebService(webServiceType) ? apiVersion : ServiceUtils.getPortName(service.getClass());
     }
 
     /**
      * Compute the port name for the <code>service</code> - if self is a custom web service, it's the name of the QName of the port
      * on the service, otherwise it's the API version as found in the <code>credentials</code>.
      *
-     * @param webServiceType the type of web service.
      * @param credentials    contains the API version from it's credentials.
+     * @param webServiceType the type of web service.
      * @param service        contains the QName of the port and is used if self is a custom web service.
      *
      * @return the port name.
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortName(final WebServiceTypeEnum webServiceType, final Credentials credentials, final Service service) {
+    static String computePortNameFromCredentials(final Credentials credentials, final WebServiceTypeEnum webServiceType, final Service service) {
         ObjectUtils.ensureObject(credentials, "Must provide credentials!");
 
-        return computePortName(webServiceType, credentials.getApiVersion(), service);
+        return computePortNameFromApiVersion(credentials.getApiVersion(), webServiceType, service);
     }
 
     /**
      * Compute the port name for the <code>service</code> - if self is a custom web service, it's the name of the QName of the port
      * on the service, otherwise it's the API version as found in the <code>securityMgr</code>'s credentials.
      *
-     * @param webServiceType the type of web service.
      * @param securityMgr    contains the API version from it's credentials.
+     * @param webServiceType the type of web service.
      * @param service        contains the QName of the port and is used if self is a custom web service.
      *
      * @return the port name.
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortName(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service) {
-        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
+    static String computePortNameFromSecurityMgr(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
-        ObjectUtils.ensureObject(securityMgr, "Must provide a service!");
 
-        return computePortName(webServiceType, securityMgr.getCredentials(), service);
+        return computePortNameFromCredentials(securityMgr.getCredentials(), webServiceType, service);
+    }
+
+    /**
+     * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
+     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
+     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
+     *
+     * @param securityMgr contains session id and credentials.
+     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
+     *                    it is the API version found in <code>securityMgr</code>'s session.
+     *
+     * @return the computed session URL.
+     */
+    static String computeSessionUrlFromBaseServerUrl(final String baseServerUrl, final WebServiceTypeEnum webServiceType, final Service service, final String portName) {
+        StringUtils.ensureString(baseServerUrl, "Must provide a base server url!");
+        StringUtils.ensureString(portName, "Must provide a port name!");
+
+        return StringUtils.concatWithSeparator(false, "/", baseServerUrl, webServiceType.getWebServiceSubUrl().getPartialUrl(), portName);
+    }
+
+    /**
+     * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
+     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
+     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
+     *
+     * @param securityMgr contains session id and credentials.
+     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
+     *                    it is the API version found in <code>securityMgr</code>'s session.
+     *
+     * @return the computed session URL.
+     */
+    static String computeSessionUrlFromLoginContext(final LoginContext loginContext, final WebServiceTypeEnum webServiceType, final Service service, final String portName) {
+        ObjectUtils.ensureObject(loginContext, "Must provide a login context!");
+
+        return computeSessionUrlFromBaseServerUrl(loginContext.getBaseServerUrl(), webServiceType, service, portName);
+    }
+
+    /**
+     * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
+     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
+     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
+     *
+     * @param securityMgr contains session id and credentials.
+     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
+     *                    it is the API version found in <code>securityMgr</code>'s session.
+     *
+     * @return the computed session URL.
+     */
+    static String computeSessionUrl(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+
+        return computeSessionUrlFromLoginContext(securityMgr.getSession(), webServiceType, service, computePortNameFromSecurityMgr(securityMgr, webServiceType, service));
     }
 
     /**
@@ -225,29 +276,6 @@ final class PortUtils {
         getLogger().log(Level.FINE, "Port = [{0}]", port);
 
         return port;
-    }
-
-    /**
-     * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
-     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
-     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
-     *
-     * @param securityMgr contains session id and credentials.
-     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                    it is the API version found in <code>securityMgr</code>'s session.
-     *
-     * @return the computed session URL.
-     */
-    static String computeSessionUrl(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service) {
-        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
-        ObjectUtils.ensureObject(service, "Must provide a service!");
-
-        return StringUtils.concatWithSeparator(
-                false, "/", securityMgr.getSession().getBaseServerUrl(),
-                webServiceType.getWebServiceSubUrl().getPartialUrl(),
-                PortUtils.computePortName(webServiceType, securityMgr, service)
-        );
     }
 
     /**

@@ -141,174 +141,6 @@ public class WebServiceTypeEnumTest {
     }
 
     /**
-     * Test computeSessionUrl() with a null baseUrl.
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_baseUrl_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl((String) null, securityMgr, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl() with a blank baseUrl.
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_baseUrl_blank() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl("  ", securityMgr, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl() with an empty baseUrl.
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_baseUrl_empty() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl("", securityMgr, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl() with a null SecurityMgr.
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_securityMgr_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl(TestUtils.generateUniqueStr("" + totalFails), null, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl() with a null Service.
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_service_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl(TestUtils.generateUniqueStr("" + totalFails), securityMgr, null);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl().
-     */
-    @Test
-    public void test_computeSessionUrl_String_SecurityMgr_Service_service() {
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            String computedUrl;
-            String actualUrl = baseUrl + "/" + webServiceTypeEnum.getWebServiceSubUrl().getPartialUrl() + "/";
-
-            if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(baseUrl, securityMgr, new StubService());
-                actualUrl += "Web_Endpoint_Method";
-            } else {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(baseUrl, securityMgr, webServiceTypeEnum.getWebService().getService());
-                actualUrl += apiVersion;
-            }
-
-            Assert.assertEquals("Should be the correct URL", actualUrl, computedUrl);
-        }
-    }
-
-    /**
-     * Test computeSessionUrl() with a null LoginContext.
-     */
-    @Test
-    public void test_computeSessionUrl_LoginContext_SecurityMgr_Service_service_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl((LoginContext) null, securityMgr, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
-     * Test computeSessionUrl().
-     */
-    @Test
-    public void test_computeSessionUrl_LoginContext_SecurityMgr_Service() {
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            String computedUrl;
-            String actualUrl = baseUrl + "/" + webServiceTypeEnum.getWebServiceSubUrl().getPartialUrl() + "/";
-
-            if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(loginContext, securityMgr, new StubService());
-                actualUrl += "Web_Endpoint_Method";
-            } else {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(loginContext, securityMgr, webServiceTypeEnum.getWebService().getService());
-                actualUrl += apiVersion;
-            }
-
-            Assert.assertEquals("Should be the correct URL", actualUrl, computedUrl);
-        }
-    }
-
-    /**
-     * Test computeSessionUrl() with a null SecurityMgr.
-     */
-    @Test
-    public void test_computeSessionUrl_SecurityMgr_Service_securityMgr_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl(null, service);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all computeSessionUrl's", WebServiceTypeEnum.values().length, totalFails);
-    }
-
-    /**
      * Test computeSessionUrl().
      */
     @Test
@@ -318,10 +150,10 @@ public class WebServiceTypeEnumTest {
             String actualUrl = baseUrl + "/" + webServiceTypeEnum.getWebServiceSubUrl().getPartialUrl() + "/";
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(securityMgr, new StubService());
+                computedUrl = PortUtils.computeSessionUrl(securityMgr, webServiceTypeEnum, new StubService());
                 actualUrl += "Web_Endpoint_Method";
             } else {
-                computedUrl = webServiceTypeEnum.computeSessionUrl(securityMgr, webServiceTypeEnum.getWebService().getService());
+                computedUrl = PortUtils.computeSessionUrl(securityMgr, webServiceTypeEnum, webServiceTypeEnum.getWebService().getService());
                 actualUrl += apiVersion;
             }
 
@@ -349,24 +181,6 @@ public class WebServiceTypeEnumTest {
 
             Assert.assertTrue("Should be the correct type of port", expectedPortClass.isAssignableFrom(computedPort.getClass()));
         }
-    }
-
-    /**
-     * Test creating a session port with a null service.
-     */
-    @Test
-    public void test_createSessionPort_SecurityMgr_Service_service_null() {
-        int totalFails = 0;
-
-        for (final WebServiceTypeEnum webServiceTypeEnum : WebServiceTypeEnum.values()) {
-            try {
-                webServiceTypeEnum.computeSessionUrl(securityMgr, null);
-            } catch (final IllegalArgumentException iae) {
-                totalFails++;
-            }
-        }
-
-        Assert.assertEquals("Should have failed for all createSessionPort's", WebServiceTypeEnum.values().length, totalFails);
     }
 
     /**
