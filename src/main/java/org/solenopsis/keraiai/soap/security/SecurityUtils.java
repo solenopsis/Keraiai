@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
+import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
@@ -46,6 +47,25 @@ final class SecurityUtils {
     }
 
     /**
+     * Using protocol, host and name, return a URL string.
+     *
+     * @param protocol the web protocol like https.
+     * @param host     the host being called.
+     *
+     * @return a URL string.
+     */
+    static String computeUrlString(final String protocol, final String host) {
+        StringUtils.ensureString(protocol, "Must provide a protocol!");
+        StringUtils.ensureString(host, "Must provide a host!");
+
+        final String retVal = StringUtils.concat(protocol, "://", host);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Computed URL [{0}]", retVal);
+
+        return retVal;
+    }
+
+    /**
      * Using the serverUrl, get the protcol and host plus the name to create a String version of the URL. The serverUrl may have
      * extraneous data. For example: http://na7.salesforce.com/alpha/beta. We want to compute http://na7.salesforce.com/ plus the
      * name.
@@ -58,11 +78,7 @@ final class SecurityUtils {
     static String computeUrlString(final URL serverUrl) {
         ObjectUtils.ensureObject(serverUrl, "Must provide a server URL!");
 
-        final String retVal = StringUtils.concat(serverUrl.getProtocol(), "://", serverUrl.getHost());
-
-        LoggerUtils.log(getLogger(), Level.FINEST, "Computed URL [{0}]", retVal);
-
-        return retVal;
+        return computeUrlString(serverUrl.getProtocol(), serverUrl.getHost());
     }
 
     /**
@@ -88,6 +104,23 @@ final class SecurityUtils {
     /**
      * Compute the login URL from credentials - the API version from the credentials is used in the URL.
      *
+     * @param credentials    contains the "base" url and the API version used to construct the URL.
+     * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
+     *
+     * @return a login URL.
+     *
+     * @throws IllegalArgumentException if <code>credentials</code> or <code>webServiceType</code> are null.
+     */
+    static String computeLoginUrl(final Credentials credentials, final WebServiceTypeEnum webServiceType) {
+        ObjectUtils.ensureObject(credentials, "Must provide credentials!");
+        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
+
+        return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());
+    }
+
+    /**
+     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
+     *
      * @param securityMgr    contains credentials whose "base" url and the API version used to construct the URL.
      * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
      *
@@ -99,7 +132,7 @@ final class SecurityUtils {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
         ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
 
-        return StringUtils.concatWithSeparator(false, "/", securityMgr.getCredentials().getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), securityMgr.getCredentials().getApiVersion());
+        return computeLoginUrl(securityMgr.getCredentials(), webServiceType);
     }
 
     /**
