@@ -28,7 +28,7 @@ import org.solenopsis.keraiai.SecurityMgr;
  *
  * @author Scot P. Floess
  */
-public abstract class AbstractSecurityMgr extends AbstractCommonBase implements SecurityMgr {
+public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implements SecurityMgr {
 
     /**
      * Used for session based logins.
@@ -65,13 +65,27 @@ public abstract class AbstractSecurityMgr extends AbstractCommonBase implements 
     }
 
     /**
+     * Creates a login port.
+     *
+     * @return a login port.
+     */
+    protected abstract P createLoginPort();
+
+    /**
+     * Creates a session port.
+     *
+     * @return a session port;
+     */
+    protected abstract P createSessionPort();
+
+    /**
      * Using port, perform a login with the supplied credentials.
      *
      * @return the login context from a login.
      *
      * @throws Exception if any problems arise performing a login.
      */
-    protected abstract LoginContext doLogin() throws Exception;
+    protected abstract LoginContext doLogin(P port) throws Exception;
 
     /**
      * Using port, perform a logout.
@@ -80,7 +94,7 @@ public abstract class AbstractSecurityMgr extends AbstractCommonBase implements 
      *
      * @throws Exception if any problems arise performing a logout.
      */
-    protected abstract void doLogout() throws Exception;
+    protected abstract void doLogout(P port) throws Exception;
 
     /**
      * This constructor sets the session credentials.
@@ -134,7 +148,7 @@ public abstract class AbstractSecurityMgr extends AbstractCommonBase implements 
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin());
+            return setLoginContext(doLogin(createLoginPort()));
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
@@ -150,7 +164,7 @@ public abstract class AbstractSecurityMgr extends AbstractCommonBase implements 
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout();
+            doLogout(createSessionPort());
             setLoginContext(null);
         } catch (final RuntimeException runtimeException) {
             getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);

@@ -27,7 +27,23 @@ import org.solenopsis.keraiai.wsdl.enterprise.Soap;
  *
  * @author Scot P. Floess
  */
-public class EnterpriseSecurityMgr extends AbstractSecurityMgr {
+public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createLoginPort() {
+        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Soap createSessionPort() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -51,5 +67,15 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr {
      */
     public EnterpriseSecurityMgr(final Credentials credentials) {
         super(credentials);
+    }
+
+    @Override
+    protected LoginContext doLogin(Soap port) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void doLogout(Soap port) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
