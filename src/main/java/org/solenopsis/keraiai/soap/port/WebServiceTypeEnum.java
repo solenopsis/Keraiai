@@ -170,7 +170,7 @@ public enum WebServiceTypeEnum {
      * @return a session based port.
      */
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
-        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{ portType }, new PortInvocationHandler(securityMgr, this, service, portType));
+        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{portType}, new PortInvocationHandler(securityMgr, this, service, portType));
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
@@ -123,14 +124,29 @@ final class PortUtils {
      *
      * @throws Throwable if the exception cannot be handled.
      */
-    static void processException(final Throwable callFailure, final Method method) throws Throwable {
+    static boolean processException(final Throwable callFailure, final Method method) throws Throwable {
+        if (ExceptionUtils.isServerUnavailable(callFailure)) {
+            LoggerUtils.log(getLogger(), Level.WARNING, "Thread [{0}] - received a server unavaible fault when calling [{1}] - will retry after a short pause", Thread.currentThread().getName(), method.getName());
+
+            final byte[] locker = new byte[0];
+            synchronized (locker) {
+                locker.wait(2500);
+            }
+
+            LoggerUtils.log(getLogger(), Level.WARNING, "Thread [{0}] will retry to call [{1}]", Thread.currentThread().getName(), method.getName());
+
+            return false;
+        }
+
         if (!ExceptionUtils.isReloginException(callFailure)) {
-            getLogger().log(Level.SEVERE, "Trouble calling [{0}] - [{1}]...raising exception", new Object[]{ method.getName(), callFailure.getLocalizedMessage() });
+            LoggerUtils.log(getLogger(), Level.SEVERE, "Thread [{0}] - trouble calling [{1}] - [{2}]...raising exception", Thread.currentThread().getName(), method.getName(), callFailure.getLocalizedMessage());
 
             throw callFailure;
         }
 
-        getLogger().log(Level.WARNING, "Received a relogin exception when calling [{0}] - initiating a new login", method.getName());
+        LoggerUtils.log(getLogger(), Level.WARNING, "Thread [{0}] - received a relogin exception when calling [{1}] - initiating a new login", Thread.currentThread().getName(), method.getName());
+
+        return true;
     }
 
     /**
@@ -217,6 +233,7 @@ final class PortUtils {
         StringUtils.ensureString(url, "Must provide a URL!");
 
         final Object port = service.getPort(portType);
+
         SoapUtils.setHandler(port, new SessionIdSoapRequestHeaderHandler(securityMgr, service));
         SoapUtils.setUrl(port, url);
 

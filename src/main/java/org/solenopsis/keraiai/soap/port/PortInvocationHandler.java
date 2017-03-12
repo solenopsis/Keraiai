@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.AbstractCommonBase;
+import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
@@ -105,6 +106,8 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
         this.url = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!").computeSessionUrl(securityMgr, service);
+
+        service.getPort(portType);
     }
 
     /**
@@ -125,12 +128,15 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
             try {
                 return method.invoke(PortUtils.createSessionPort(getSecurityMgr(), getService(), getPortType(), getUrl()), args);
             } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException callFailure) {
-                getLogger().log(Level.WARNING, "Trouble calling " + proxy.getClass().getName() + "." + method.getName() + "()", toRaise);
                 toRaise = callFailure;
-                PortUtils.processException(callFailure, method);
-            }
 
-            loginContext = getSecurityMgr().resetSession(loginContext);
+                if (PortUtils.processException(callFailure, method)) {
+                    LoggerUtils.log(getLogger(), Level.WARNING, "Trouble calling {0}.{1}() due to a relogin issue", proxy.getClass().getName(), method.getName());
+                    loginContext = getSecurityMgr().resetSession(loginContext);
+                } else {
+                    LoggerUtils.log(getLogger(), Level.WARNING, "Trouble calling {0}.{1}() due to a Service Unavailable issue", proxy.getClass().getName(), method.getName());
+                }
+            }
         } while (PortUtils.isCallRetriable(++totalCalls));
 
         throw toRaise;
