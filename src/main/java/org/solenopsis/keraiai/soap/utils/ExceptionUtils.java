@@ -45,6 +45,16 @@ public final class ExceptionUtils {
     public static final String SERVER_UNAVAILABLE = "SERVER_UNAVAILABLE";
 
     /**
+     * Denotes unable to lock a row.
+     */
+    public static final String UNABLE_TO_LOCK_ROW = "UNABLE_TO_LOCK_ROW";
+
+    /**
+     * Denotes server is unavailable.
+     */
+    public static final String SERVICE_UNAVAILABLE = "Service Unavailable";
+
+    /**
      * Return the logger.
      */
     private static Logger getLogger() {
@@ -117,6 +127,32 @@ public final class ExceptionUtils {
     }
 
     /**
+     * Return true if message contains unable to lock row.
+     *
+     * @param message is the message to examine for being unable to lock row.
+     */
+    static boolean isUnableToLockRow(final String message) {
+        final boolean retVal = isExceptionMsgContained(UNABLE_TO_LOCK_ROW, message);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of unable to lock row [{0}] for string [{1}]", retVal, message);
+
+        return retVal;
+    }
+
+    /**
+     * Return true if message contains service unavailable.
+     *
+     * @param message is the message to examine for service being unavailable.
+     */
+    static boolean isServiceUnavailable(final String message) {
+        final boolean retVal = isExceptionMsgContained(SERVICE_UNAVAILABLE, message);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of service unavailable [{0}] for string [{1}]", retVal, message);
+
+        return retVal;
+    }
+
+    /**
      * Return true if we have an invalid session id or false if not.
      *
      * @param failure is the failure to examine for an invalid session id.
@@ -134,6 +170,32 @@ public final class ExceptionUtils {
         final boolean retVal = isExceptionMsgContained(SERVER_UNAVAILABLE, failure);
 
         LoggerUtils.log(getLogger(), Level.FINEST, "Result of is server unavailable [{0}] for throwable {1}", retVal, failure);
+
+        return retVal;
+    }
+
+    /**
+     * Return true if we have unable to lock row or false if not.
+     *
+     * @param failure is the failure to examine for unable to lock row.
+     */
+    public static boolean isUnableToLockRow(final Throwable failure) {
+        final boolean retVal = isExceptionMsgContained(UNABLE_TO_LOCK_ROW, failure);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of unable to lock row [{0}] for throwable {1}", retVal, failure);
+
+        return retVal;
+    }
+
+    /**
+     * Return true if we have service unavailable or false if not.
+     *
+     * @param failure is the failure to examine for service unavailable.
+     */
+    public static boolean isServiceUnavailable(final Throwable failure) {
+        final boolean retVal = isExceptionMsgContained(SERVICE_UNAVAILABLE, failure);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is service unavailable [{0}] for throwable {1}", retVal, failure);
 
         return retVal;
     }
@@ -160,6 +222,21 @@ public final class ExceptionUtils {
         final boolean retVal = isInvalidSessionId(failure) || containsIOException(failure);
 
         LoggerUtils.log(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", retVal, failure);
+
+        return retVal;
+    }
+
+    /**
+     * Returns true if the failure represents one where a retry should occur.
+     *
+     * @param failure the exception to examine if retry is necessary.
+     *
+     * @return true if retry is necessary.
+     */
+    public static boolean isRetryException(final Throwable failure) {
+        final boolean retVal = isServerUnavailable(failure) || isUnableToLockRow(failure) || isServiceUnavailable(failure);
+
+        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is retry exception [{0}] for throwable {1}", retVal, failure);
 
         return retVal;
     }

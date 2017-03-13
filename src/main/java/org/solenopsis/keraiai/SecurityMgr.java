@@ -41,11 +41,9 @@ public interface SecurityMgr {
     /**
      * Reset a session.
      *
-     * @param loginContext is the login that was being used as part of the session.
-     *
      * @return the a new session based login context.
      */
-    LoginContext resetSession(LoginContext loginContext);
+    LoginContext resetSession();
 
     /**
      * Request a new login.

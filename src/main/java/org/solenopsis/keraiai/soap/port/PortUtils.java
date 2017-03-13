@@ -17,10 +17,12 @@
 package org.solenopsis.keraiai.soap.port;
 
 import java.lang.reflect.Method;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
@@ -37,6 +39,16 @@ import org.solenopsis.keraiai.soap.utils.ExceptionUtils;
  * @author Scot P. Floess
  */
 final class PortUtils {
+
+    /**
+     * Default pause time in millis.
+     */
+    final static int DEFAULT_PAUSE_TIME = 5000;
+
+    /**
+     * When we need to pause, use this to generate a random time to wait.
+     */
+    final static Random RANDOM_PAUSE = new Random(DEFAULT_PAUSE_TIME);
 
     /**
      * When setting up the soap header, we need to set the session header using this attribute.
@@ -58,7 +70,7 @@ final class PortUtils {
     /**
      * Maximum retries.
      */
-    static final int MAX_RETRIES = 4;
+    static final int MAX_RETRIES = 8;
 
     /**
      * Using service, create a QName for the SOAP session header.
@@ -117,21 +129,51 @@ final class PortUtils {
     }
 
     /**
+     * Pauses execution.
+     */
+    static void pause() {
+        try {
+            final long waitTime = RANDOM_PAUSE.nextInt(DEFAULT_PAUSE_TIME);
+
+            LoggerUtils.log(getLogger(), Level.INFO, "Pausing current thread [{0} ms] before retrying...", waitTime);
+
+            final byte[] lock = new byte[0];
+
+            synchronized (lock) {
+                lock.wait(waitTime);
+            }
+        } catch (final InterruptedException ex) {
+            LoggerUtils.log(getLogger(), Level.WARNING, "Trouble pausing current thread...", ex);
+        }
+    }
+
+    /**
      * When an exception happens on call, this method will handle the exception.
      *
      * @param callFailure the exception that arose when calling SFDC.
      * @param method      the method being called when the failure arose.
      *
+     * @return true if a relogin is necessary.
+     *
      * @throws Throwable if the exception cannot be handled.
      */
-    static void processException(final Throwable callFailure, final Method method) throws Throwable {
-        if (!ExceptionUtils.isReloginException(callFailure)) {
-            getLogger().log(Level.SEVERE, "Trouble calling [{0}] - [{1}]...raising exception", new Object[]{method.getName(), callFailure.getLocalizedMessage()});
+    static void processException(final PortInvocationHandler handler, final Object proxy, final Method method, final Throwable callFailure) throws Throwable {
+        if (ExceptionUtils.isRetryException(callFailure)) {
+            LoggerUtils.log(getLogger(), Level.WARNING, callFailure, "Received a retry exception (will attempt to perform call) when calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
 
-            throw callFailure;
+            pause();
+
+            return;
+        } else if (ExceptionUtils.isReloginException(callFailure)) {
+            LoggerUtils.log(getLogger(), Level.WARNING, callFailure, "Received a relogin exception when calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
+
+            handler.getSecurityMgr().resetSession();
+            handler.getPort().set(createSessionPort(handler.getSecurityMgr(), handler.getService(), handler.getPortType(), handler.getUrl()));
         }
 
-        getLogger().log(Level.WARNING, "Received a relogin exception when calling [{0}] - initiating a new login", method.getName());
+        LoggerUtils.log(getLogger(), Level.SEVERE, callFailure, "Trouble calling [{0}.{1}]...raising exception", proxy.getClass().getName(), method.getName());
+
+        throw callFailure;
     }
 
     /**

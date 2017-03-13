@@ -19,11 +19,11 @@ package org.solenopsis.keraiai.soap.port;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
 
 /**
@@ -55,11 +55,16 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
     private final Class portType;
 
     /**
+     * Our port.
+     */
+    private final AtomicReference port;
+
+    /**
      * Return the security manager.
      *
      * @return the security manager.
      */
-    private SecurityMgr getSecurityMgr() {
+    SecurityMgr getSecurityMgr() {
         return securityMgr;
     }
 
@@ -68,7 +73,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the web service url to call.
      */
-    private String getUrl() {
+    String getUrl() {
         return url;
     }
 
@@ -77,7 +82,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the web service being used.
      */
-    private Service getService() {
+    Service getService() {
         return service;
     }
 
@@ -86,8 +91,15 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the port type on the web service.
      */
-    private Class getPortType() {
+    Class getPortType() {
         return portType;
+    }
+
+    /**
+     * Return the port.
+     */
+    AtomicReference getPort() {
+        return port;
     }
 
     /**
@@ -105,6 +117,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
         this.url = PortUtils.computeSessionUrl(securityMgr, ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!"), service);
+        this.port = new AtomicReference(PortUtils.createSessionPort(securityMgr, service, portType, url));
     }
 
     /**
@@ -115,22 +128,20 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         ObjectUtils.ensureObject(proxy, "Must have a proxy object in which to call methods!");
         ObjectUtils.ensureObject(method, "Must provide a method to call!");
 
-        log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass(), method.getName());
+        log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
 
         int totalCalls = 0;
-        LoginContext loginContext = getSecurityMgr().getSession();
         Throwable toRaise = null;
 
         do {
             try {
-                return method.invoke(PortUtils.createSessionPort(getSecurityMgr(), getService(), getPortType(), getUrl()), args);
+                return method.invoke(getPort().get(), args);
             } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException callFailure) {
-                getLogger().log(Level.WARNING, "Trouble calling " + proxy.getClass().getName() + "." + method.getName() + "()", toRaise);
+                log(Level.WARNING, "Trouble calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
                 toRaise = callFailure;
-                PortUtils.processException(callFailure, method);
-            }
 
-            loginContext = getSecurityMgr().resetSession(loginContext);
+                PortUtils.processException(this, proxy, method, callFailure);
+            }
         } while (PortUtils.isCallRetriable(++totalCalls));
 
         throw toRaise;

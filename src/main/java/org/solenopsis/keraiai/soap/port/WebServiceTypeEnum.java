@@ -105,6 +105,10 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      */
     @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
+        // Retrieving the port in a threaded capacity is highly synchronized.
+        // By prefetching here, all subsequent calls happen very fast.
+        service.getPort(portType);
+
         return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{portType}, new PortInvocationHandler(securityMgr, this, service, portType));
     }
 

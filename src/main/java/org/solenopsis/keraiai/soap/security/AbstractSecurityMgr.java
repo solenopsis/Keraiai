@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
@@ -38,29 +39,14 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     /**
      * Login context used in sessions.
      */
-    private LoginContext loginContext;
+    private AtomicReference<LoginContext> loginContext;
 
     /**
      * Return the login context.
      *
      * @return the new login context.
      */
-    synchronized LoginContext getLoginContext() {
-        return loginContext;
-    }
-
-    /**
-     * Set and return the newly defined login context.
-     *
-     * @param loginContext the new login context.
-     *
-     * @return the new login context.
-     */
-    synchronized LoginContext setLoginContext(final LoginContext loginContext) {
-        this.loginContext = loginContext;
-
-        log(Level.FINEST, "Setting loging context to [{0}]", loginContext);
-
+    synchronized AtomicReference<LoginContext> getLoginContext() {
         return loginContext;
     }
 
@@ -119,9 +105,9 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      * {@inheritDoc}
      */
     @Override
-    public synchronized LoginContext getSession() {
-        if (null != loginContext) {
-            return loginContext;
+    public LoginContext getSession() {
+        if (null != getLoginContext().get()) {
+            return getLoginContext().get();
         }
 
         return login();
@@ -131,12 +117,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      * {@inheritDoc}
      */
     @Override
-    public synchronized LoginContext resetSession(final LoginContext loginContext) {
-        if (this.loginContext != loginContext) {
-            log(Level.FINEST, "Not resetting as old context [{0}] != new context [{1}]", this.loginContext, loginContext);
-            return this.loginContext;
-        }
-
+    public LoginContext resetSession() {
         return login();
     }
 
@@ -144,11 +125,12 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      * {@inheritDoc}
      */
     @Override
-    public synchronized LoginContext login() {
+    public LoginContext login() {
         log(Level.FINEST, "Requesting login");
 
         try {
-            return setLoginContext(doLogin(createLoginPort()));
+            getLoginContext().set(doLogin(createLoginPort()));
+            return getLoginContext().get();
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
         } catch (final Throwable throwable) {
@@ -165,7 +147,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
 
         try {
             doLogout(createSessionPort());
-            setLoginContext(null);
+            getLoginContext().set(null);
         } catch (final RuntimeException runtimeException) {
             getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);
             throw runtimeException;
