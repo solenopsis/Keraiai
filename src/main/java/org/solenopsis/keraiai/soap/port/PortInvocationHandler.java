@@ -144,6 +144,8 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
             }
         } while (PortUtils.isCallRetriable(++totalCalls));
 
-        throw toRaise;
+        log(Level.SEVERE, "Unable to call [{0}].[{1}] after retry [{2}] attemps, raising exception", port.get().getClass().getName(), method.getName(), totalCalls);
+
+        throw new IllegalStateException("Attempts to retry calls to Salesforce have failed after [" + totalCalls + "] times", toRaise);
     }
 }
