@@ -1,3 +1,16 @@
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+LOGGING FOR RETRY/RELOGIN
+
+Throw Exception with info in it
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
 package org.solenopsis.lasius.wsimport.common.session.mgr;
 
 import java.util.concurrent.atomic.AtomicReference;
