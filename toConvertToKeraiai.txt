@@ -1,9 +1,13 @@
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-LOGGING FOR RETRY/RELOGIN
+* LOGGING FOR RETRY/RELOGIN
 
-Throw Exception with info in it
+* Throw Exception with info in it
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+CONSIDER MULTI-INTERFACES FOR PORT
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

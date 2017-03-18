@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap.port;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,10 +54,35 @@ final class PortUtils {
     /**
      * When setting up the soap header, we need to set the session header using this attribute.
      */
-    static final String SESSION_HEADER = "SessionHeader";
+    final static String SESSION_HEADER = "SessionHeader";
 
     /**
-     * Our LOGGER.
+     * Key when keeping track of invalid session ids on a call.
+     */
+    final static String INVALID_SESSION_ID_KEY = "invalid session id";
+
+    /**
+     * Key when keeping track of IOExceptions on a call.
+     */
+    final static String IOEXCEPTION_KEY = "IOException";
+
+    /**
+     * Key when keeping track of server unavailabe on a call.
+     */
+    final static String SERVER_UNAVAILABLE_KEY = "server unavailable";
+
+    /**
+     * Key when keeping track of unable to lock rows on a call.
+     */
+    final static String UNABLE_TO_LOCK_ROW_KEY = "unable to lock row";
+
+    /**
+     * Key when keeping track of service unavailables on a call.
+     */
+    final static String SERVICE_UNAVAILABLE_KEY = "service unavailable";
+
+    /**
+     * Our logger.
      */
     private static final Logger LOGGER = Logger.getLogger(PortUtils.class.getName());
 
@@ -129,22 +155,50 @@ final class PortUtils {
     }
 
     /**
-     * Pauses execution.
+     * W
      */
-    static void pause() {
-        try {
-            final long waitTime = RANDOM_PAUSE.nextInt(DEFAULT_PAUSE_TIME);
+    static void incrementFailureCount(final String key, final Map<String, Integer> callFailureTotal) {
+        Integer total = callFailureTotal.get(key);
 
-            LoggerUtils.log(getLogger(), Level.INFO, "Pausing current thread [{0} ms] before retrying...", waitTime);
+        callFailureTotal.put(key, null == total ? 1 : total + 1);
 
-            final byte[] lock = new byte[0];
+        LoggerUtils.log(getLogger(), Level.INFO, "When calling Salesforce, encountered a [{0}]", key);
+    }
 
-            synchronized (lock) {
-                lock.wait(waitTime);
-            }
-        } catch (final InterruptedException ex) {
-            LoggerUtils.log(getLogger(), Level.WARNING, "Trouble pausing current thread...", ex);
+    /**
+     * Increment a failure count if <code>isToIncrement</code> is true.
+     */
+    static boolean incrementFailureCount(final boolean isToIncrement, final String key, final Map<String, Integer> callFailureTotal) {
+        if (isToIncrement) {
+            incrementFailureCount(key, callFailureTotal);
         }
+
+        return isToIncrement;
+    }
+
+    /**
+     * Returns true if the failure represents one where relogin should occur.
+     *
+     * @param failure the exception to examine if relogin is necessary.
+     *
+     * @return true if relogin is necessary.
+     */
+    static boolean isReloginException(final Throwable failure, final Map<String, Integer> callFailureTotal) {
+        return incrementFailureCount(ExceptionUtils.isInvalidSessionId(failure), INVALID_SESSION_ID_KEY, callFailureTotal)
+               || incrementFailureCount(ExceptionUtils.containsIOException(failure), IOEXCEPTION_KEY, callFailureTotal);
+    }
+
+    /**
+     * Returns true if the failure represents one where a retry should occur.
+     *
+     * @param failure the exception to examine if retry is necessary.
+     *
+     * @return true if retry is necessary.
+     */
+    static boolean isRetryException(final Throwable failure, final Map<String, Integer> callFailureTotal) {
+        return incrementFailureCount(ExceptionUtils.isServerUnavailable(failure), SERVER_UNAVAILABLE_KEY, callFailureTotal)
+               || incrementFailureCount(ExceptionUtils.isUnableToLockRow(failure), UNABLE_TO_LOCK_ROW_KEY, callFailureTotal)
+               || incrementFailureCount(ExceptionUtils.isServiceUnavailable(failure), SERVICE_UNAVAILABLE_KEY, callFailureTotal);
     }
 
     /**
@@ -157,14 +211,14 @@ final class PortUtils {
      *
      * @throws Throwable if the exception cannot be handled.
      */
-    static void processException(final PortInvocationHandler handler, final Object proxy, final Method method, final Throwable callFailure) throws Throwable {
-        if (ExceptionUtils.isRetryException(callFailure)) {
+    static void processException(final PortInvocationHandler handler, final Object proxy, final Method method, final Throwable callFailure, final Map<String, Integer> callFailureTotal) throws Throwable {
+        if (isRetryException(callFailure, callFailureTotal)) {
             LoggerUtils.log(getLogger(), Level.WARNING, callFailure, "Received a retry exception (will attempt to perform call) when calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
 
-            pause();
+            PauseUtils.randomPause(DEFAULT_PAUSE_TIME);
 
             return;
-        } else if (ExceptionUtils.isReloginException(callFailure)) {
+        } else if (isReloginException(callFailure, callFailureTotal)) {
             LoggerUtils.log(getLogger(), Level.WARNING, callFailure, "Received a relogin exception when calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
 
             handler.getSecurityMgr().resetSession();

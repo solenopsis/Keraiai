@@ -212,36 +212,6 @@ public final class ExceptionUtils {
     }
 
     /**
-     * Returns true if the failure represents one where relogin should occur.
-     *
-     * @param failure the exception to examine if relogin is necessary.
-     *
-     * @return true if relogin is necessary.
-     */
-    public static boolean isReloginException(final Throwable failure) {
-        final boolean retVal = isInvalidSessionId(failure) || containsIOException(failure);
-
-        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is relogin exception [{0}] for throwable {1}", retVal, failure);
-
-        return retVal;
-    }
-
-    /**
-     * Returns true if the failure represents one where a retry should occur.
-     *
-     * @param failure the exception to examine if retry is necessary.
-     *
-     * @return true if retry is necessary.
-     */
-    public static boolean isRetryException(final Throwable failure) {
-        final boolean retVal = isServerUnavailable(failure) || isUnableToLockRow(failure) || isServiceUnavailable(failure);
-
-        LoggerUtils.log(getLogger(), Level.FINEST, "Result of is retry exception [{0}] for throwable {1}", retVal, failure);
-
-        return retVal;
-    }
-
-    /**
      * Not allowed.
      */
     private ExceptionUtils() {

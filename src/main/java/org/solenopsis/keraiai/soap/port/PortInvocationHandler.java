@@ -19,6 +19,8 @@ package org.solenopsis.keraiai.soap.port;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import javax.xml.ws.Service;
@@ -132,6 +134,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
 
         int totalCalls = 0;
         Throwable toRaise = null;
+        final Map<String, Integer> callFailureTotal = new TreeMap<>();
 
         do {
             try {
@@ -140,12 +143,12 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
                 log(Level.WARNING, "Trouble calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
                 toRaise = callFailure;
 
-                PortUtils.processException(this, proxy, method, callFailure);
+                PortUtils.processException(this, proxy, method, callFailure, callFailureTotal);
             }
         } while (PortUtils.isCallRetriable(++totalCalls));
 
-        log(Level.SEVERE, "Unable to call [{0}].[{1}] after retry [{2}] attemps, raising exception", port.get().getClass().getName(), method.getName(), totalCalls);
+        log(Level.SEVERE, toRaise, "Unable to call [{0}].[{1}] after retry [{2}] attempts, raising exception.  Failures include [{3}]", port.get().getClass().getName(), method.getName(), totalCalls, callFailureTotal);
 
-        throw new IllegalStateException("Attempts to retry calls to Salesforce have failed after [" + totalCalls + "] times", toRaise);
+        throw new IllegalStateException("Attempts to retry calls to Salesforce have failed after [" + totalCalls + "] times.  Failures are: " + callFailureTotal, toRaise);
     }
 }
