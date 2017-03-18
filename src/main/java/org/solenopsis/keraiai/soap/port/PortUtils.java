@@ -18,13 +18,13 @@ package org.solenopsis.keraiai.soap.port;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.LoggerUtils;
 import org.flossware.jcore.utils.ObjectUtils;
+import org.flossware.jcore.utils.PauseUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.flossware.jcore.utils.soap.SoapUtils;
@@ -45,11 +45,6 @@ final class PortUtils {
      * Default pause time in millis.
      */
     final static int DEFAULT_PAUSE_TIME = 5000;
-
-    /**
-     * When we need to pause, use this to generate a random time to wait.
-     */
-    final static Random RANDOM_PAUSE = new Random(DEFAULT_PAUSE_TIME);
 
     /**
      * When setting up the soap header, we need to set the session header using this attribute.
