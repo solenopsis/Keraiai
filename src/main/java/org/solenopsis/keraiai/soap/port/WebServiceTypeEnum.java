@@ -104,7 +104,7 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      * {@inheritDoc}
      */
     @Override
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
         ObjectUtils.ensureObject(service, "Must provide a service!");
         ObjectUtils.ensureObject(portType, "Must provide a port type!");
 
@@ -122,25 +122,25 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      * {@inheritDoc}
      */
     @Override
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final S service) {
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final S service) {
         ObjectUtils.ensureObject(service, "Must provide a service!");
 
-        return (P) createSessionPort(securityMgr, service, ServiceUtils.getPortType(service.getClass()));
+        return (P) createProxyPort(securityMgr, service, ServiceUtils.getPortType(service.getClass()));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource) {
-        return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource) {
+        return createProxyPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource) {
-        return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource) {
+        return createProxyPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
     }
 }

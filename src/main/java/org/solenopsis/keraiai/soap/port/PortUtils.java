@@ -397,7 +397,7 @@ final class PortUtils {
         SoapUtils.setHandler(port, new SessionIdSoapRequestHeaderHandler(securityMgr, service));
         SoapUtils.setUrl(port, url);
 
-        getLogger().log(Level.FINE, "Port = [{0}]", port);
+        LoggerUtils.log(getLogger(), Level.FINE, "Port = [{0}]", port);
 
         return port;
     }

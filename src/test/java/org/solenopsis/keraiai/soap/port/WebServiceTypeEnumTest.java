@@ -171,11 +171,11 @@ public class WebServiceTypeEnumTest {
             Class expectedPortClass;
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, new StubService(), StubInterface.class);
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, new StubService(), StubInterface.class);
                 expectedPortClass = StubInterface.class;
 
             } else {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, webServiceTypeEnum.getWebService().getService(), webServiceTypeEnum.getWebService().getPortType());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, webServiceTypeEnum.getWebService().getService(), webServiceTypeEnum.getWebService().getPortType());
                 expectedPortClass = webServiceTypeEnum.getWebService().getPortType();
             }
 
@@ -193,11 +193,11 @@ public class WebServiceTypeEnumTest {
             Class expectedPortClass;
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, new StubService());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, new StubService());
                 expectedPortClass = StubInterface.class;
 
             } else {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, webServiceTypeEnum.getWebService().getService());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, webServiceTypeEnum.getWebService().getService());
                 expectedPortClass = webServiceTypeEnum.getWebService().getPortType();
             }
 
@@ -215,11 +215,11 @@ public class WebServiceTypeEnumTest {
             Class expectedPortClass;
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, StubService.class, WebServiceTypeEnumTest.class.getResource("/TestService.wsdl"));
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, StubService.class, WebServiceTypeEnumTest.class.getResource("/TestService.wsdl"));
                 expectedPortClass = StubInterface.class;
 
             } else {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, webServiceTypeEnum.getWebService().getService().getClass(), webServiceTypeEnum.getWebService().getService().getWSDLDocumentLocation());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, webServiceTypeEnum.getWebService().getService().getClass(), webServiceTypeEnum.getWebService().getService().getWSDLDocumentLocation());
                 expectedPortClass = webServiceTypeEnum.getWebService().getPortType();
             }
 
@@ -237,11 +237,11 @@ public class WebServiceTypeEnumTest {
             Class expectedPortClass;
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, StubService.class, "file://" + WebServiceTypeEnumTest.class.getResource("/TestService.wsdl").getFile());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, StubService.class, "file://" + WebServiceTypeEnumTest.class.getResource("/TestService.wsdl").getFile());
                 expectedPortClass = StubInterface.class;
 
             } else {
-                computedPort = webServiceTypeEnum.createSessionPort(securityMgr, webServiceTypeEnum.getWebService().getService().getClass(), "file://" + webServiceTypeEnum.getWebService().getService().getWSDLDocumentLocation().getFile());
+                computedPort = webServiceTypeEnum.createProxyPort(securityMgr, webServiceTypeEnum.getWebService().getService().getClass(), "file://" + webServiceTypeEnum.getWebService().getService().getWSDLDocumentLocation().getFile());
                 expectedPortClass = webServiceTypeEnum.getWebService().getPortType();
             }
 

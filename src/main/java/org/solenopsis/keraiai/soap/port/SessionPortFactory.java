@@ -39,7 +39,7 @@ public interface SessionPortFactory {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
@@ -52,7 +52,7 @@ public interface SessionPortFactory {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final S service);
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final S service);
 
     /**
      * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
@@ -66,7 +66,7 @@ public interface SessionPortFactory {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource);
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource);
 
     /**
      * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
@@ -80,5 +80,5 @@ public interface SessionPortFactory {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource);
+    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource);
 }

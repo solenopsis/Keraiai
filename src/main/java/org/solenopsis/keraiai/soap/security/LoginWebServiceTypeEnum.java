@@ -73,6 +73,6 @@ public enum LoginWebServiceTypeEnum implements LoginPortFactory {
     public <P> P createLoginSessionPort(final SecurityMgr securityMgr) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
 
-        return getWebServiceType().createSessionPort(securityMgr, getWebServiceType().getWebService().getService());
+        return getWebServiceType().createProxyPort(securityMgr, getWebServiceType().getWebService().getService());
     }
 }
