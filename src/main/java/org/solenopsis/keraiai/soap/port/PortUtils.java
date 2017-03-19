@@ -17,7 +17,10 @@
 package org.solenopsis.keraiai.soap.port;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
@@ -77,9 +80,35 @@ final class PortUtils {
     final static String SERVICE_UNAVAILABLE_KEY = "service unavailable";
 
     /**
+     * Maximum retries.
+     */
+    static final int MAX_RETRIES = 8;
+
+    /**
+     * Used to determine if methods are part of a SecurityMgr.
+     */
+    final static Set<Method> SECURITY_MGR_METHOD_SET;
+
+    /**
      * Our logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(PortUtils.class.getName());
+    private static final Logger LOGGER;
+
+    /**
+     * Class initializer.
+     */
+    static {
+        final Set<Method> securityMgrSet = new HashSet<>();
+
+        // Cache all the methods from the security manager interface...
+        for (final Method method : SecurityMgr.class.getMethods()) {
+            securityMgrSet.add(method);
+        }
+
+        SECURITY_MGR_METHOD_SET = Collections.unmodifiableSet(securityMgrSet);
+
+        LOGGER = Logger.getLogger(PortUtils.class.getName());
+    }
 
     /**
      * Return the LOGGER.
@@ -89,9 +118,13 @@ final class PortUtils {
     }
 
     /**
-     * Maximum retries.
+     * Returns the security manager methods.
+     *
+     * @return the set of security manager methods.
      */
-    static final int MAX_RETRIES = 8;
+    static Set<Method> getSecurityMgrMethodSet() {
+        return SECURITY_MGR_METHOD_SET;
+    }
 
     /**
      * Using service, create a QName for the SOAP session header.
@@ -367,6 +400,19 @@ final class PortUtils {
         getLogger().log(Level.FINE, "Port = [{0}]", port);
 
         return port;
+    }
+
+    /**
+     * Will return true if the method is defined in the SecurityMgr interface.
+     *
+     * @param method used to determine if defined in the SecurityMgr interface.
+     *
+     * @return true if the method is defined in the SecurityMgr interface.
+     *
+     * @throws IllegalArgumentException if method is null.
+     */
+    static boolean isSecurityMgrMethod(final Method method) {
+        return getSecurityMgrMethodSet().contains(ObjectUtils.ensureObject(method, "Must provide a method to seek!"));
     }
 
     /**

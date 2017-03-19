@@ -27,21 +27,37 @@ import org.solenopsis.keraiai.wsdl.partner.Soap;
  *
  * @author Scot P. Floess
  */
-public class PartnerSecurityMgr extends AbstractSecurityMgr {
+public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
     /**
      * {@inheritDoc}
      */
     @Override
-    protected LoginContext doLogin() throws Exception {
-        return new PartnerLoginContext(((Soap) LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginPort(this)).login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    protected Soap createLoginPort() {
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginPort(this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doLogout() throws Exception {
-        ((Soap) LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().getWebService().getService())).logout();
+    protected Soap createSessionPort() {
+        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginSessionPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected LoginContext doLogin(final Soap port) throws Exception {
+        return new PartnerLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doLogout(final Soap port) throws Exception {
+        port.logout();
     }
 
     /**

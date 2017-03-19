@@ -27,21 +27,37 @@ import org.solenopsis.keraiai.wsdl.tooling.SforceServicePortType;
  *
  * @author Scot P. Floess
  */
-public class ToolingSecurityMgr extends AbstractSecurityMgr {
+public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortType> {
     /**
      * {@inheritDoc}
      */
     @Override
-    protected LoginContext doLogin() throws Exception {
-        return new ToolingLoginContext(((SforceServicePortType) LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this)).login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    protected SforceServicePortType createLoginPort() {
+        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doLogout() throws Exception {
-        ((SforceServicePortType) LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.getWebServiceType().getWebService().getService())).logout();
+    protected SforceServicePortType createSessionPort() {
+        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginSessionPort(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected LoginContext doLogin(final SforceServicePortType port) throws Exception {
+        return new ToolingLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doLogout(final SforceServicePortType port) throws Exception {
+        port.logout();
     }
 
     /**

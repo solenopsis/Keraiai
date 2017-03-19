@@ -1,4 +1,10 @@
 
+
+
+
+To convert:
+
+
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 * LOGGING FOR RETRY/RELOGIN
@@ -7,7 +13,7 @@
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-CONSIDER MULTI-INTERFACES FOR PORT
+* CONSIDER MULTI-INTERFACES FOR PORT
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

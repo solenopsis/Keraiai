@@ -17,8 +17,12 @@
 package org.solenopsis.keraiai.soap.port;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.HashSet;
+import java.util.Set;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
@@ -135,9 +139,9 @@ public class PortInvocationHandlerTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void test_invoke_Object_null() throws NoSuchMethodException, NoSuchMethodException, Throwable {
-        final Method method = StubInterface.class.getDeclaredMethod("testMethod", new Class[]{ String.class });
+        final Method method = StubInterface.class.getDeclaredMethod("testMethod", new Class[]{String.class});
 
-        new PortInvocationHandler(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE, service, Object.class).invoke(null, method, new Object[]{ TestUtils.generateUniqueStr() });
+        new PortInvocationHandler(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE, service, Object.class).invoke(null, method, new Object[]{TestUtils.generateUniqueStr()});
     }
 
     /**
@@ -145,7 +149,7 @@ public class PortInvocationHandlerTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void test_invoke_Method_null() throws NoSuchMethodException, NoSuchMethodException, Throwable {
-        new PortInvocationHandler(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE, service, Object.class).invoke(new Object(), null, new Object[]{ TestUtils.generateUniqueStr() });
+        new PortInvocationHandler(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE, service, Object.class).invoke(new Object(), null, new Object[]{TestUtils.generateUniqueStr()});
     }
 
     /**
@@ -162,13 +166,13 @@ public class PortInvocationHandlerTest {
         Mockito.when(soap.query(Mockito.anyString())).thenThrow(invalidSessionIdException);
 
         try {
-            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{ String.class }), new Object[]{ str });
+            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{String.class}), new Object[]{str});
         } catch (final InvocationTargetException ite) {
             ite.printStackTrace();
         }
 
         Mockito.verify(soap, Mockito.times(PortUtils.MAX_RETRIES)).query(str);
-        Mockito.verify(securityMgr, Mockito.times(PortUtils.MAX_RETRIES)).resetSession((LoginContext) Mockito.anyObject());
+        Mockito.verify(securityMgr, Mockito.times(PortUtils.MAX_RETRIES)).resetSession();
     }
 
     /**
@@ -185,13 +189,13 @@ public class PortInvocationHandlerTest {
         Mockito.when(soap.query(Mockito.anyString())).thenThrow(faultException);
 
         try {
-            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{ String.class }), new Object[]{ str });
+            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{String.class}), new Object[]{str});
         } catch (final InvocationTargetException ite) {
 
         }
 
         Mockito.verify(soap, Mockito.times(PortUtils.MAX_RETRIES)).query(str);
-        Mockito.verify(securityMgr, Mockito.times(PortUtils.MAX_RETRIES)).resetSession((LoginContext) Mockito.anyObject());
+        Mockito.verify(securityMgr, Mockito.times(PortUtils.MAX_RETRIES)).resetSession();
     }
 
     /**
@@ -208,13 +212,13 @@ public class PortInvocationHandlerTest {
         Mockito.when(soap.query(Mockito.anyString())).thenThrow(faultException);
 
         try {
-            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{ String.class }), new Object[]{ str });
+            invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{String.class}), new Object[]{str});
         } catch (final InvocationTargetException ite) {
             Assert.assertEquals("Should have gotten an UnexpectedErrorFault_Exception", ite.getCause().getClass(), UnexpectedErrorFault_Exception.class);
         }
 
         Mockito.verify(soap, Mockito.times(1)).query(str);
-        Mockito.verify(securityMgr, Mockito.times(0)).resetSession((LoginContext) Mockito.anyObject());
+        Mockito.verify(securityMgr, Mockito.times(0)).resetSession();
     }
 
     /**
@@ -226,9 +230,71 @@ public class PortInvocationHandlerTest {
 
         final String str = TestUtils.generateUniqueStr();
 
-        invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{ String.class }), new Object[]{ str });
+        invoker.invoke(soap, StubInterface.class.getMethod("query", new Class[]{String.class}), new Object[]{str});
 
         Mockito.verify(soap, Mockito.times(1)).query(str);
-        Mockito.verify(securityMgr, Mockito.never()).resetSession((LoginContext) Mockito.anyObject());
+        Mockito.verify(securityMgr, Mockito.never()).resetSession();
+    }
+
+    interface inf1 {
+        Object compute1a();
+
+        Object compute1b();
+    }
+
+    interface inf2 {
+        Object compute2a();
+
+        Object compute2b();
+    }
+
+    static class Invoker implements InvocationHandler, inf1 {
+        final static Set<Method> METHODS;
+
+        static {
+            METHODS = new HashSet<>();
+
+            for (final Method method : inf1.class.getMethods()) {
+                METHODS.add(method);
+            }
+
+            System.out.println("All found: " + METHODS);
+        }
+
+        @Override
+        public Object invoke(Object o, Method method, Object[] os) throws Throwable {
+            if (METHODS.contains(method)) {
+                return method.invoke(this, os);
+            } else {
+                System.out.println("NOT ONE");
+
+                return "no";
+            }
+        }
+
+        @Override
+        public Object compute1a() {
+            System.out.println("FOUND ONE - compute1a");
+
+            return "yes";
+        }
+
+        @Override
+        public Object compute1b() {
+            System.out.println("FOUND ONE - compute1b");
+
+            return "yes";
+        }
+    }
+
+    @Test
+    public void testId() throws Exception {
+        final Object toCall = Proxy.newProxyInstance(PortInvocationHandlerTest.class.getClassLoader(), new Class[]{inf1.class, inf2.class}, new Invoker());
+
+        System.out.println("compute1a: " + ((inf1) toCall).compute1a());
+        System.out.println("compute1b: " + ((inf1) toCall).compute1b());
+
+        System.out.println("compute2a: " + ((inf2) toCall).compute2a());
+        System.out.println("compute2b: " + ((inf2) toCall).compute2b());
     }
 }

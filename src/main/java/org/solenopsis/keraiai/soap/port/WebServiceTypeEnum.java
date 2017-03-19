@@ -105,11 +105,17 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      */
     @Override
     public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
+        ObjectUtils.ensureObject(service, "Must provide a service!");
+        ObjectUtils.ensureObject(portType, "Must provide a port type!");
+
         // Retrieving the port in a threaded capacity is highly synchronized.
         // By prefetching here, all subsequent calls happen very fast.
         service.getPort(portType);
 
-        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{portType}, new PortInvocationHandler(securityMgr, this, service, portType));
+        // The type returned can also be cast to a SecurityMgr.  Useful if default
+        // implementations are used for SecurityMgr - the user of the proxy can
+        // then get the SecurityMgr used by casting and using...
+        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{portType, SecurityMgr.class}, new PortInvocationHandler(securityMgr, this, service, portType));
     }
 
     /**

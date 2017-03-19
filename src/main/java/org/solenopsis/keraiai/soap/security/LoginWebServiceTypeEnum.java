@@ -65,4 +65,14 @@ public enum LoginWebServiceTypeEnum implements LoginPortFactory {
 
         return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), SecurityUtils.computeLoginUrl(securityMgr, getWebServiceType()));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <P> P createLoginSessionPort(final SecurityMgr securityMgr) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+
+        return getWebServiceType().createSessionPort(securityMgr, getWebServiceType().getWebService().getService());
+    }
 }

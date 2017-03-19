@@ -132,6 +132,12 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
 
         log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass().getName(), method.getName());
 
+        // If we are being asked to invoke a SecurityMgr method,
+        // use our member to do it...
+        if (PortUtils.isSecurityMgrMethod(method)) {
+            return method.invoke(getSecurityMgr(), args);
+        }
+
         int totalCalls = 0;
         Throwable toRaise = null;
         final Map<String, Integer> callFailureTotal = new TreeMap<>();

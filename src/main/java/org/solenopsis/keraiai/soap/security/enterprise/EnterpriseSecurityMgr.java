@@ -41,23 +41,23 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     @Override
     protected Soap createSessionPort() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginSessionPort(this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected LoginContext doLogin() throws Exception {
-        return new EnterpriseLoginContext(((Soap) LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginPort(this)).login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
+    protected LoginContext doLogin(final Soap port) throws Exception {
+        return new EnterpriseLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doLogout() throws Exception {
-        ((Soap) LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.getWebServiceType().createSessionPort(this, LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.getWebServiceType().getWebService().getService())).logout();
+    protected void doLogout(final Soap port) throws Exception {
+        port.logout();
     }
 
     /**
@@ -67,15 +67,5 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      */
     public EnterpriseSecurityMgr(final Credentials credentials) {
         super(credentials);
-    }
-
-    @Override
-    protected LoginContext doLogin(Soap port) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void doLogout(Soap port) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

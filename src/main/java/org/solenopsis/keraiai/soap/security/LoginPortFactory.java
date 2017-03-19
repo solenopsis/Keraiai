@@ -24,7 +24,6 @@ import org.solenopsis.keraiai.SecurityMgr;
  * @author Scot P. Floess
  */
 public interface LoginPortFactory {
-
     /**
      * Creates a login port to an SFDC web service (either enterprise, partner or tooling).
      *
@@ -35,4 +34,15 @@ public interface LoginPortFactory {
      * @return a usable login port.
      */
     public <P> P createLoginPort(final SecurityMgr securityMgr);
+
+    /**
+     * Creates a login session port to an SFDC web service (either enterprise, partner or tooling). Allowing one to call logout.
+     *
+     * @param <P>         the type of port being created.
+     *
+     * @param securityMgr contains credentials whose "base" url and the API version used to construct the URL.
+     *
+     * @return a usable login port.
+     */
+    public <P> P createLoginSessionPort(final SecurityMgr securityMgr);
 }
