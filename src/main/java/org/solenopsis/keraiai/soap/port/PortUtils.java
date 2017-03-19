@@ -271,7 +271,7 @@ final class PortUtils {
 
     /**
      * Compute the port name for the <code>service</code> - if self is a custom web service, it's the name of the QName of the port
-     * on the service, otherwise it's the API versio.
+     * on the service, otherwise it's the API version.
      *
      * @param apiVersion     the API version.
      * @param webServiceType the type of web service.

@@ -21,9 +21,11 @@ import java.net.URL;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
+import org.flossware.jcore.utils.soap.SoapUtils;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.WebServiceEnum;
 import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
+import org.solenopsis.keraiai.soap.security.SecurityUtils;
 
 /**
  * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session ports
@@ -98,6 +100,26 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      */
     public WebServiceEnum getWebService() {
         return webService;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <P> P createLoginPort(final SecurityMgr securityMgr) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+
+        return SoapUtils.setUrl((P) getWebService().createPort(), SecurityUtils.computeLoginUrl(securityMgr, getWebServiceType()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <P> P createLoginSessionPort(final SecurityMgr securityMgr) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+
+        return createProxyPort(securityMgr, getWebServiceType().getWebService().getService());
     }
 
     /**

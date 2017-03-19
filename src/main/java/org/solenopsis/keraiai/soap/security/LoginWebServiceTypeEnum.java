@@ -16,9 +16,6 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
-import org.flossware.jcore.utils.ObjectUtils;
-import org.flossware.jcore.utils.soap.SoapUtils;
-import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
 /**
@@ -54,25 +51,5 @@ public enum LoginWebServiceTypeEnum implements LoginPortFactory {
      */
     public WebServiceTypeEnum getWebServiceType() {
         return apiWebserviceType;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <P> P createLoginPort(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return SoapUtils.setUrl((P) getWebServiceType().getWebService().createPort(), SecurityUtils.computeLoginUrl(securityMgr, getWebServiceType()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <P> P createLoginSessionPort(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return getWebServiceType().createProxyPort(securityMgr, getWebServiceType().getWebService().getService());
     }
 }
