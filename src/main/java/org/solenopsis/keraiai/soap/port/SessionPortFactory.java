@@ -26,9 +26,30 @@ import org.solenopsis.keraiai.SecurityMgr;
  * @author Scot P. Floess
  */
 public interface SessionPortFactory {
+    /**
+     * Create a vanilla port that has the URL set for the web service call.
+     *
+     * @param <P>         the type of port to create.
+     *
+     * @param securityMgr used for logins and session ids.
+     *
+     * @return the create port.
+     */
+    public <P> P createPort(final SecurityMgr securityMgr);
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
+     * Create a session based port that will have the URL and session id set for web service calls.
+     *
+     * @param <P>         the type of port desired.
+     *
+     * @param securityMgr used for logins and session ids.
+     *
+     * @return a session based port.
+     */
+    public <P> P createSessionPort(final SecurityMgr securityMgr);
+
+    /**
+     * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
      *
      * @param <S>         the type of web service being used.
      * @param <P>         the type of port desired.
@@ -42,7 +63,7 @@ public interface SessionPortFactory {
     public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
+     * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
      *
      * @param <S>         the type of web service being used.
      * @param <P>         the type of port desired.
@@ -55,7 +76,7 @@ public interface SessionPortFactory {
     public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final S service);
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
+     * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
      *
      * @param <S>          the type of web service being used.
      * @param <P>          the type of port desired.
@@ -69,7 +90,7 @@ public interface SessionPortFactory {
     public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource);
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
+     * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
      *
      * @param <S>          the type of web service being used.
      * @param <P>          the type of port desired.
