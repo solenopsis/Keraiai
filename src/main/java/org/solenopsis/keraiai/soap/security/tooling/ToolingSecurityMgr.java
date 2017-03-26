@@ -32,22 +32,6 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      * {@inheritDoc}
      */
     @Override
-    protected SforceServicePortType createLoginPort() {
-        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected SforceServicePortType createSessionPort() {
-        return LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE.createLoginSessionPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected LoginContext doLogin(final SforceServicePortType port) throws Exception {
         return new ToolingLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
@@ -66,6 +50,6 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      * @param credentials our credentials.
      */
     public ToolingSecurityMgr(final Credentials credentials) {
-        super(credentials);
+        super(LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE, credentials);
     }
 }

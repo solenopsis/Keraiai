@@ -141,7 +141,7 @@ public class WebServiceTypeEnumTest {
     }
 
     /**
-     * Test computeSessionUrl().
+     * Test computeUrl().
      */
     @Test
     public void test_computeSessionUrl_SecurityMgr_Service() {
@@ -150,10 +150,10 @@ public class WebServiceTypeEnumTest {
             String actualUrl = baseUrl + "/" + webServiceTypeEnum.getWebServiceSubUrl().getPartialUrl() + "/";
 
             if (WebServiceTypeEnum.CUSTOM_SERVICE_TYPE == webServiceTypeEnum) {
-                computedUrl = PortUtils.computeSessionUrl(securityMgr, webServiceTypeEnum, new StubService());
+                computedUrl = PortUtils.computeUrl(securityMgr, webServiceTypeEnum, new StubService());
                 actualUrl += "Web_Endpoint_Method";
             } else {
-                computedUrl = PortUtils.computeSessionUrl(securityMgr, webServiceTypeEnum, webServiceTypeEnum.getWebService().getService());
+                computedUrl = PortUtils.computeUrl(securityMgr, webServiceTypeEnum, webServiceTypeEnum.getWebService().getService());
                 actualUrl += apiVersion;
             }
 

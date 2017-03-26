@@ -596,7 +596,7 @@ public class PortUtilsTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void test_computeSessionUrl_null() {
-        PortUtils.computeSessionUrl(null, WebServiceTypeEnum.APEX_SERVICE_TYPE, service);
+        PortUtils.computeUrl(null, WebServiceTypeEnum.APEX_SERVICE_TYPE, service);
     }
 
     /**
@@ -612,7 +612,7 @@ public class PortUtilsTest {
 
         final String toCompare = baseServerUrl + "/" + WebServiceSubUrlEnum.TOOLING_TYPE.getPartialUrl() + "/" + portName;
 
-        Assert.assertEquals("Should be the correct session url", toCompare, PortUtils.computeSessionUrl(securityMgr, WebServiceTypeEnum.TOOLING_SERVICE_TYPE, service));
+        Assert.assertEquals("Should be the correct session url", toCompare, PortUtils.computeUrl(securityMgr, WebServiceTypeEnum.TOOLING_SERVICE_TYPE, service));
     }
 
     /**

@@ -21,7 +21,6 @@ import java.net.URL;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
-import org.flossware.jcore.utils.soap.SoapUtils;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.soap.WebServiceEnum;
 import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
@@ -105,20 +104,16 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      * {@inheritDoc}
      */
     @Override
-    public <P> P createPort(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return SoapUtils.setUrl((P) getWebService().createPort(), SecurityUtils.computeLoginUrl(securityMgr, this));
+    public <P> P createPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
+        return PortUtils.createPort(this, securityMgr, service, portType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <P> P createSessionPort(final SecurityMgr securityMgr) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
-
-        return createProxyPort(securityMgr, getWebService().getService());
+    public <P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
+        return PortUtils.createSessionPort(this, securityMgr, service, portType);
     }
 
     /**

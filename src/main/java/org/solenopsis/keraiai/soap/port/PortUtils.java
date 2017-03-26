@@ -366,12 +366,10 @@ final class PortUtils {
      * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
      *
      * @param securityMgr contains session id and credentials.
-     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                    it is the API version found in <code>securityMgr</code>'s session.
      *
      * @return the computed session URL.
      */
-    static String computeSessionUrlFromBaseServerUrl(final String baseServerUrl, final WebServiceTypeEnum webServiceType, final Service service, final String portName) {
+    static String computeSessionUrlFromBaseServerUrl(final String baseServerUrl, final WebServiceTypeEnum webServiceType, final String portName) {
         StringUtils.ensureString(baseServerUrl, "Must provide a base server url!");
         StringUtils.ensureString(portName, "Must provide a port name!");
 
@@ -384,15 +382,13 @@ final class PortUtils {
      * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
      *
      * @param securityMgr contains session id and credentials.
-     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                    it is the API version found in <code>securityMgr</code>'s session.
      *
      * @return the computed session URL.
      */
-    static String computeSessionUrlFromLoginContext(final LoginContext loginContext, final WebServiceTypeEnum webServiceType, final Service service, final String portName) {
+    static String computeSessionUrlFromLoginContext(final LoginContext loginContext, final WebServiceTypeEnum webServiceType, final String portName) {
         ObjectUtils.ensureObject(loginContext, "Must provide a login context!");
 
-        return computeSessionUrlFromBaseServerUrl(loginContext.getBaseServerUrl(), webServiceType, service, portName);
+        return computeSessionUrlFromBaseServerUrl(loginContext.getBaseServerUrl(), webServiceType, portName);
     }
 
     /**
@@ -406,10 +402,28 @@ final class PortUtils {
      *
      * @return the computed session URL.
      */
-    static String computeSessionUrl(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service) {
+    static String computeUrl(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
 
-        return computeSessionUrlFromLoginContext(securityMgr.getSession(), webServiceType, service, computePortNameFromSecurityMgr(securityMgr, webServiceType, service));
+        return computeSessionUrlFromLoginContext(securityMgr.getSession(), webServiceType, computePortNameFromSecurityMgr(securityMgr, webServiceType, service));
+    }
+
+    static <P> P createPort(final SecurityMgr securityMgr, final Service service, final Class portType, final String url) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+        ObjectUtils.ensureObject(service, "Must probide a service!");
+        ObjectUtils.ensureObject(portType, "Must provide a port type!");
+        StringUtils.ensureString(url, "Must provide a URL!");
+
+        final P port = (P) service.getPort(portType);
+        SoapUtils.setUrl(port, url);
+
+        LoggerUtils.log(getLogger(), Level.FINE, "Port = [{0}]", port);
+
+        return port;
+    }
+
+    static <P> P createPort(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
+        return createPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr));
     }
 
     /**
@@ -422,19 +436,18 @@ final class PortUtils {
      *
      * @return a usable port that has session id and URL set.
      */
-    static Object createSessionPort(final SecurityMgr securityMgr, final Service service, final Class portType, final String url) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
-        ObjectUtils.ensureObject(service, "Must probide a service!");
-        ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        StringUtils.ensureString(url, "Must provide a URL!");
+    static <P> P createSessionPort(final SecurityMgr securityMgr, final Service service, final Class portType, final String url) {
+        final P port = createPort(securityMgr, service, portType, url);
 
-        final Object port = service.getPort(portType);
         SoapUtils.setHandler(port, new SessionIdSoapRequestHeaderHandler(securityMgr, service));
-        SoapUtils.setUrl(port, url);
 
-        LoggerUtils.log(getLogger(), Level.FINE, "Port = [{0}]", port);
+        LoggerUtils.log(getLogger(), Level.FINE, "Session Port = [{0}]", port);
 
         return port;
+    }
+
+    static <P> P createSessionPort(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
+        return createSessionPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr));
     }
 
     /**

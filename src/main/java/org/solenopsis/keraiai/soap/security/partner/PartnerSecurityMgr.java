@@ -32,22 +32,6 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      * {@inheritDoc}
      */
     @Override
-    protected Soap createLoginPort() {
-        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Soap createSessionPort() {
-        return LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE.createLoginSessionPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected LoginContext doLogin(final Soap port) throws Exception {
         return new PartnerLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
@@ -66,6 +50,6 @@ public class PartnerSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public PartnerSecurityMgr(final Credentials credentials) {
-        super(credentials);
+        super(LoginWebServiceTypeEnum.PARTNER_LOGIN_SERVICE, credentials);
     }
 }

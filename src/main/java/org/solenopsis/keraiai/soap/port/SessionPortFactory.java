@@ -35,7 +35,7 @@ public interface SessionPortFactory {
      *
      * @return the create port.
      */
-    public <P> P createPort(final SecurityMgr securityMgr);
+    public <P> P createPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a session based port that will have the URL and session id set for web service calls.
@@ -46,7 +46,7 @@ public interface SessionPortFactory {
      *
      * @return a session based port.
      */
-    public <P> P createSessionPort(final SecurityMgr securityMgr);
+    public <P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.

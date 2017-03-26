@@ -32,22 +32,6 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      * {@inheritDoc}
      */
     @Override
-    protected Soap createLoginPort() {
-        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Soap createSessionPort() {
-        return LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE.createLoginSessionPort(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected LoginContext doLogin(final Soap port) throws Exception {
         return new EnterpriseLoginContext(port.login(getCredentials().getUserName(), getCredentials().getSecurityPassword()), getCredentials());
     }
@@ -66,6 +50,6 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public EnterpriseSecurityMgr(final Credentials credentials) {
-        super(credentials);
+        super(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
     }
 }

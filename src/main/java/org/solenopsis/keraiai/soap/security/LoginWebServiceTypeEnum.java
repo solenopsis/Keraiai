@@ -24,7 +24,7 @@ import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
  *
  * @author Scot P. Floess
  */
-public enum LoginWebServiceTypeEnum implements LoginPortFactory {
+public enum LoginWebServiceTypeEnum {
     ENTERPRISE_LOGIN_SERVICE(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE),
     PARTNER_LOGIN_SERVICE(WebServiceTypeEnum.PARTNER_SERVICE_TYPE),
     TOOLING_LOGIN_SERVICE(WebServiceTypeEnum.TOOLING_SERVICE_TYPE);
