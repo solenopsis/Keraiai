@@ -21,6 +21,7 @@ import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.credentials.CredentialsUtils;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
 /**
@@ -53,7 +54,7 @@ final class SecurityUtils {
      * @throws IllegalArgumentException if <code>credentials</code> or <code>webServiceType</code> are null.
      */
     static String computeLoginUrl(final Credentials credentials, final WebServiceTypeEnum webServiceType) {
-        ObjectUtils.ensureObject(credentials, "Must provide credentials!");
+        CredentialsUtils.ensureCredentials(credentials, "Must provide credentials!");
         ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
 
         return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());

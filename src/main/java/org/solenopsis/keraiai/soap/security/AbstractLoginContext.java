@@ -19,6 +19,7 @@ package org.solenopsis.keraiai.soap.security;
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.StringUtils;
+import org.flossware.jcore.utils.net.UrlUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 
@@ -58,7 +59,7 @@ public abstract class AbstractLoginContext<T> extends AbstractCommonBase impleme
     protected AbstractLoginContext(final T loginResult, final Credentials credentials, final String serverUrl) {
         this.loginResult = ObjectUtils.ensureObject(loginResult, "Must provide a login result");
         this.credentials = ObjectUtils.ensureObject(credentials, "Credentials must not be null");
-        this.baseUrl = SecurityUtils.computeUrlString(StringUtils.ensureString(serverUrl, "Must provide a server url!"));
+        this.baseUrl = UrlUtils.computeProtocolAndHostString(StringUtils.ensureString(serverUrl, "Must provide a server url!"));
     }
 
     /**
