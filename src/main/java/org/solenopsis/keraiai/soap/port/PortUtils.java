@@ -34,6 +34,7 @@ import org.flossware.jcore.utils.soap.SoapUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.credentials.CredentialsUtils;
 import static org.solenopsis.keraiai.soap.port.WebServiceTypeEnum.CUSTOM_SERVICE_TYPE;
 import org.solenopsis.keraiai.soap.utils.ExceptionUtils;
 
@@ -267,6 +268,40 @@ final class PortUtils {
      */
     static boolean isCustomWebService(final WebServiceTypeEnum webServiceType) {
         return webServiceType == CUSTOM_SERVICE_TYPE;
+    }
+
+    /**
+     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
+     *
+     * @param credentials    contains the "base" url and the API version used to construct the URL.
+     * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
+     *
+     * @return a login URL.
+     *
+     * @throws IllegalArgumentException if <code>credentials</code> or <code>webServiceType</code> are null.
+     */
+    static String computeLoginUrl(final Credentials credentials, final WebServiceTypeEnum webServiceType) {
+        CredentialsUtils.ensureCredentials(credentials, "Must provide credentials!");
+        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
+
+        return StringUtils.concatWithSeparator(false, "/", credentials.getUrl(), webServiceType.getWebServiceSubUrl().getPartialUrl(), credentials.getApiVersion());
+    }
+
+    /**
+     * Compute the login URL from credentials - the API version from the credentials is used in the URL.
+     *
+     * @param securityMgr    contains credentials whose "base" url and the API version used to construct the URL.
+     * @param webServiceType is the type of web service being called. It contains the partial URL we need to compute a login URL.
+     *
+     * @return a login URL.
+     *
+     * @throws IllegalArgumentException if <code>securityMgr</code> is null.
+     */
+    static String computeLoginUrl(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType) {
+        ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
+        ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
+
+        return computeLoginUrl(securityMgr.getCredentials(), webServiceType);
     }
 
     /**

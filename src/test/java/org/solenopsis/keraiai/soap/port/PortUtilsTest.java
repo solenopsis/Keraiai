@@ -88,6 +88,69 @@ public class PortUtilsTest {
     }
 
     /**
+     * Test computing if a WebServiceTypeEnum is a custom web service.
+     */
+    @Test
+    public void test_isCustomWebService() {
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(null));
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.APEX_SERVICE_TYPE));
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.METADATA_SERVICE_TYPE));
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.PARTNER_SERVICE_TYPE));
+        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.TOOLING_SERVICE_TYPE));
+
+        Assert.assertTrue("Should be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.CUSTOM_SERVICE_TYPE));
+    }
+
+    /**
+     * Test computing a login url with null credentials.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_credentials_webServiceType_null_credentials() {
+        PortUtils.computeLoginUrl((Credentials) null, WebServiceTypeEnum.APEX_SERVICE_TYPE);
+    }
+
+    /**
+     * Test computing a login url with null web service type.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_credentials_webServiceType_null_webServiceType() {
+        PortUtils.computeLoginUrl(credentials, null);
+    }
+
+    /**
+     * Test computing a login url.
+     */
+    @Test
+    public void test_computeLoginUrl_credentials_webServiceType() {
+        Assert.assertEquals("Should be the correct login url", "http://foo.com/services/Soap/c/31.0", PortUtils.computeLoginUrl(credentials, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
+    }
+
+    /**
+     * Test computing a login url with null credentials.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_securityMgr_webServiceType_null_credentials() {
+        PortUtils.computeLoginUrl((SecurityMgr) null, WebServiceTypeEnum.APEX_SERVICE_TYPE);
+    }
+
+    /**
+     * Test computing a login url with null web service type.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_securityMgr_webServiceType_null_webServiceType() {
+        PortUtils.computeLoginUrl(securityMgr, null);
+    }
+
+    /**
+     * Test computing a login url.
+     */
+    @Test
+    public void test_computeLoginUrl_securityMgr_webServiceType() {
+        Assert.assertEquals("Should be the correct login url", "http://foo.com/services/Soap/c/31.0", PortUtils.computeLoginUrl(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
+    }
+
+    /**
      * Test computing a session header name with a null String.
      */
     @Test(expected = IllegalArgumentException.class)
@@ -253,21 +316,6 @@ public class PortUtilsTest {
 
         PortUtils.processException(new NullPointerException(ExceptionUtils.INVALID_SESSION_ID), method);
         PortUtils.processException(new IllegalArgumentException(TestUtils.generateUniqueStr(), new IOException(TestUtils.generateUniqueStr())), method);
-    }
-
-    /**
-     * Test computing if a WebServiceTypeEnum is a custom web service.
-     */
-    @Test
-    public void test_isCustomWebService() {
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(null));
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.APEX_SERVICE_TYPE));
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.METADATA_SERVICE_TYPE));
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.PARTNER_SERVICE_TYPE));
-        Assert.assertFalse("Should not be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.TOOLING_SERVICE_TYPE));
-
-        Assert.assertTrue("Should be a custom web service", PortUtils.isCustomWebService(WebServiceTypeEnum.CUSTOM_SERVICE_TYPE));
     }
 
     /**
