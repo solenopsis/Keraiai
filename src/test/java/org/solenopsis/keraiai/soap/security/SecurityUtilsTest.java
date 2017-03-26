@@ -18,9 +18,16 @@ package org.solenopsis.keraiai.soap.security;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
 /**
  * Tests the SecurityUtils class.
@@ -29,6 +36,22 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SecurityUtilsTest {
+    @Mock
+    Credentials credentials;
+
+    @Mock
+    SecurityMgr securityMgr;
+
+    @Before
+    public void setup() {
+        Mockito.when(credentials.getApiVersion()).thenReturn("31.0");
+        Mockito.when(credentials.getPassword()).thenReturn("password");
+        Mockito.when(credentials.getToken()).thenReturn("token");
+        Mockito.when(credentials.getUrl()).thenReturn("http://foo.com");
+        Mockito.when(credentials.getUserName()).thenReturn("username");
+
+        Mockito.when(securityMgr.getCredentials()).thenReturn(credentials);
+    }
 
     /**
      * Tests the constructor.
@@ -40,4 +63,51 @@ public class SecurityUtilsTest {
         constructor.newInstance(new Object[0]);
     }
 
+    /**
+     * Test computing a login url with null credentials.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_credentials_webServiceType_null_credentials() {
+        SecurityUtils.computeLoginUrl((Credentials) null, WebServiceTypeEnum.APEX_SERVICE_TYPE);
+    }
+
+    /**
+     * Test computing a login url with null web service type.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_credentials_webServiceType_null_webServiceType() {
+        SecurityUtils.computeLoginUrl(credentials, null);
+    }
+
+    /**
+     * Test computing a login url.
+     */
+    @Test
+    public void test_computeLoginUrl_credentials_webServiceType() {
+        Assert.assertEquals("Should be the correct login url", "http://foo.com/services/Soap/c/31.0", SecurityUtils.computeLoginUrl(credentials, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
+    }
+
+    /**
+     * Test computing a login url with null credentials.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_securityMgr_webServiceType_null_credentials() {
+        SecurityUtils.computeLoginUrl((SecurityMgr) null, WebServiceTypeEnum.APEX_SERVICE_TYPE);
+    }
+
+    /**
+     * Test computing a login url with null web service type.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeLoginUrl_securityMgr_webServiceType_null_webServiceType() {
+        SecurityUtils.computeLoginUrl(securityMgr, null);
+    }
+
+    /**
+     * Test computing a login url.
+     */
+    @Test
+    public void test_computeLoginUrl_securityMgr_webServiceType() {
+        Assert.assertEquals("Should be the correct login url", "http://foo.com/services/Soap/c/31.0", SecurityUtils.computeLoginUrl(securityMgr, WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE));
+    }
 }

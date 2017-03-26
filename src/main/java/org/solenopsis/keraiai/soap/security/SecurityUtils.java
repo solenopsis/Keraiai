@@ -32,15 +32,21 @@ import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 final class SecurityUtils {
 
     /**
-     * Our LOGGER.
+     * Our logger.
      */
     private static final Logger LOGGER = Logger.getLogger(SecurityUtils.class.getName());
 
     /**
-     * Return the LOGGER.
+     * Return the logger.
      */
     private static Logger getLogger() {
         return LOGGER;
+    }
+
+    /**
+     * Default constructor not allowed.
+     */
+    private SecurityUtils() {
     }
 
     /**
@@ -77,9 +83,4 @@ final class SecurityUtils {
         return computeLoginUrl(securityMgr.getCredentials(), webServiceType);
     }
 
-    /**
-     * Default constructor not allowed.
-     */
-    private SecurityUtils() {
-    }
 }
