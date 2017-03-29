@@ -31,12 +31,12 @@ import org.solenopsis.keraiai.wsdl.tooling.SforceServiceService;
  *
  * @author Scot P. Floess
  */
-public enum WebServiceEnum {
-    APEX_SERVICE(new ApexService(WebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-apex.wsdl")), ApexPortType.class),
-    ENTERPRISE_SERVICE(new SforceService(WebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-enterprise.wsdl")), Soap.class),
-    METADATA_SERVICE(new MetadataService(WebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-metadata.wsdl")), MetadataPortType.class),
-    PARTNER_SERVICE(new org.solenopsis.keraiai.wsdl.partner.SforceService(WebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-partner.wsdl")), org.solenopsis.keraiai.wsdl.partner.Soap.class),
-    TOOLING_SERVICE(new SforceServiceService(WebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-tooling.wsdl")), SforceServicePortType.class);
+public enum ApiWebServiceEnum implements ApiWebService {
+    APEX_SERVICE(new ApexService(ApiWebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-apex.wsdl")), ApexPortType.class),
+    ENTERPRISE_SERVICE(new SforceService(ApiWebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-enterprise.wsdl")), Soap.class),
+    METADATA_SERVICE(new MetadataService(ApiWebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-metadata.wsdl")), MetadataPortType.class),
+    PARTNER_SERVICE(new org.solenopsis.keraiai.wsdl.partner.SforceService(ApiWebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-partner.wsdl")), org.solenopsis.keraiai.wsdl.partner.Soap.class),
+    TOOLING_SERVICE(new SforceServiceService(ApiWebServiceEnum.class.getClassLoader().getResource("wsdl/Keraiai-tooling.wsdl")), SforceServicePortType.class);
 
     /**
      * The SFDC web service.
@@ -51,39 +51,34 @@ public enum WebServiceEnum {
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
      *
-     * @param service the SFDC web service.
-     * @param portType   the port for the web service.
+     * @param service  the SFDC web service.
+     * @param portType the port for the web service.
      */
-    private WebServiceEnum(final Service service, final Class portType) {
+    private ApiWebServiceEnum(final Service service, final Class portType) {
         this.service = service;
         this.portType = portType;
     }
 
     /**
-     * Return the SFDC web service.
-     *
-     * @return the SFDC web service.
+     * {@inheritDoc}
      */
+    @Override
     public Service getService() {
         return service;
     }
 
     /**
-     * Return the port for the web service.
-     *
-     * @return the port for the web service.
+     * {@inheritDoc}
      */
+    @Override
     public Class getPortType() {
         return portType;
     }
 
     /**
-     * Return an instantiated port that can be called against the web service.
-     *
-     * @param <P> The type of port desired.
-     *
-     * @return the port.
+     * {@inheritDoc}
      */
+    @Override
     public <P> P createPort() {
         return (P) getService().getPort(getPortType());
     }

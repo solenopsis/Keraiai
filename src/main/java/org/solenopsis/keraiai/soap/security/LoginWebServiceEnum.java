@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.security;
 
+import org.solenopsis.keraiai.soap.port.WebServiceType;
 import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
 
 /**
@@ -24,7 +25,7 @@ import org.solenopsis.keraiai.soap.port.WebServiceTypeEnum;
  *
  * @author Scot P. Floess
  */
-public enum LoginWebServiceTypeEnum {
+public enum LoginWebServiceEnum implements LoginWebService {
     ENTERPRISE_LOGIN_SERVICE(WebServiceTypeEnum.ENTERPRISE_SERVICE_TYPE),
     PARTNER_LOGIN_SERVICE(WebServiceTypeEnum.PARTNER_SERVICE_TYPE),
     TOOLING_LOGIN_SERVICE(WebServiceTypeEnum.TOOLING_SERVICE_TYPE);
@@ -32,7 +33,7 @@ public enum LoginWebServiceTypeEnum {
     /**
      * The actual web service type.
      */
-    private final WebServiceTypeEnum apiWebserviceType;
+    private final WebServiceType webServiceType;
 
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
@@ -40,16 +41,15 @@ public enum LoginWebServiceTypeEnum {
      * @param webService the SFDC web service.
      * @param portType   the port for the web service.
      */
-    private LoginWebServiceTypeEnum(final WebServiceTypeEnum loginWebserviceType) {
-        this.apiWebserviceType = loginWebserviceType;
+    private LoginWebServiceEnum(final WebServiceType webServiceType) {
+        this.webServiceType = webServiceType;
     }
 
     /**
-     * Return the login web service type.
-     *
-     * @return the login web service type.
+     * {@inheritDoc}
      */
-    public WebServiceTypeEnum getWebServiceType() {
-        return apiWebserviceType;
+    @Override
+    public WebServiceType getWebServiceType() {
+        return webServiceType;
     }
 }

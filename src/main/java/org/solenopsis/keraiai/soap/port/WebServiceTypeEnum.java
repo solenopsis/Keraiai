@@ -22,8 +22,9 @@ import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.solenopsis.keraiai.SecurityMgr;
-import org.solenopsis.keraiai.soap.WebServiceEnum;
+import org.solenopsis.keraiai.soap.ApiWebServiceEnum;
 import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
+import org.solenopsis.keraiai.soap.ApiWebService;
 
 /**
  * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session ports
@@ -60,15 +61,15 @@ import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
  *
  * @author Scot P. Floess
  */
-public enum WebServiceTypeEnum implements SessionPortFactory {
-    APEX_SERVICE_TYPE(WebServiceEnum.APEX_SERVICE, WebServiceSubUrlEnum.APEX_TYPE),
+public enum WebServiceTypeEnum implements WebServiceType {
+    APEX_SERVICE_TYPE(ApiWebServiceEnum.APEX_SERVICE, WebServiceSubUrlEnum.APEX_TYPE),
     CUSTOM_SERVICE_TYPE(null, WebServiceSubUrlEnum.CUSTOM_TYPE),
-    ENTERPRISE_SERVICE_TYPE(WebServiceEnum.ENTERPRISE_SERVICE, WebServiceSubUrlEnum.ENTERPRISE_TYPE),
-    METADATA_SERVICE_TYPE(WebServiceEnum.METADATA_SERVICE, WebServiceSubUrlEnum.METADATA_TYPE),
-    PARTNER_SERVICE_TYPE(WebServiceEnum.PARTNER_SERVICE, WebServiceSubUrlEnum.PARTNER_TYPE),
-    TOOLING_SERVICE_TYPE(WebServiceEnum.TOOLING_SERVICE, WebServiceSubUrlEnum.TOOLING_TYPE);
+    ENTERPRISE_SERVICE_TYPE(ApiWebServiceEnum.ENTERPRISE_SERVICE, WebServiceSubUrlEnum.ENTERPRISE_TYPE),
+    METADATA_SERVICE_TYPE(ApiWebServiceEnum.METADATA_SERVICE, WebServiceSubUrlEnum.METADATA_TYPE),
+    PARTNER_SERVICE_TYPE(ApiWebServiceEnum.PARTNER_SERVICE, WebServiceSubUrlEnum.PARTNER_TYPE),
+    TOOLING_SERVICE_TYPE(ApiWebServiceEnum.TOOLING_SERVICE, WebServiceSubUrlEnum.TOOLING_TYPE);
 
-    private final WebServiceEnum webService;
+    private final ApiWebService webService;
     private final WebServiceSubUrlEnum webServiceSubUrl;
 
     /**
@@ -77,7 +78,7 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      * @param webServiceType   the SFDC web service.
      * @param webServiceSubUrl the port for the web service.
      */
-    private WebServiceTypeEnum(final WebServiceEnum webService, final WebServiceSubUrlEnum webServiceSubUrl) {
+    private WebServiceTypeEnum(final ApiWebService webService, final WebServiceSubUrlEnum webServiceSubUrl) {
         this.webService = webService;
         this.webServiceSubUrl = webServiceSubUrl;
     }
@@ -96,7 +97,7 @@ public enum WebServiceTypeEnum implements SessionPortFactory {
      *
      * @return the web service or null if none exists.
      */
-    public WebServiceEnum getWebService() {
+    public ApiWebService getWebService() {
         return webService;
     }
 

@@ -19,7 +19,7 @@ package org.solenopsis.keraiai.soap.security.tooling;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
-import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
+import org.solenopsis.keraiai.soap.security.LoginWebServiceEnum;
 import org.solenopsis.keraiai.wsdl.tooling.SforceServicePortType;
 
 /**
@@ -50,6 +50,6 @@ public class ToolingSecurityMgr extends AbstractSecurityMgr<SforceServicePortTyp
      * @param credentials our credentials.
      */
     public ToolingSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.TOOLING_LOGIN_SERVICE, credentials);
+        super(LoginWebServiceEnum.TOOLING_LOGIN_SERVICE, credentials);
     }
 }

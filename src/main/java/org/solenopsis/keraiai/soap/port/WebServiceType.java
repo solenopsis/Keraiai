@@ -25,7 +25,7 @@ import org.solenopsis.keraiai.SecurityMgr;
  *
  * @author Scot P. Floess
  */
-public interface SessionPortFactory {
+public interface WebServiceType {
     /**
      * Create a vanilla port that has the URL set for the web service call.
      *

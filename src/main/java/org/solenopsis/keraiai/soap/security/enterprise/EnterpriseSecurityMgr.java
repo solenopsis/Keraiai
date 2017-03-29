@@ -19,7 +19,7 @@ package org.solenopsis.keraiai.soap.security.enterprise;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.security.AbstractSecurityMgr;
-import org.solenopsis.keraiai.soap.security.LoginWebServiceTypeEnum;
+import org.solenopsis.keraiai.soap.security.LoginWebServiceEnum;
 import org.solenopsis.keraiai.wsdl.enterprise.Soap;
 
 /**
@@ -50,6 +50,6 @@ public class EnterpriseSecurityMgr extends AbstractSecurityMgr<Soap> {
      * @param credentials our credentials.
      */
     public EnterpriseSecurityMgr(final Credentials credentials) {
-        super(LoginWebServiceTypeEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
+        super(LoginWebServiceEnum.ENTERPRISE_LOGIN_SERVICE, credentials);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Scot P. Floess
+ * Copyright (C) 2015 Scot P. Floess
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,34 @@
  */
 package org.solenopsis.keraiai.soap;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import javax.xml.ws.Service;
 
 /**
- * Tests the ApiWebServiceEnum class.
+ * This interface denotes the built in API SFDC web services.
  *
  * @author Scot P. Floess
  */
-@RunWith(MockitoJUnitRunner.class)
-public class WebServiceEnumTest {
+public interface ApiWebService {
+    /**
+     * Return the SFDC web service.
+     *
+     * @return the SFDC web service.
+     */
+    public Service getService();
 
-    @Test
-    public void test_values() {
-        for (final ApiWebServiceEnum webServiceEnum : ApiWebServiceEnum.values()) {
-            Assert.assertNotNull("Should have a service", webServiceEnum.getService());
-            Assert.assertNotNull("Should have a port type", webServiceEnum.getPortType());
-            Assert.assertNotNull("Should have a port", webServiceEnum.createPort());
-        }
-    }
+    /**
+     * Return the port for the web service.
+     *
+     * @return the port for the web service.
+     */
+    public Class getPortType();
+
+    /**
+     * Return an instantiated port that can be called against the web service.
+     *
+     * @param <P> The type of port desired.
+     *
+     * @return the port.
+     */
+    public <P> P createPort();
 }

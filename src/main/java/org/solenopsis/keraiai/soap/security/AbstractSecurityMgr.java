@@ -33,7 +33,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     /**
      * The type of login web service.
      */
-    private final LoginWebServiceTypeEnum loginWebServiceType;
+    private final LoginWebService loginWebService;
 
     /**
      * Used for session based logins.
@@ -54,8 +54,8 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         return loginContext;
     }
 
-    private LoginWebServiceTypeEnum getLoginWebServiceType() {
-        return loginWebServiceType;
+    private LoginWebService getLoginWebService() {
+        return loginWebService;
     }
 
     /**
@@ -83,8 +83,8 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      *
      * @throws IllegalArgumentException if any params are null.
      */
-    protected AbstractSecurityMgr(final LoginWebServiceTypeEnum loginWebServiceType, final Credentials credentials) {
-        this.loginWebServiceType = ObjectUtils.ensureObject(loginWebServiceType, "Must provide a LoginWebServiceTypeEnum");
+    protected AbstractSecurityMgr(final LoginWebService loginWebService, final Credentials credentials) {
+        this.loginWebService = ObjectUtils.ensureObject(loginWebService, "Must provide a LoginWebService");
         this.credentials = ObjectUtils.ensureObject(credentials, "Must have credentials");
     }
 
@@ -124,7 +124,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            getLoginContext().set(doLogin((P) getLoginWebServiceType().getWebServiceType().createPort(this, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType())));
+            getLoginContext().set(doLogin((P) getLoginWebService().getWebServiceType().createPort(this, getLoginWebService(), portType);
             return getLoginContext().get();
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
@@ -141,7 +141,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout((P) getLoginWebServiceType().getWebServiceType().createSessionPort(this, getLoginWebServiceType().getWebServiceType().getWebService().getService(), getLoginWebServiceType().getWebServiceType().getWebService().getPortType()));
+            doLogout((P) getLoginWebService().getWebServiceType().createSessionPort(this, getLoginWebService().getWebServiceType().getWebService().getService(), getLoginWebService().getWebServiceType().getWebService().getPortType()));
             getLoginContext().set(null);
         } catch (final RuntimeException runtimeException) {
             getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);
