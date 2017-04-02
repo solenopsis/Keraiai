@@ -26,7 +26,7 @@
         <java_version>1.7</java_version>
 
         <com.github.github_site-maven-plugin_version>0.12</com.github.github_site-maven-plugin_version>
-        <org.apache.maven.plugins_maven-compiler-plugin_version>3.5.1</org.apache.maven.plugins_maven-compiler-plugin_version>
+        <org.apache.maven.plugins_maven-compiler-plugin_version>3.6.1</org.apache.maven.plugins_maven-compiler-plugin_version>
         <org.apache.maven.plugins_maven-surefire-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-plugin_version>
         <org.apache.maven.plugins_maven-project-info-reports-plugin_version>2.9</org.apache.maven.plugins_maven-project-info-reports-plugin_version>
         <org.apache.maven.plugins_maven-javadoc-plugin_version>2.10.4</org.apache.maven.plugins_maven-javadoc-plugin_version>
@@ -35,7 +35,7 @@
         <org.apache.maven.plugins_maven-pmd-plugin_version>3.7</org.apache.maven.plugins_maven-pmd-plugin_version>
         <org.apache.maven.plugins_maven-jxr-plugin_version>2.5</org.apache.maven.plugins_maven-jxr-plugin_version>
         <org.codehaus.mojo_findbugs-maven-plugin_version>3.0.4</org.codehaus.mojo_findbugs-maven-plugin_version>
-        <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
+        <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3.1-b20150201.1248</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
         <!--
         <net.sourceforge.cobertura_cobertura_version>2.1.1</net.sourceforge.cobertura_cobertura_version>
         -->
@@ -141,6 +141,9 @@
                             </xjcArgs>
                             <!-- Without this, multiple WSDLs won't be processed :( -->
                             <staleFile>${project.build.directory}/jaxws/stale/wsdl.apex.done</staleFile>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
                         </configuration>
                     </execution>
 
@@ -165,6 +168,9 @@
                             </xjcArgs>
                             <!-- Without this, multiple WSDLs won't be processed :( -->
                             <staleFile>${project.build.directory}/jaxws/stale/wsdl.enterprise.done</staleFile>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
                         </configuration>
                     </execution>
 
@@ -189,6 +195,9 @@
                             </xjcArgs>
                             <!-- Without this, multiple WSDLs won't be processed :( -->
                             <staleFile>${project.build.directory}/jaxws/stale/wsdl.metadata.done</staleFile>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
                         </configuration>
                     </execution>
 
@@ -213,6 +222,9 @@
                             </xjcArgs>
                             <!-- Without this, multiple WSDLs won't be processed :( -->
                             <staleFile>${project.build.directory}/jaxws/stale/wsdl.partner.done</staleFile>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
                         </configuration>
                     </execution>
 
@@ -237,6 +249,9 @@
                             </xjcArgs>
                             <!-- Without this, multiple WSDLs won't be processed :( -->
                             <staleFile>${project.build.directory}/jaxws/stale/wsdl.tooling.done</staleFile>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
                         </configuration>
                     </execution>
                 </executions>

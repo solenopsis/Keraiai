@@ -33,7 +33,7 @@ public interface WebServiceType {
      *
      * @return the web service or null if none exists.
      */
-    ApiWebService getWebService();
+    ApiWebService getApiWebService();
 
     /**
      * The sub URL when calling out to web services.

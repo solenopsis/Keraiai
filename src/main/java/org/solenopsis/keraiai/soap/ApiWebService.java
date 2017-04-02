@@ -29,12 +29,21 @@ public interface ApiWebService {
      *
      * @return the SFDC web service.
      */
-    public Service getService();
+    Service getService();
 
     /**
      * Return the port for the web service.
      *
      * @return the port for the web service.
      */
-    public Class getPortType();
+    Class getPortType();
+
+    /**
+     * Creates a vanilla port for the API web service.
+     *
+     * @param <P>
+     *
+     * @return a vanilla port.
+     */
+    <P> P createPort();
 }

@@ -50,7 +50,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
      *
      * @return the new login context.
      */
-    synchronized AtomicReference<LoginContext> getLoginContext() {
+    AtomicReference<LoginContext> getLoginContext() {
         return loginContext;
     }
 
@@ -86,6 +86,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
     protected AbstractSecurityMgr(final LoginWebService loginWebService, final Credentials credentials) {
         this.loginWebService = ObjectUtils.ensureObject(loginWebService, "Must provide a LoginWebService");
         this.credentials = ObjectUtils.ensureObject(credentials, "Must have credentials");
+        this.loginContext = new AtomicReference();
     }
 
     /**
@@ -124,7 +125,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            getLoginContext().set(doLogin((P) getLoginWebService().getWebServiceType().createPort(this, getLoginWebService().getWebServiceType().getWebService().getService(), getLoginWebService().getWebServiceType().getWebService().getPortType())));
+            getLoginContext().set(doLogin((P) getLoginWebService().getWebServiceType().createPort(this, getLoginWebService().getWebServiceType().getApiWebService().getService(), getLoginWebService().getWebServiceType().getApiWebService().getPortType())));
             return getLoginContext().get();
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;
@@ -141,7 +142,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting logout");
 
         try {
-            doLogout((P) getLoginWebService().getWebServiceType().createSessionPort(this, getLoginWebService().getWebServiceType().getWebService().getService(), getLoginWebService().getWebServiceType().getWebService().getPortType()));
+            doLogout((P) getLoginWebService().getWebServiceType().createSessionPort(this, getLoginWebService().getWebServiceType().getApiWebService().getService(), getLoginWebService().getWebServiceType().getApiWebService().getPortType()));
             getLoginContext().set(null);
         } catch (final RuntimeException runtimeException) {
             getLogger().log(Level.WARNING, "Trouble logging out", runtimeException);

@@ -96,7 +96,7 @@ public enum WebServiceTypeEnum implements WebServiceType {
      * {@inheritDoc}
      */
     @Override
-    public ApiWebService getWebService() {
+    public ApiWebService getApiWebService() {
         return webService;
     }
 
