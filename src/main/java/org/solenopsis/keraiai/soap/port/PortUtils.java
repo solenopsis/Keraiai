@@ -35,7 +35,6 @@ import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.SecurityMgr;
 import org.solenopsis.keraiai.credentials.CredentialsUtils;
-import static org.solenopsis.keraiai.soap.port.WebServiceTypeEnum.CUSTOM_SERVICE_TYPE;
 import org.solenopsis.keraiai.soap.utils.ExceptionUtils;
 
 /**
@@ -266,8 +265,8 @@ final class PortUtils {
      *
      * @return true if <code>webServiceType</code> is a CUSTOM_SERVICE_TYPE or false if not.
      */
-    static boolean isCustomWebService(final WebServiceTypeEnum webServiceType) {
-        return webServiceType == CUSTOM_SERVICE_TYPE;
+    static boolean isCustomWebService(final WebServiceType webServiceType) {
+        return webServiceType == WebServiceTypeEnum.CUSTOM_SERVICE_TYPE;
     }
 
     /**
@@ -280,7 +279,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if <code>credentials</code> or <code>webServiceType</code> are null.
      */
-    static String computeLoginUrl(final Credentials credentials, final WebServiceTypeEnum webServiceType) {
+    static String computeLoginUrl(final Credentials credentials, final WebServiceType webServiceType) {
         CredentialsUtils.ensureCredentials(credentials, "Must provide credentials!");
         ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
 
@@ -297,7 +296,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if <code>securityMgr</code> is null.
      */
-    static String computeLoginUrl(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType) {
+    static String computeLoginUrl(final SecurityMgr securityMgr, final WebServiceType webServiceType) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security mananger!");
         ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
 
@@ -316,7 +315,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortNameFromApiVersion(final String apiVersion, final WebServiceTypeEnum webServiceType, final Service service) {
+    static String computePortNameFromApiVersion(final String apiVersion, final WebServiceType webServiceType, final Service service) {
         StringUtils.ensureString(apiVersion, "Must provide an API version!");
         ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
         ObjectUtils.ensureObject(service, "Must provide a service!");
@@ -336,7 +335,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortNameFromCredentials(final Credentials credentials, final WebServiceTypeEnum webServiceType, final Service service) {
+    static String computePortNameFromCredentials(final Credentials credentials, final WebServiceType webServiceType, final Service service) {
         ObjectUtils.ensureObject(credentials, "Must provide credentials!");
 
         return computePortNameFromApiVersion(credentials.getApiVersion(), webServiceType, service);
@@ -354,7 +353,7 @@ final class PortUtils {
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    static String computePortNameFromSecurityMgr(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service) {
+    static String computePortNameFromSecurityMgr(final SecurityMgr securityMgr, final WebServiceType webServiceType, final Service service) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
 
         return computePortNameFromCredentials(securityMgr.getCredentials(), webServiceType, service);
@@ -369,7 +368,7 @@ final class PortUtils {
      *
      * @return the computed session URL.
      */
-    static String computeSessionUrlFromBaseServerUrl(final String baseServerUrl, final WebServiceTypeEnum webServiceType, final String portName) {
+    static String computeSessionUrlFromBaseServerUrl(final String baseServerUrl, final WebServiceType webServiceType, final String portName) {
         StringUtils.ensureString(baseServerUrl, "Must provide a base server url!");
         StringUtils.ensureString(portName, "Must provide a port name!");
 
@@ -385,7 +384,7 @@ final class PortUtils {
      *
      * @return the computed session URL.
      */
-    static String computeSessionUrlFromLoginContext(final LoginContext loginContext, final WebServiceTypeEnum webServiceType, final String portName) {
+    static String computeSessionUrlFromLoginContext(final LoginContext loginContext, final WebServiceType webServiceType, final String portName) {
         ObjectUtils.ensureObject(loginContext, "Must provide a login context!");
 
         return computeSessionUrlFromBaseServerUrl(loginContext.getBaseServerUrl(), webServiceType, portName);
@@ -402,7 +401,7 @@ final class PortUtils {
      *
      * @return the computed session URL.
      */
-    static String computeUrl(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr) {
+    static String computeUrl(final WebServiceType webServiceType, final SecurityMgr securityMgr, final Service service) {
         ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
 
         return computeSessionUrlFromLoginContext(securityMgr.getSession(), webServiceType, computePortNameFromSecurityMgr(securityMgr, webServiceType, service));
@@ -422,8 +421,8 @@ final class PortUtils {
         return port;
     }
 
-    static <P> P createPort(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
-        return createPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr));
+    static <P> P createPort(final WebServiceType webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
+        return createPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr, service));
     }
 
     /**
@@ -446,8 +445,8 @@ final class PortUtils {
         return port;
     }
 
-    static <P> P createSessionPort(final WebServiceTypeEnum webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
-        return createSessionPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr));
+    static <P> P createSessionPort(final WebServiceType webServiceType, final SecurityMgr securityMgr, final Service service, final Class portType) {
+        return createSessionPort(securityMgr, service, portType, computeUrl(webServiceType, securityMgr, service));
     }
 
     /**

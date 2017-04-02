@@ -37,13 +37,4 @@ public interface ApiWebService {
      * @return the port for the web service.
      */
     public Class getPortType();
-
-    /**
-     * Return an instantiated port that can be called against the web service.
-     *
-     * @param <P> The type of port desired.
-     *
-     * @return the port.
-     */
-    public <P> P createPort();
 }

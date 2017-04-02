@@ -124,7 +124,7 @@ public abstract class AbstractSecurityMgr<P> extends AbstractCommonBase implemen
         log(Level.FINEST, "Requesting login");
 
         try {
-            getLoginContext().set(doLogin((P) getLoginWebService().getWebServiceType().createPort(this, getLoginWebService(), portType);
+            getLoginContext().set(doLogin((P) getLoginWebService().getWebServiceType().createPort(this, getLoginWebService().getWebServiceType().getWebService().getService(), getLoginWebService().getWebServiceType().getWebService().getPortType())));
             return getLoginContext().get();
         } catch (final RuntimeException runtimeException) {
             throw runtimeException;

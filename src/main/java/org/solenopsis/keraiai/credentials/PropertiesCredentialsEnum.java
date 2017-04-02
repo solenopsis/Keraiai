@@ -21,8 +21,7 @@ package org.solenopsis.keraiai.credentials;
  *
  * @author Scot P. Floess
  */
-enum CredentialsEnum {
-
+enum PropertiesCredentialsEnum {
     URL("url"),
     USER_NAME("username"),
     PASSWORD("password"),
@@ -39,7 +38,7 @@ enum CredentialsEnum {
      *
      * @param name the name of the property or XML element.
      */
-    private CredentialsEnum(final String name) {
+    private PropertiesCredentialsEnum(final String name) {
         this.name = name;
     }
 

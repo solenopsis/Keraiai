@@ -22,9 +22,10 @@ import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.solenopsis.keraiai.SecurityMgr;
-import org.solenopsis.keraiai.soap.ApiWebServiceEnum;
-import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
 import org.solenopsis.keraiai.soap.ApiWebService;
+import org.solenopsis.keraiai.soap.ApiWebServiceEnum;
+import org.solenopsis.keraiai.soap.WebServiceSubUrl;
+import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
 
 /**
  * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session ports
@@ -70,7 +71,7 @@ public enum WebServiceTypeEnum implements WebServiceType {
     TOOLING_SERVICE_TYPE(ApiWebServiceEnum.TOOLING_SERVICE, WebServiceSubUrlEnum.TOOLING_TYPE);
 
     private final ApiWebService webService;
-    private final WebServiceSubUrlEnum webServiceSubUrl;
+    private final WebServiceSubUrl webServiceSubUrl;
 
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
@@ -78,25 +79,23 @@ public enum WebServiceTypeEnum implements WebServiceType {
      * @param webServiceType   the SFDC web service.
      * @param webServiceSubUrl the port for the web service.
      */
-    private WebServiceTypeEnum(final ApiWebService webService, final WebServiceSubUrlEnum webServiceSubUrl) {
+    private WebServiceTypeEnum(final ApiWebService webService, final WebServiceSubUrl webServiceSubUrl) {
         this.webService = webService;
         this.webServiceSubUrl = webServiceSubUrl;
     }
 
     /**
-     * The sub URL when calling out to web services.
-     *
-     * @return the sub URL.
+     * {@inheritDoc}
      */
-    public WebServiceSubUrlEnum getWebServiceSubUrl() {
+    @Override
+    public WebServiceSubUrl getWebServiceSubUrl() {
         return webServiceSubUrl;
     }
 
     /**
-     * Return the web service or null for a custom service.
-     *
-     * @return the web service or null if none exists.
+     * {@inheritDoc}
      */
+    @Override
     public ApiWebService getWebService() {
         return webService;
     }

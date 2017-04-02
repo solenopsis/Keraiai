@@ -74,12 +74,4 @@ public enum ApiWebServiceEnum implements ApiWebService {
     public Class getPortType() {
         return portType;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <P> P createPort() {
-        return (P) getService().getPort(getPortType());
-    }
 }

@@ -114,11 +114,11 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    <P> PortInvocationHandler(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service, final Class portType) {
+    <P> PortInvocationHandler(final SecurityMgr securityMgr, final WebServiceType webServiceType, final Service service, final Class portType) {
         this.securityMgr = ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        this.url = PortUtils.computeUrl(ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!"), securityMgr);
+        this.url = PortUtils.computeUrl(ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!"), securityMgr, service);
         this.port = new AtomicReference(PortUtils.createSessionPort(securityMgr, service, portType, url));
     }
 

@@ -53,11 +53,11 @@ public class PropertiesCredentialsTest {
 
     Properties createDefaultProperties() {
         return createProperties(
-                CredentialsEnum.URL.getName(),
-                CredentialsEnum.USER_NAME.getName(),
-                CredentialsEnum.PASSWORD.getName(),
-                CredentialsEnum.TOKEN.getName(),
-                CredentialsEnum.API_VERSION.getName()
+                PropertiesCredentialsEnum.URL.getName(),
+                PropertiesCredentialsEnum.USER_NAME.getName(),
+                PropertiesCredentialsEnum.PASSWORD.getName(),
+                PropertiesCredentialsEnum.TOKEN.getName(),
+                PropertiesCredentialsEnum.API_VERSION.getName()
         );
     }
 
@@ -101,13 +101,13 @@ public class PropertiesCredentialsTest {
     @Test
     public void test_constructor_defaultPropertyNames() {
         final Properties props1 = createDefaultProperties();
-        props1.setProperty(CredentialsEnum.URL.getName(), "http://foo/bar/");
+        props1.setProperty(PropertiesCredentialsEnum.URL.getName(), "http://foo/bar/");
 
         final PropertiesCredentials creds1 = createDefaultCredentials(props1);
         Assert.assertEquals("Should be correct url", "http://foo/bar/", creds1.getUrl());
 
         final Properties props2 = createDefaultProperties();
-        props2.setProperty(CredentialsEnum.URL.getName(), "http://alpha/beta");
+        props2.setProperty(PropertiesCredentialsEnum.URL.getName(), "http://alpha/beta");
 
         final PropertiesCredentials creds2 = createDefaultCredentials(props2);
         Assert.assertEquals("Should be correct url", "http://alpha/beta", creds2.getUrl());
@@ -192,7 +192,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertNames_nullPassword() {
         final Properties props1 = createDefaultProperties();
-        props1.remove(CredentialsEnum.PASSWORD.getName());
+        props1.remove(PropertiesCredentialsEnum.PASSWORD.getName());
 
         createCredentials(props1).getSecurityPassword();
     }
@@ -214,7 +214,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertyNames_blankPassword() {
         final Properties props1 = createDefaultProperties();
-        props1.setProperty(CredentialsEnum.PASSWORD.getName(), "  ");
+        props1.setProperty(PropertiesCredentialsEnum.PASSWORD.getName(), "  ");
 
         createCredentials(props1).getSecurityPassword();
     }
@@ -236,7 +236,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertyNames_emptyPassword() {
         final Properties props1 = createDefaultProperties();
-        props1.setProperty(CredentialsEnum.PASSWORD.getName(), "");
+        props1.setProperty(PropertiesCredentialsEnum.PASSWORD.getName(), "");
 
         createCredentials(props1).getSecurityPassword();
     }
@@ -258,7 +258,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertyNames_nullToken() {
         final Properties props1 = createDefaultProperties();
-        props1.remove(CredentialsEnum.TOKEN.getName());
+        props1.remove(PropertiesCredentialsEnum.TOKEN.getName());
 
         createCredentials(props1).getSecurityPassword();
     }
@@ -280,7 +280,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertyNames_blankToken() {
         final Properties props1 = createDefaultProperties();
-        props1.setProperty(CredentialsEnum.TOKEN.getName(), "  ");
+        props1.setProperty(PropertiesCredentialsEnum.TOKEN.getName(), "  ");
 
         createCredentials(props1).getSecurityPassword();
     }
@@ -302,7 +302,7 @@ public class PropertiesCredentialsTest {
     @Test(expected = IllegalArgumentException.class)
     public void test_getSecurityPassword_defaultPropertyNames_emptyToken() {
         final Properties props1 = createDefaultProperties();
-        props1.setProperty(CredentialsEnum.TOKEN.getName(), "");
+        props1.setProperty(PropertiesCredentialsEnum.TOKEN.getName(), "");
 
         createCredentials(props1).getSecurityPassword();
     }

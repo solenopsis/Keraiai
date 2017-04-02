@@ -19,6 +19,8 @@ package org.solenopsis.keraiai.soap.port;
 import java.net.URL;
 import javax.xml.ws.Service;
 import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.soap.ApiWebService;
+import org.solenopsis.keraiai.soap.WebServiceSubUrl;
 
 /**
  * Interface defining the API to create session based ports.
@@ -26,6 +28,20 @@ import org.solenopsis.keraiai.SecurityMgr;
  * @author Scot P. Floess
  */
 public interface WebServiceType {
+    /**
+     * Return the web service or null for a custom service.
+     *
+     * @return the web service or null if none exists.
+     */
+    ApiWebService getWebService();
+
+    /**
+     * The sub URL when calling out to web services.
+     *
+     * @return the sub URL.
+     */
+    WebServiceSubUrl getWebServiceSubUrl();
+
     /**
      * Create a vanilla port that has the URL set for the web service call.
      *
@@ -35,7 +51,7 @@ public interface WebServiceType {
      *
      * @return the create port.
      */
-    public <P> P createPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
+    <P> P createPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a session based port that will have the URL and session id set for web service calls.
@@ -46,7 +62,7 @@ public interface WebServiceType {
      *
      * @return a session based port.
      */
-    public <P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
+    <P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
@@ -60,7 +76,7 @@ public interface WebServiceType {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
+    <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Service service, Class<P> portType);
 
     /**
      * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
@@ -73,7 +89,7 @@ public interface WebServiceType {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final S service);
+    <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final S service);
 
     /**
      * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
@@ -87,7 +103,7 @@ public interface WebServiceType {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource);
+    <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource);
 
     /**
      * Create a proxy based port. This port will be able to perform auto logins, re-logins, etc.
@@ -101,5 +117,5 @@ public interface WebServiceType {
      *
      * @return a session based port.
      */
-    public <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource);
+    <S extends Service, P> P createProxyPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource);
 }

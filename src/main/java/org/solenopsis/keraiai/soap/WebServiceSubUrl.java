@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Scot P. Floess
+ * Copyright (C) 2017 Scot P. Floess
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 package org.solenopsis.keraiai.soap;
 
 /**
- * Denotes the sub URL one needs when calling an SFDC web service:
+ * Defines a web service sub url:
  * <ul>
  * <li>Apex = services/Soap/s/</li>
  * <li>Custom = services/Soap/class/</li>
@@ -25,37 +25,15 @@ package org.solenopsis.keraiai.soap;
  * <li>Metadata = services/Soap/m/</li>
  * <li>Partner = services/Soap/u/</li>
  * <li>Tooling = services/Soap/T/</li>
- * </ul>
+ * </ul
  *
  * @author Scot P. Floess
  */
-public enum WebServiceSubUrlEnum implements WebServiceSubUrl {
-    APEX_TYPE("services/Soap/s"),
-    CUSTOM_TYPE("services/Soap/class"),
-    ENTERPRISE_TYPE("services/Soap/c"),
-    METADATA_TYPE("services/Soap/m"),
-    PARTNER_TYPE("services/Soap/u"),
-    TOOLING_TYPE("services/Soap/T");
-
+public interface WebServiceSubUrl {
     /**
-     * The partial URL as defined in the Java doc header.
-     */
-    private final String partialUrl;
-
-    /**
-     * This constructor sets the SFDC partial URL (as defined in the Java doc header).
+     * Return the partial URL as defined in the Java doc header.
      *
-     * @param partialUrl the partial URL as defined in the Java doc header.
+     * @return the partial URL as defined in the Java doc header.
      */
-    private WebServiceSubUrlEnum(final String partialUrl) {
-        this.partialUrl = partialUrl;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getPartialUrl() {
-        return partialUrl;
-    }
+    String getPartialUrl();
 }
