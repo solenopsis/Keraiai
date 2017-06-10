@@ -26,7 +26,7 @@ If you browse the source code, you will note we make heavy use of enums which im
 
 #### Declarative Model
 
-You will may also note our enums are more than simple name markers - they contain code as well as what we consider a "declarative" model.  As an example, refer to [SessionUrlFactoryEnum](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/session/SessionUrlFactoryEnum.java).  We have two varying pieces:
+You may note our enums are more than simple named markers - they contain code as well as what we consider a "declarative" model.  As an example, refer to [SessionUrlFactoryEnum](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/session/SessionUrlFactoryEnum.java).  We have two varying pieces:
 * The sub-URL for a session.
 * The factory that computes the "name" of the web service.  For some SFDC web services, one uses the API version as the name of the web service.  For custom web services it is the name of the Apex class.
 
@@ -46,14 +46,14 @@ Using enums in this fashion allows us to declare how to do things vs if/else-if 
 
 ### Creating Web Service Ports
 
-Web service ports can be created using [WebServiceTypeEnum](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/port/WebServiceTypeEnum.java)'s various `createProxyPort()` methods.  The returned ports will manage auto login, and re-login should your session become invalid.  A [LoginMgr](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/LoginMgr.java) implementation will be required.  Those can be found as follows:
+Web service ports can be created using [WebServiceTypeEnum](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/port/WebServiceTypeEnum.java)'s various `createProxyPort()` methods.  The returned ports will manage auto login, and re-login should your session become invalid.  A [LoginMgr](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/LoginMgr.java) implementation is required and can be found in the following:
 * [Enterprise Login Manager](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/EnterpriseLoginMgr.java)
 * [Partner Login Manager](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/PartnerLoginMgr.java)
 * [Tooling Login Manager](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/ToolingLoginMgr.java)
 
-Please note:  the default [LoginMgr](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/LoginMgr.java) defaults to the [Enterprise Login Manager](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/EnterpriseLoginMgr.java) when omitted creating proxy ports.
+Please note:  when omitted, the default [LoginMgr](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/LoginMgr.java) is the [Enterprise Login Manager](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/soap/login/EnterpriseLoginMgr.java) in creating proxy ports.
 
-Additionally, an implementation of [Credentials](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/Credentials.java) is needed whe creating a proxy port.  The following implementations are provided:
+Additionally, an implementation of [Credentials](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/Credentials.java) is needed whe creating a proxy port.  The following implementations are provided for your convenience:
 * [File Credentials](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/credentials/FilePropertiesCredentials.java)
 * [InputStream Credentials](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/credentials/InputStreamCredentials.java)
 * [Properties Credentials](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/credentials/PropertiesCredentials.java)
