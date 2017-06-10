@@ -1,0 +1,671 @@
+
+
+
+
+To convert:
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+* LOGGING FOR RETRY/RELOGIN
+
+* Throw Exception with info in it
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+* CONSIDER MULTI-INTERFACES FOR PORT
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+package org.solenopsis.lasius.wsimport.common.session.mgr;
+
+import java.util.concurrent.atomic.AtomicReference;
+import org.flossware.common.IntegrityUtil;
+import org.solenopsis.lasius.credentials.Credentials;
+import org.solenopsis.lasius.wsimport.common.security.SecurityMgr;
+import org.solenopsis.lasius.wsimport.common.session.DefaultSession;
+import org.solenopsis.lasius.wsimport.common.session.Session;
+
+/**
+ *
+ * Manages single session.
+ *
+ * @author sfloess
+ *
+ */
+public class SingleSessionMgr extends AbstractSessionMgr {
+
+    /**
+     * Our credentials.
+     */
+    private final Credentials credentials;
+
+    /**
+     * Our security web service.
+     */
+    private final SecurityMgr securityWebSvc;
+
+    /**
+     * Our current session.
+     */
+    private final AtomicReference<Session> session;
+
+    /**
+     * Return the credentials.
+     *
+     * @return the credentials.
+     */
+    protected Credentials getCredentials() {
+        return credentials;
+    }
+
+    /**
+     * Return the security web service.
+     *
+     * @return the security web service.
+     */
+    protected SecurityMgr getSecurityWebSvc() {
+        return securityWebSvc;
+    }
+
+    /**
+     * This constructor sets up the credentials and security web service.
+     *
+     * @param credentials    the credentials to use when logging in.
+     * @param securityWebSvc the security web service.
+     *
+     * @throws IllegalArgumentException if credentials or securityWebSvc are
+     *                                  null.
+     */
+    public SingleSessionMgr(final Credentials credentials, final SecurityMgr securityWebSvc) {
+        IntegrityUtil.ensure(securityWebSvc, "Security web service cannot be null!");
+
+        this.credentials = credentials;
+        this.securityWebSvc = securityWebSvc;
+        this.session = new AtomicReference(new DefaultSession(securityWebSvc.login(credentials)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Session getSession() {
+        return session.get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Session resetSession(final Session oldSession) {
+        session.set(new DefaultSession(getSecurityWebSvc().login(getCredentials())));
+
+        return session.get();
+    }
+}
+
+
+
+/*
+ * Copyright (C) 2014 Scot P. Floess
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.solenopsis.lasius.util;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Scot P. Floess
+ */
+public class ExceptionUtil {
+
+    /**
+     * Our logger.
+     */
+    private static final Logger logger = Logger.getLogger(ExceptionUtil.class.getName());
+
+    /**
+     * Denotes an invalid session id.
+     */
+    public static final String INVALID_SESSION_ID = "INVALID_SESSION_ID";
+
+    /**
+     * Denotes server is unavailable.
+     */
+    public static final String SERVER_UNAVAILABLE = "SERVER_UNAVAILABLE";
+
+    /**
+     * Denotes server is unavailable.
+     */
+    public static final String SERVICE_UNAVAILABLE = "Service Unavailable";
+
+    /**
+     * Denotes unable to lock a row.
+     */
+    public static final String UNABLE_TO_LOCK_ROW = "UNABLE_TO_LOCK_ROW";
+
+    /**
+     * Return the logger.
+     */
+    protected static Logger getLogger() {
+        return logger;
+    }
+
+    /**
+     * Return true if message contains invalid session id.
+     *
+     * @param toCompare is the
+     * @param message   is the message to examine for being an invalid session
+     *                  id.
+     */
+    public static boolean isExceptionMsg(final String toCompare, final String message) {
+        return (null == message ? false : message.contains(toCompare));
+    }
+
+    /**
+     * Return true if we have an invalid session id or false if not.
+     *
+     * @param failure is the failure to examine for an invalid session id.
+     */
+    public static boolean isExceptionMsg(final String toCompare, final Throwable failure) {
+        if (failure instanceof InvocationTargetException) {
+            return isExceptionMsg(toCompare, ((InvocationTargetException) failure).getTargetException().getMessage());
+        }
+
+        return isExceptionMsg(toCompare, failure.getMessage());
+    }
+
+    /**
+     * Return true if message contains invalid session id.
+     *
+     * @param message is the message to examine for being an invalid session id.
+     */
+    public static boolean isInvalidSessionId(final String message) {
+        return isExceptionMsg(INVALID_SESSION_ID, message);
+    }
+
+    /**
+     * Return true if we have an invalid session id or false if not.
+     *
+     * @param failure is the failure to examine for an invalid session id.
+     */
+    public static boolean isInvalidSessionId(final Throwable failure) {
+        return isExceptionMsg(INVALID_SESSION_ID, failure);
+    }
+
+    /**
+     * Return true if message contains server unavailable.
+     *
+     * @param message is the message to examine for being server unavailable.
+     */
+    public static boolean isServerUnavailable(final String message) {
+        return isExceptionMsg(SERVER_UNAVAILABLE, message);
+    }
+
+    /**
+     * Return true if we have server unavailable or false if not.
+     *
+     * @param failure is the failure to examine for server unavailable.
+     */
+    public static boolean isServerUnavailable(final Throwable failure) {
+        return isExceptionMsg(SERVER_UNAVAILABLE, failure);
+    }
+
+    /**
+     * Return true if we have service is unavailable or false if not.
+     *
+     * @param failure is the failure to examine for service unavailable.
+     */
+    public static boolean isServiceUnavailable(final Throwable failure) {
+        return isExceptionMsg(SERVICE_UNAVAILABLE, failure);
+    }
+
+    /**
+     * Return true if we are unable to lock a row in SFDC.
+     *
+     * @param failure is the failure to examine for unable to lock row.
+     */
+    public static boolean isUnableToLockRow(final Throwable failure) {
+        return isExceptionMsg(UNABLE_TO_LOCK_ROW, failure);
+    }
+
+    /**
+     * Returns true if the failure represents one where relogin should occur.
+     *
+     * @param failure the exception to examine if relogin is necessary.
+     *
+     * @return true if relogin is necessary.
+     */
+    public static boolean isReloginException(final Throwable failure) {
+        return isInvalidSessionId(failure) || org.flossware.util.ExceptionUtil.containsIOException(failure);
+    }
+
+    /**
+     * Returns true if the failure represents one where a retry should occur.
+     *
+     * @param failure the exception to examine if retry is necessary.
+     *
+     * @return true if retry is necessary.
+     */
+    public static boolean isRetryException(final Throwable failure) {
+        return isServerUnavailable(failure) || isUnableToLockRow(failure) || isServiceUnavailable(failure);
+    }
+
+    /**
+     * Not allowed.
+     */
+    private ExceptionUtil() {
+    }
+}
+
+
+
+package org.solenopsis.lasius.wsimport.common.util;
+
+import java.lang.reflect.Method;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import org.flossware.common.IntegrityUtil;
+import org.flossware.wsimport.service.WebService;
+import org.flossware.wsimport.service.decorator.AbstractPortInvocationHandler;
+import org.solenopsis.lasius.util.ExceptionUtil;
+import org.solenopsis.lasius.wsimport.common.WebServiceTypeEnum;
+import org.solenopsis.lasius.wsimport.common.session.Session;
+import org.solenopsis.lasius.wsimport.common.session.mgr.SessionMgr;
+
+/**
+ *
+ * The purpose of this class is
+ *
+ * @author sfloess
+ *
+ */
+public class SalesforceWebServicePortInvoker extends AbstractPortInvocationHandler {
+
+    /**
+     * Default pause time in millis.
+     */
+    final static int DEFAULT_PAUSE_TIME = 5000;
+
+    final static Random RANDOM_PAUSE = new Random(DEFAULT_PAUSE_TIME);
+
+    /**
+     * The session manager.
+     */
+    private final SessionMgr sessionMgr;
+
+    /**
+     * The type of web service.
+     */
+    private final WebServiceTypeEnum webServiceType;
+
+    static final int DEFAULT_TOTAL_LOCKS = Integer.MAX_VALUE;
+
+    private static final ConcurrentHashMap<Class, Semaphore> METHOD_MAP = new ConcurrentHashMap<>();
+
+    private final AtomicReference port;
+
+    /**
+     * Can allow fine tuning when calling web service asynchronously...
+     *
+     * @param totalLocks
+     */
+//    public static void setSemaphoreLimit(final Class klass, final int totalLocks) {
+//        System.out.println("ADDING [" + klass.getName() + "]");
+//        METHOD_MAP.put(klass, new Semaphore(totalLocks));
+//        System.out.println(METHOD_MAP);
+//    }
+    /**
+     * Lock down the proxy...
+     */
+//    static boolean lock(final Class klass) throws Exception {
+//        System.out.println(METHOD_MAP);
+//        if (!METHOD_MAP.contains(klass)) {
+//            System.out.println("NOT FOUND [" + klass.getName() + "]");
+//            System.out.println(METHOD_MAP);
+//            return false;
+//        }
+//
+//        System.out.println("LOCK FOUND [" + klass.getName() + "]");
+//
+//        METHOD_MAP.get(klass).acquire();
+//        return true;
+//    }
+    /**
+     * Lock down the proxy.
+     */
+//    static void lock(final Object proxy) throws Exception {
+//        for (final Class intr : proxy.getClass().getInterfaces()) {
+//            System.out.println("Examining [" + intr.getName() + "]");
+//            if (lock(intr)) {
+//                return;
+//            }
+//        }
+//    }
+    /**
+     * Release the proxy...
+     */
+//    static boolean unlock(final Class klass) throws Exception {
+//        System.out.println(METHOD_MAP);
+//        if (!METHOD_MAP.contains(klass)) {
+//            return false;
+//        }
+//
+//        System.out.println("UNLOCK FOUND [" + klass.getName() + "]");
+//
+//        METHOD_MAP.get(klass).release();
+//        return true;
+//    }
+    /**
+     * Release the proxy.
+     */
+//    static void unlock(final Object proxy) throws Exception {
+//        for (final Class intr : proxy.getClass().getInterfaces()) {
+//            if (unlock(intr)) {
+//                return;
+//            }
+//        }
+//    }
+    /**
+     * Pauses execution.
+     */
+    void pause(final Object lock, final int totalCalls) {
+        try {
+            final long waitTime = RANDOM_PAUSE.nextInt(DEFAULT_PAUSE_TIME);
+
+            getLogger().log(Level.INFO, "Pausing current thread [{0} ms] before retrying attempt [#{1}]...", new Object[]{waitTime, totalCalls});
+
+            synchronized (lock) {
+                lock.wait(waitTime);
+            }
+        } catch (final InterruptedException ex) {
+            getLogger().log(Level.WARNING, "Trouble pausing current thread...", ex);
+        }
+    }
+
+    /**
+     * Return the session manager.
+     *
+     * @return the session manager.
+     */
+    protected SessionMgr getSessionMgr() {
+        return sessionMgr;
+    }
+
+    /**
+     * Return the type of web service.
+     *
+     * @return the type of web service.
+     */
+    protected WebServiceTypeEnum getWebServiceType() {
+        return webServiceType;
+    }
+
+    /**
+     * Can we re
+     *
+     * @param totalCalls
+     *
+     * @return
+     */
+    protected boolean isCallable(int totalCalls) {
+        return totalCalls < SalesforceWebServiceUtil.MAX_RETRIES;
+    }
+
+    /**
+     * When an exception happens on call, this method will handle the exception.
+     *
+     * @param callFailure the exception that arose when calling SFDC.
+     * @param method      the method being called when the failure arose.
+     * @param session     the session being used when calling SFDC.
+     *
+     * @throws Throwable if the exception cannot be handled.
+     */
+    protected void handleException(final Throwable callFailure, final WebService webService, final Object proxy, final Method method, final Session session, final int totalCalls) throws Throwable {
+//        unlock(proxy);
+        if (ExceptionUtil.isReloginException(callFailure)) {
+            getLogger().log(Level.INFO, "Received a relogin exception when calling [{0}] - retry attempt [#{1}]", new Object[]{method.getName(), totalCalls});
+
+            getSessionMgr().resetSession(session);
+            port.set(SalesforceWebServiceUtil.createPort(session, getWebServiceType(), webService));
+        } else if (ExceptionUtil.isRetryException(callFailure)) {
+            getLogger().log(Level.WARNING, "Web service retry encountered calling [{0}] - retry attempt [#{1}]", new Object[]{method.getName(), totalCalls});
+
+            pause(new byte[0], totalCalls);
+        } else {
+            getLogger().log(Level.FINE, "Trouble calling [" + method.getName() + "]", callFailure);
+
+            throw callFailure;
+        }
+    }
+
+    /**
+     * This constructor sets the sessionMgr to use, the type of web service and the class of the web service being used.
+     *
+     * @param <P>
+     * @param sessionMgr     manages our sessions with SFDC.
+     * @param webServiceType the type of web service being used.
+     *
+     * @throws IllegalArgumentException if sessionMgr, webServiceType or serviceClass are null.
+     */
+    public <P> SalesforceWebServicePortInvoker(final WebService<P> service, final SessionMgr sessionMgr, final WebServiceTypeEnum webServiceType) {
+        this.sessionMgr = IntegrityUtil.ensure(sessionMgr, "Cannot have a null session mgr!");
+        this.webServiceType = IntegrityUtil.ensure(webServiceType, "Cannot have a null web service type!");
+        this.port = new AtomicReference(SalesforceWebServiceUtil.createPort(sessionMgr.getSession(), webServiceType, service));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object invoke(final WebService webService, final Object proxy, final Method method, final Object[] args) throws Throwable {
+        int totalCalls = 0;
+
+        getLogger().log(Level.FINE, "Calling [{0}]", method.getName());
+
+        Session session = null;
+
+        while (isCallable(totalCalls++)) {
+//            lock(proxy);
+            try {
+                session = getSessionMgr().getSession();
+
+                final Object retVal = method.invoke(port.get(), args);
+//                unlock(proxy);
+
+                return retVal;
+            } catch (final Exception callFailure) {
+                handleException(callFailure, webService, proxy, method, session, totalCalls);
+            }
+        }
+
+        throw new IllegalStateException("Should have returned a value!");
+    }
+}
+
+/*
+ * Copyright (C) 2014 Scot P. Floess
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.solenopsis.lasius.util;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Scot P. Floess
+ */
+public class ExceptionUtil {
+
+    /**
+     * Our logger.
+     */
+    private static final Logger logger = Logger.getLogger(ExceptionUtil.class.getName());
+
+    /**
+     * Denotes an invalid session id.
+     */
+    public static final String INVALID_SESSION_ID = "INVALID_SESSION_ID";
+
+    /**
+     * Denotes server is unavailable.
+     */
+    public static final String SERVER_UNAVAILABLE = "SERVER_UNAVAILABLE";
+
+    /**
+     * Denotes server is unavailable.
+     */
+    public static final String SERVICE_UNAVAILABLE = "Service Unavailable";
+
+    /**
+     * Denotes unable to lock a row.
+     */
+    public static final String UNABLE_TO_LOCK_ROW = "UNABLE_TO_LOCK_ROW";
+
+    /**
+     * Return the logger.
+     */
+    protected static Logger getLogger() {
+        return logger;
+    }
+
+    /**
+     * Return true if message contains invalid session id.
+     *
+     * @param toCompare is the
+     * @param message   is the message to examine for being an invalid session
+     *                  id.
+     */
+    public static boolean isExceptionMsg(final String toCompare, final String message) {
+        return (null == message ? false : message.contains(toCompare));
+    }
+
+    /**
+     * Return true if we have an invalid session id or false if not.
+     *
+     * @param failure is the failure to examine for an invalid session id.
+     */
+    public static boolean isExceptionMsg(final String toCompare, final Throwable failure) {
+        if (failure instanceof InvocationTargetException) {
+            return isExceptionMsg(toCompare, ((InvocationTargetException) failure).getTargetException().getMessage());
+        }
+
+        return isExceptionMsg(toCompare, failure.getMessage());
+    }
+
+    /**
+     * Return true if message contains invalid session id.
+     *
+     * @param message is the message to examine for being an invalid session id.
+     */
+    public static boolean isInvalidSessionId(final String message) {
+        return isExceptionMsg(INVALID_SESSION_ID, message);
+    }
+
+    /**
+     * Return true if we have an invalid session id or false if not.
+     *
+     * @param failure is the failure to examine for an invalid session id.
+     */
+    public static boolean isInvalidSessionId(final Throwable failure) {
+        return isExceptionMsg(INVALID_SESSION_ID, failure);
+    }
+
+    /**
+     * Return true if message contains server unavailable.
+     *
+     * @param message is the message to examine for being server unavailable.
+     */
+    public static boolean isServerUnavailable(final String message) {
+        return isExceptionMsg(SERVER_UNAVAILABLE, message);
+    }
+
+    /**
+     * Return true if we have server unavailable or false if not.
+     *
+     * @param failure is the failure to examine for server unavailable.
+     */
+    public static boolean isServerUnavailable(final Throwable failure) {
+        return isExceptionMsg(SERVER_UNAVAILABLE, failure);
+    }
+
+    /**
+     * Return true if we have service is unavailable or false if not.
+     *
+     * @param failure is the failure to examine for service unavailable.
+     */
+    public static boolean isServiceUnavailable(final Throwable failure) {
+        return isExceptionMsg(SERVICE_UNAVAILABLE, failure);
+    }
+
+    /**
+     * Return true if we are unable to lock a row in SFDC.
+     *
+     * @param failure is the failure to examine for unable to lock row.
+     */
+    public static boolean isUnableToLockRow(final Throwable failure) {
+        return isExceptionMsg(UNABLE_TO_LOCK_ROW, failure);
+    }
+
+    /**
+     * Returns true if the failure represents one where relogin should occur.
+     *
+     * @param failure the exception to examine if relogin is necessary.
+     *
+     * @return true if relogin is necessary.
+     */
+    public static boolean isReloginException(final Throwable failure) {
+        return isInvalidSessionId(failure) || org.flossware.util.ExceptionUtil.containsIOException(failure);
+    }
+
+    /**
+     * Returns true if the failure represents one where a retry should occur.
+     *
+     * @param failure the exception to examine if retry is necessary.
+     *
+     * @return true if retry is necessary.
+     */
+    public static boolean isRetryException(final Throwable failure) {
+        return isServerUnavailable(failure) || isUnableToLockRow(failure) || isServiceUnavailable(failure);
+    }
+
+    /**
+     * Not allowed.
+     */
+    private ExceptionUtil() {
+    }
+}

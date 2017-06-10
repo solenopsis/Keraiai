@@ -16,49 +16,37 @@
  */
 package org.solenopsis.keraiai.credentials;
 
-import java.util.Properties;
+import java.io.File;
+import org.flossware.jcore.utils.PropertiesUtils;
 
 /**
  *
- * Uses properties to populate the credentials.
+ * Uses a file to populate the credentials.
  *
  * @author sfloess
  *
  */
-public class PropertiesCredentials extends StringCredentials {
+public class FilePropertiesCredentials extends PropertiesCredentials {
     /**
      * Uses properties to get the credentials.
      *
-     * @param properties         contains the credentials.
+     * @param file               file containing properties.
      * @param urlProperty        the name of the property containing URL.
      * @param userNameProperty   the name of the property containing user name.
      * @param passwordProperty   the name of the property containing password.
      * @param tokenProperty      the name of the property containing token.
      * @param apiVersionProperty the name of the property containing API.
      */
-    public PropertiesCredentials(final Properties properties, final String urlProperty, final String userNameProperty, final String passwordProperty, final String tokenProperty, final String apiVersionProperty) {
-        super(
-                properties.getProperty(urlProperty),
-                properties.getProperty(userNameProperty),
-                properties.getProperty(passwordProperty),
-                properties.getProperty(tokenProperty),
-                properties.getProperty(apiVersionProperty)
-        );
+    public FilePropertiesCredentials(final File file, final String urlProperty, final String userNameProperty, final String passwordProperty, final String tokenProperty, final String apiVersionProperty) {
+        super(PropertiesUtils.createProperties(file), urlProperty, userNameProperty, passwordProperty, tokenProperty, apiVersionProperty);
     }
 
     /**
      * Constructs credentials from properties.
      *
-     * @param properties contains properties from which our credentials will be retrieved.
+     * @param file the file to create credentials from.
      */
-    public PropertiesCredentials(final Properties properties) {
-        this(
-                properties,
-                PropertiesCredentialsEnum.URL.getName(),
-                PropertiesCredentialsEnum.USER_NAME.getName(),
-                PropertiesCredentialsEnum.PASSWORD.getName(),
-                PropertiesCredentialsEnum.TOKEN.getName(),
-                PropertiesCredentialsEnum.API_VERSION.getName()
-        );
+    public FilePropertiesCredentials(final File file) {
+        super(PropertiesUtils.createProperties(file));
     }
 }

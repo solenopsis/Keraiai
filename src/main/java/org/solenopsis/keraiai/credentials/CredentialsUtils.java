@@ -26,7 +26,17 @@ import org.solenopsis.keraiai.Credentials;
  * @author sfloess
  *
  */
-final class CredentialsUtils {
+public final class CredentialsUtils {
+    /**
+     * If no error message is provided, use this value.
+     */
+    public static final String DEFAULT_ERROR_MESSAGE = "Invalid credentials";
+
+    /**
+     * Default constructor not allowed.
+     */
+    private CredentialsUtils() {
+    }
 
     /**
      * Compute the web service password - this is a combination of <code>password</code> plus <code>token</code>.
@@ -57,8 +67,37 @@ final class CredentialsUtils {
     }
 
     /**
-     * Default constructor not allowed.
+     * Ensure good credentials - must have all the pieces to be good.
+     *
+     * @param credentials the credentials to examine.
+     * @param errorMsg    the error message to emit if any parts are invalid.
+     *
+     * @return <code>credentials</code> if all parts of credentials are not missing.
+     *
+     * @throws IllegalArgumentException if credentials is null or any part of it are missing.
      */
-    private CredentialsUtils() {
+    public static Credentials ensureCredentials(final Credentials credentials, final String errorMsg) {
+        ObjectUtils.ensureObject(credentials, errorMsg);
+
+        StringUtils.ensureString(credentials.getApiVersion(), "Must provide an API version!");
+        StringUtils.ensureString(credentials.getPassword(), "Must provide a password!");
+        StringUtils.ensureString(credentials.getToken(), "Must provide a token!");
+        StringUtils.ensureString(credentials.getUrl(), "Must provide a URL!");
+        StringUtils.ensureString(credentials.getUserName(), "Must provide a user name!");
+
+        return credentials;
+    }
+
+    /**
+     * Ensure good credentials - must have all the pieces to be good.
+     *
+     * @param credentials the credentials to examine.
+     *
+     * @return <code>credentials</code> if all parts of credentials are not missing.
+     *
+     * @throws IllegalArgumentException if credentials is null or any part of it are missing.
+     */
+    public static Credentials ensureCredentials(final Credentials credentials) {
+        return ensureCredentials(credentials, DEFAULT_ERROR_MESSAGE);
     }
 }

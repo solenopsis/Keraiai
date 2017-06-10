@@ -1,108 +1,106 @@
-/*
- * Copyright (C) 2016 flossware
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package org.solenopsis.keraiai.credentials;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.solenopsis.keraiai.Credentials;
 
+/*
+ * Copyright (C) 2017 Scot P. Floess
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
 /**
  * Tests the CredentialsUtils utility class.
  *
- * @author sfloess
+ * @author Scot P. Floess
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CredentialsUtilsTest {
+    @Mock
+    Credentials credentials;
 
-    /**
-     * Tests the constructor.
-     */
-    @Test
-    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        final Constructor constructor = CredentialsUtils.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        constructor.newInstance(new Object[0]);
+    @Before
+    public void setup() {
+        Mockito.when(credentials.getApiVersion()).thenReturn(TestUtils.generateUniqueStr("api"));
+        Mockito.when(credentials.getPassword()).thenReturn(TestUtils.generateUniqueStr("password"));
+        Mockito.when(credentials.getUrl()).thenReturn(TestUtils.generateUniqueStr("url"));
+        Mockito.when(credentials.getUserName()).thenReturn(TestUtils.generateUniqueStr("username"));
     }
 
     /**
-     * Test computing the security password with a null password.
+     * Test computing a security password with a null password.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_nullPassword() {
+    public void test_computeSecurityPassword_String_String_null_password() {
         CredentialsUtils.computeSecurityPassword(null, "foo");
     }
 
     /**
-     * Test computing the security password with a blank password.
+     * Test computing a security password with a blank password.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_emptyPassword() {
+    public void test_computeSecurityPassword_String_String_blank_password() {
+        CredentialsUtils.computeSecurityPassword("    ", "foo");
+    }
+
+    /**
+     * Test computing a security password with an empty password.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_String_String_empty_password() {
         CredentialsUtils.computeSecurityPassword("", "foo");
     }
 
     /**
-     * Test computing the security password with an empty password.
+     * Test computing a security password with a null token.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_blankPassword() {
-        CredentialsUtils.computeSecurityPassword("  ", "foo");
-    }
-
-    /**
-     * Test computing the security password with a null token.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_nullToken() {
+    public void test_computeSecurityPassword_String_String_null_token() {
         CredentialsUtils.computeSecurityPassword("bar", null);
     }
 
     /**
-     * Test computing the security password with a blank password.
+     * Test computing a security password with a blank token.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_emptyToken() {
+    public void test_computeSecurityPassword_String_String_blank_token() {
+        CredentialsUtils.computeSecurityPassword("bar", "    ");
+    }
+
+    /**
+     * Test computing a security password with an empty token.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_String_String_empty_token() {
         CredentialsUtils.computeSecurityPassword("bar", "");
     }
 
     /**
-     * Test computing the security password with an empty password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_computeSecurityPassword_String_String_blankToken() {
-        CredentialsUtils.computeSecurityPassword("bar", "  ");
-    }
-
-    /**
-     * Test computing the security password.
+     * Test computing a security password.
      */
     @Test
     public void test_computeSecurityPassword_String_String() {
-        final String password = "password" + System.currentTimeMillis();
-        final String token = "token" + System.currentTimeMillis();
+        final String password = TestUtils.generateUniqueStr("password");
+        final String token = TestUtils.generateUniqueStr("token");
 
-        Assert.assertEquals("Should be the same", password + token, CredentialsUtils.computeSecurityPassword(password, token));
+        Assert.assertEquals("Should be same security token", password + token, CredentialsUtils.computeSecurityPassword(password, token));
     }
 
     /**
-     * Test computing the security password with null credentials.
+     * Tests computing a security password with null credentials.
      */
     @Test(expected = IllegalArgumentException.class)
     public void test_computeSecurityPassword_Credentials_null() {
@@ -110,15 +108,80 @@ public class CredentialsUtilsTest {
     }
 
     /**
-     * Test computing the security password with credentials.
+     * Test computing a security password with a null password.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_null_password() {
+        Mockito.when(credentials.getPassword()).thenReturn(null);
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password with a blank password.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_blank_password() {
+        Mockito.when(credentials.getToken()).thenReturn("foo");
+        Mockito.when(credentials.getPassword()).thenReturn("    ");
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password with an empty password.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_empty_password() {
+        Mockito.when(credentials.getToken()).thenReturn("foo");
+        Mockito.when(credentials.getPassword()).thenReturn("");
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password with a null token.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_null_token() {
+        Mockito.when(credentials.getPassword()).thenReturn("bar");
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password with a blank token.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_blank_token() {
+        Mockito.when(credentials.getToken()).thenReturn("    ");
+        Mockito.when(credentials.getPassword()).thenReturn("bar");
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password with an empty token.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void test_computeSecurityPassword_Credentials_empty_token() {
+        Mockito.when(credentials.getToken()).thenReturn("");
+        Mockito.when(credentials.getPassword()).thenReturn("bar");
+
+        CredentialsUtils.computeSecurityPassword(credentials);
+    }
+
+    /**
+     * Test computing a security password.
      */
     @Test
     public void test_computeSecurityPassword_Credentials() {
         final String password = TestUtils.generateUniqueStr("password");
         final String token = TestUtils.generateUniqueStr("token");
 
-        final StringCredentials creds = new StringCredentials("http://foo.bar", "myUser", password, token, "31.0");
+        Mockito.when(credentials.getToken()).thenReturn(token);
+        Mockito.when(credentials.getPassword()).thenReturn(password);
 
-        Assert.assertEquals("Should be correct security password", password + token, CredentialsUtils.computeSecurityPassword(creds));
+        Assert.assertEquals("Should be same security token", password + token, CredentialsUtils.computeSecurityPassword(credentials));
     }
 }

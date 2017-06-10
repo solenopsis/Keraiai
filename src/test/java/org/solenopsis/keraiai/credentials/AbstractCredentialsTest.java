@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Scot P. Floess
+ * Copyright (C) 2017 Scot P. Floess
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,54 +19,52 @@ package org.solenopsis.keraiai.credentials;
 import org.flossware.jcore.utils.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.solenopsis.keraiai.Credentials;
 
 /**
- * Test the AbstractCredentials base class.
+ * Tests the AbstractCredentials class.
  *
  * @author Scot P. Floess
  */
 public class AbstractCredentialsTest {
+    static class CredentialsStub extends AbstractCredentials {
+        static int ID = 0;
 
-    volatile static int id = 0;
-
-    /**
-     * Stub class for testing.
-     */
-    class AbstractCredentialsStub extends AbstractCredentials {
-
-        int myId;
-
-        String user;
-        String password;
-        String token;
         String url;
-        String api;
 
-        AbstractCredentialsStub(int myId) {
-            this.myId = myId;
+        String userName;
 
-            this.user = "user" + myId;
-            this.password = "password" + myId;
-            this.token = "token" + myId;
-            this.url = "url" + myId;
-            this.api = "api" + myId;
+        String password;
+
+        String token;
+
+        String apiVersion;
+
+        CredentialsStub() {
+            String id = "" + (ID++);
+
+            url = TestUtils.generateUniqueStr("url", id);
+            userName = TestUtils.generateUniqueStr("userName", id);
+            password = TestUtils.generateUniqueStr("password", id);
+            token = TestUtils.generateUniqueStr("token", id);
+            apiVersion = TestUtils.generateUniqueStr("apiVersion", id);
         }
 
-        AbstractCredentialsStub() {
-            this(id++);
+        CredentialsStub(final CredentialsStub toCopy) {
+            url = toCopy.url;
+            userName = toCopy.userName;
+            password = toCopy.password;
+            token = toCopy.token;
+            apiVersion = toCopy.apiVersion;
         }
 
-        AbstractCredentialsStub(final String password, final String token) {
-            this();
-
-            this.password = password;
-            this.token = token;
+        @Override
+        public String getUrl() {
+            return url;
         }
 
         @Override
         public String getUserName() {
-            return user;
+            return userName;
         }
 
         @Override
@@ -80,182 +78,74 @@ public class AbstractCredentialsTest {
         }
 
         @Override
-        public String getUrl() {
-            return url;
-        }
-
-        @Override
         public String getApiVersion() {
-            return api;
+            return apiVersion;
         }
     }
 
     /**
-     * Test equality.
+     * Test the equalsCredentials() method.
      */
     @Test
     public void test_equalsCredentials() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
+        Assert.assertFalse("Should not be equal", new CredentialsStub().equalsCredentials(null));
 
-        Assert.assertFalse("Should not be equal", stub1.equalsCredentials(null));
-        Assert.assertTrue("Should be equals", stub1.equalsCredentials(stub1));
+        final CredentialsStub credentials1 = new CredentialsStub();
 
-        final int myId = (int) System.currentTimeMillis();
+        Assert.assertTrue("Should be equal - same instance", credentials1.equalsCredentials(credentials1));
 
-        AbstractCredentialsStub stub3 = new AbstractCredentialsStub(myId);
-        AbstractCredentialsStub stub4 = new AbstractCredentialsStub(myId);
+        final CredentialsStub credentials2 = new CredentialsStub(credentials1);
 
-        Assert.assertTrue("Should be equal", stub3.equalsCredentials(stub4));
-        Assert.assertTrue("Should be equal", stub4.equalsCredentials(stub3));
+        Assert.assertTrue("Should be equal - copied instance", credentials1.equalsCredentials(credentials2));
+        Assert.assertTrue("Should be equal - copied instance", credentials2.equalsCredentials(credentials1));
 
-        stub3.api = "api";
-        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
-        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
-        stub3.api = stub4.api;
+        credentials2.apiVersion = "foo";
 
-        stub3.url = "url";
-        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
-        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
-        stub3.url = stub4.url;
-
-        stub3.token = "token";
-        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
-        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
-        stub3.token = stub4.token;
-
-        stub3.password = "password";
-        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
-        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
-        stub3.password = stub4.password;
-
-        stub3.user = "user";
-        Assert.assertFalse("Should not be equal", stub3.equalsCredentials(stub4));
-        Assert.assertFalse("Should not be equal", stub4.equalsCredentials(stub3));
+        Assert.assertFalse("Should not be equal", credentials1.equalsCredentials(credentials2));
+        Assert.assertFalse("Should not be equal", credentials2.equalsCredentials(credentials1));
     }
 
     /**
-     * Test equality.
+     * Test the equals() method.
      */
     @Test
     public void test_equals() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
+        Assert.assertFalse("Should not be equal", new CredentialsStub().equals(null));
 
-        Assert.assertFalse("Should not be equal", stub1.equals(TestUtils.generateUniqueStr()));
-        Assert.assertFalse("Should not be equal", stub1.equals((String) null));
-        Assert.assertFalse("Should not be equal", stub1.equals((Credentials) null));
+        final CredentialsStub credentials1 = new CredentialsStub();
 
-        Assert.assertTrue("Should not be equal", stub1.equals(stub1));
+        Assert.assertTrue("Should be equal - same instance", credentials1.equals(credentials1));
 
-        final int myId = (int) System.currentTimeMillis();
+        final CredentialsStub credentials2 = new CredentialsStub(credentials1);
 
-        AbstractCredentialsStub stub3 = new AbstractCredentialsStub(myId);
-        AbstractCredentialsStub stub4 = new AbstractCredentialsStub(myId);
+        Assert.assertTrue("Should be equal - copied instance", credentials1.equals(credentials2));
+        Assert.assertTrue("Should be equal - copied instance", credentials2.equals(credentials1));
 
-        Assert.assertTrue("Should be equal", stub3.equals(stub4));
-        Assert.assertTrue("Should be equal", stub4.equals(stub3));
+        credentials2.apiVersion = "foo";
 
-        stub3.password = "password";
-        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
-        stub3.password = stub4.password;
-
-        stub3.token = "token";
-        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
-        stub3.token = stub4.token;
-
-        stub3.url = "url";
-        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
-        stub3.url = stub4.url;
-
-        stub3.api = "api";
-        Assert.assertFalse("Should not be equal", stub3.equals(stub4));
+        Assert.assertFalse("Should not be equal", credentials1.equals(credentials2));
+        Assert.assertFalse("Should not be equal", credentials2.equals(credentials1));
     }
 
     /**
-     * Test hash code.
+     * Test the hashCode() method.
      */
     @Test
     public void test_hashCode() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
-
-        final int hashCode = stub1.getUserName().hashCode()
-                             + stub1.getPassword().hashCode()
-                             + stub1.getToken().hashCode()
-                             + stub1.getUrl().hashCode()
-                             + stub1.getApiVersion().hashCode();
-
-        Assert.assertEquals("Should be equal", hashCode, stub1.hashCode());
+        Assert.assertTrue("Should have computed a hash code", new CredentialsStub().hashCode() != 0);
     }
 
     /**
-     * Test retrieving the security password with a null password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_nullPassword() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub(null, "foo");
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test retrieving the security password with a blank password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_blankPassword() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub("  ", "foo");
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test retrieving the security password with an empty password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_emptyPassword() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub("", "foo");
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test retrieving the security password with a null token.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_nullToken() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub("bar", null);
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test retrieving the security password with a blank password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_blankToken() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub("bar", "  ");
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test retrieving the security password with an empty password.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void test_getSecurityPassword_emptyToken() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub("bar", "");
-        stub1.getSecurityPassword();
-    }
-
-    /**
-     * Test computing the security password.
+     * Test converting to a StringBuilder.
      */
     @Test
-    public void test_getSecurityPassword() {
-        AbstractCredentialsStub stub1 = new AbstractCredentialsStub();
+    public void test_toStringBuilder() {
+        final StringBuilder sb = new StringBuilder();
+        final StringBuilder toCompare = new CredentialsStub().toStringBuilder(sb, "");
 
-        Assert.assertFalse("Should not be blank", stub1.getSecurityPassword().trim().isEmpty());
-        Assert.assertEquals("Should be equal", stub1.getPassword() + stub1.getToken(), stub1.getSecurityPassword());
-    }
+        Assert.assertNotNull("Should not be null", toCompare);
+        Assert.assertSame("Should be the same object", toCompare, sb);
 
-    /**
-     * Test computing the toString().
-     */
-    @Test
-    public void test_toString() {
-        Assert.assertFalse("Should not be blank", new AbstractCredentialsStub().toString().isEmpty());
+        Assert.assertTrue("Should contain a string", toCompare.length() > 0);
     }
 }

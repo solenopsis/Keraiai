@@ -16,16 +16,18 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
+import org.solenopsis.keraiai.soap.SessionUrlFactory;
 import java.lang.reflect.Proxy;
 import java.net.URL;
 import javax.xml.ws.Service;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.flossware.jcore.utils.StringUtils;
 import org.flossware.jcore.utils.soap.ServiceUtils;
+import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
-import org.solenopsis.keraiai.SecurityMgr;
-import org.solenopsis.keraiai.soap.WebServiceEnum;
-import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
+import org.solenopsis.keraiai.soap.LoginWebService;
+import org.solenopsis.keraiai.soap.WebServiceType;
+import org.solenopsis.keraiai.soap.login.LoginWebServiceEnum;
+import org.solenopsis.keraiai.soap.session.SessionUrlFactoryEnum;
 
 /**
  * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session ports
@@ -62,16 +64,20 @@ import org.solenopsis.keraiai.soap.WebServiceSubUrlEnum;
  *
  * @author Scot P. Floess
  */
-public enum WebServiceTypeEnum {
-    APEX_SERVICE_TYPE(WebServiceEnum.APEX_SERVICE, WebServiceSubUrlEnum.APEX_TYPE),
-    CUSTOM_SERVICE_TYPE(null, WebServiceSubUrlEnum.CUSTOM_TYPE),
-    ENTERPRISE_SERVICE_TYPE(WebServiceEnum.ENTERPRISE_SERVICE, WebServiceSubUrlEnum.ENTERPRISE_TYPE),
-    METADATA_SERVICE_TYPE(WebServiceEnum.METADATA_SERVICE, WebServiceSubUrlEnum.METADATA_TYPE),
-    PARTNER_SERVICE_TYPE(WebServiceEnum.PARTNER_SERVICE, WebServiceSubUrlEnum.PARTNER_TYPE),
-    TOOLING_SERVICE_TYPE(WebServiceEnum.TOOLING_SERVICE, WebServiceSubUrlEnum.TOOLING_TYPE);
+public enum WebServiceTypeEnum implements WebServiceType {
+    APEX_SERVICE_TYPE(SessionUrlFactoryEnum.APEX_SESSION_URL_FACTORY),
+    CUSTOM_SERVICE_TYPE(SessionUrlFactoryEnum.CUSTOM_SESSION_URL_FACTORY),
+    ENTERPRISE_SERVICE_TYPE(SessionUrlFactoryEnum.ENTERPRISE_SESSION_URL_FACTORY),
+    METADATA_SERVICE_TYPE(SessionUrlFactoryEnum.METADATA_SESSION_URL_FACTORY),
+    PARTNER_SERVICE_TYPE(SessionUrlFactoryEnum.PARTNER_SESSION_URL_FACTORY),
+    TOOLING_SERVICE_TYPE(SessionUrlFactoryEnum.TOOLING_SESSION_URL_FACTORY);
 
-    private final WebServiceEnum webService;
-    private final WebServiceSubUrlEnum webServiceSubUrl;
+    private static final LoginWebService DEFAULT_LOGIN_WEB_SERVICE = LoginWebServiceEnum.ENTERPRISE_LOGIN_SERVICE;
+
+    /**
+     * Can compute a session URL.
+     */
+    private final SessionUrlFactory sessionUrlFactory;
 
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
@@ -79,146 +85,91 @@ public enum WebServiceTypeEnum {
      * @param webServiceType   the SFDC web service.
      * @param webServiceSubUrl the port for the web service.
      */
-    private WebServiceTypeEnum(final WebServiceEnum webService, final WebServiceSubUrlEnum webServiceSubUrl) {
-        this.webService = webService;
-        this.webServiceSubUrl = webServiceSubUrl;
+    private WebServiceTypeEnum(final SessionUrlFactory sessionUrlFactory) {
+        this.sessionUrlFactory = sessionUrlFactory;
     }
 
     /**
-     * The sub URL when calling out to web services.
-     *
-     * @return the sub URL.
+     * {@inheritDoc}
      */
-    public WebServiceSubUrlEnum getWebServiceSubUrl() {
-        return webServiceSubUrl;
+    @Override
+    public SessionUrlFactory getSessionUrlFactory() {
+        return sessionUrlFactory;
     }
 
     /**
-     * Return the web service or null for a custom service.
-     *
-     * @return the web service or null if none exists.
+     * {@inheritDoc}
      */
-    public WebServiceEnum getWebService() {
-        return webService;
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final LoginWebService loginWebService, final Service service, Class<P> portType) {
+        ObjectUtils.ensureObject(service, "Must provide a service!");
+        ObjectUtils.ensureObject(portType, "Must provide a port type!");
+
+        // Retrieving the port in a threaded capacity is highly synchronized.
+        // By prefetching here, all subsequent calls happen very fast.
+        service.getPort(portType);
+
+        // The type returned can also be cast to a LoginMgr.  Useful if default
+        // implementations are used for LoginMgr - the user of the proxy can
+        // then get the LoginMgr used by casting and using...
+        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{portType, LoginContext.class}, new PortInvocationHandler(credentials, loginWebService, this, service, portType));
     }
 
     /**
-     * Compute the session URL using <code<>baseURL</code>, the partial URL for a web service and the name of the port. By port
-     * name, for custom services it is the name of the QName of the port for service, otherwise it is the API version for from the
-     * credentials as found in the <code>securityMgr</code>'s credentials.
-     *
-     * @param baseUrl     is the server URL from which we will make a web service call.
-     * @param securityMgr contains session id and credentials.
-     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                    it is the API version found in <code>securityMgr</code>'s session.
-     *
-     * @return the computed session URL.
+     * {@inheritDoc}
      */
-    String computeSessionUrl(final String baseUrl, final SecurityMgr securityMgr, final Service service) {
-        StringUtils.ensureString(baseUrl, "Must provide a base URL!");
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final Service service, Class<P> portType) {
+        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, service, portType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final LoginWebService loginWebService, final S service) {
         ObjectUtils.ensureObject(service, "Must provide a service!");
 
-        return StringUtils.concatWithSeparator(false, "/", baseUrl, getWebServiceSubUrl().getPartialUrl(), PortUtils.computePortName(this, securityMgr, service));
+        return (P) createProxyPort(credentials, loginWebService, service, ServiceUtils.getPortType(service.getClass()));
     }
 
     /**
-     * Compute the session URL using the base URL from the <code>loginContext</code>'s session, the partial URL for a web service
-     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
-     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
-     *
-     * @param loginContext contains the base URL of the server for whom we will make a web service call.
-     * @param securityMgr  contains session id and credentials.
-     * @param service      if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                     it is the API version found in <code>securityMgr</code>'s session.
-     *
-     * @return the computed session URL.
+     * {@inheritDoc}
      */
-    String computeSessionUrl(final LoginContext loginContext, final SecurityMgr securityMgr, final Service service) {
-        ObjectUtils.ensureObject(loginContext, "Must provide a login context!");
-
-        return computeSessionUrl(loginContext.getBaseServerUrl(), securityMgr, service);
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final S service) {
+        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, service);
     }
 
     /**
-     * Compute the session URL using the base URL from the <code>securityMgr</code>'s session, the partial URL for a web service
-     * and the name of the port. By port name, for custom services it is the name of the QName of the port for service, otherwise it
-     * is the API version for from the credentials as found in the <code>securityMgr</code>'s credentials.
-     *
-     * @param securityMgr contains session id and credentials.
-     * @param service     if using a custom web service, will use the name of the QName of the port name of the service. Otherwise
-     *                    it is the API version found in <code>securityMgr</code>'s session.
-     *
-     * @return the computed session URL.
+     * {@inheritDoc}
      */
-    String computeSessionUrl(final SecurityMgr securityMgr, final Service service) {
-        ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
-
-        return computeSessionUrl(securityMgr.getSession(), securityMgr, service);
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final LoginWebService loginWebService, final Class<S> serviceClass, final URL wsdlResource) {
+        return createProxyPort(credentials, loginWebService, ServiceUtils.createService(serviceClass, wsdlResource));
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>         the type of web service being used.
-     * @param <P>         the type of port desired.
-     *
-     * @param securityMgr used for logins and session ids.
-     * @param service     contains the port for web service calls.
-     * @param portType    the type of port to perform web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Service service, Class<P> portType) {
-        return (P) Proxy.newProxyInstance(WebServiceTypeEnum.class.getClassLoader(), new Class[]{ portType }, new PortInvocationHandler(securityMgr, this, service, portType));
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final Class<S> serviceClass, final URL wsdlResource) {
+        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>         the type of web service being used.
-     * @param <P>         the type of port desired.
-     *
-     * @param securityMgr used for logins and session ids.
-     * @param service     contains the port for web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final S service) {
-        ObjectUtils.ensureObject(service, "Must provide a service!");
-
-        return (P) createSessionPort(securityMgr, service, ServiceUtils.getPortType(service.getClass()));
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final LoginWebService loginWebService, final Class<S> serviceClass, final String wsdlResource) {
+        return createProxyPort(credentials, loginWebService, ServiceUtils.createService(serviceClass, wsdlResource));
     }
 
     /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>          the type of web service being used.
-     * @param <P>          the type of port desired.
-     *
-     * @param securityMgr  used for logins and session ids.
-     * @param serviceClass the class of the service where instances contains the port for web service calls.
-     * @param wsdlResource the type of port to perform web service calls.
-     *
-     * @return a session based port.
+     * {@inheritDoc}
      */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final URL wsdlResource) {
-        return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
-    }
-
-    /**
-     * Create a session based port. This port will be able to perform auto logins, re-logins, etc.
-     *
-     * @param <S>          the type of web service being used.
-     * @param <P>          the type of port desired.
-     *
-     * @param securityMgr  used for logins and session ids.
-     * @param serviceClass the class of the service where instances contains the port for web service calls.
-     * @param wsdlResource the type of port to perform web service calls.
-     *
-     * @return a session based port.
-     */
-    public <S extends Service, P> P createSessionPort(final SecurityMgr securityMgr, final Class<S> serviceClass, final String wsdlResource) {
-        return createSessionPort(securityMgr, ServiceUtils.createService(serviceClass, wsdlResource));
+    @Override
+    public <S extends Service, P> P createProxyPort(final Credentials credentials, final Class<S> serviceClass, final String wsdlResource) {
+        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
     }
 }

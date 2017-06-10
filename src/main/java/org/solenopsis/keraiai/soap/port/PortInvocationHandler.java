@@ -19,12 +19,16 @@ package org.solenopsis.keraiai.soap.port;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
-import org.solenopsis.keraiai.LoginContext;
-import org.solenopsis.keraiai.SecurityMgr;
+import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.soap.LoginWebService;
+import org.solenopsis.keraiai.soap.WebServiceType;
+import org.solenopsis.keraiai.soap.exception.ExceptionContext;
+import org.solenopsis.keraiai.soap.exception.SalesforceExceptionEnum;
 
 /**
  * Acts as a proxy to call methods on ports. This is the real place that auto logins, retries, etc. happen. We leverage the
@@ -35,14 +39,24 @@ import org.solenopsis.keraiai.SecurityMgr;
 final class PortInvocationHandler extends AbstractCommonBase implements InvocationHandler {
 
     /**
-     * The security manager for logins, relogins, etc.
+     * Total calls for retry.
      */
-    private final SecurityMgr securityMgr;
+    static final int MAX_RETRIES = 8;
 
     /**
-     * The url of the web service to call.
+     * The credentials.
      */
-    private final String url;
+    private final Credentials credentials;
+
+    /**
+     * The login web service.
+     */
+    private final LoginWebService loginWebService;
+
+    /**
+     * The web service type.
+     */
+    private final WebServiceType webServiceType;
 
     /**
      * The web service itself.
@@ -55,21 +69,35 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
     private final Class portType;
 
     /**
-     * Return the security manager.
-     *
-     * @return the security manager.
+     * Our port.
      */
-    private SecurityMgr getSecurityMgr() {
-        return securityMgr;
+    private final AtomicReference port;
+
+    /**
+     * Return the credentials
+     *
+     * @return the credentials.
+     */
+    Credentials getCredentials() {
+        return credentials;
     }
 
     /**
-     * Return the web service url to call.
+     * Return the login web service
      *
-     * @return the web service url to call.
+     * @return the login web service.
      */
-    private String getUrl() {
-        return url;
+    LoginWebService getLoginWebService() {
+        return loginWebService;
+    }
+
+    /**
+     * Return the web service type.
+     *
+     * @return the web service type.
+     */
+    WebServiceType getWebServiceType() {
+        return webServiceType;
     }
 
     /**
@@ -77,7 +105,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the web service being used.
      */
-    private Service getService() {
+    Service getService() {
         return service;
     }
 
@@ -86,25 +114,45 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the port type on the web service.
      */
-    private Class getPortType() {
+    Class getPortType() {
         return portType;
+    }
+
+    /**
+     * Return the port.
+     */
+    AtomicReference getPort() {
+        return port;
+    }
+
+    /**
+     * Return true if call retries allowed.
+     *
+     * @param callsThusFar is the number of calls made thus far.
+     *
+     * @return true if calls can be retried.
+     */
+    static boolean isCallRetriable(final int callsThusFar) {
+        return callsThusFar <= MAX_RETRIES;
     }
 
     /**
      * This constructor all one needs to provide proxy calls for autologins and retries.
      *
-     * @param securityMgr    used for login, re-login, etc.
+     * @param securityMgr used for login, re-login, etc.
      * @param webServiceType the type of web service being used.
-     * @param service        the web service to call.
-     * @param portType       used to retrieve a port from the service.
+     * @param service the web service to call.
+     * @param portType used to retrieve a port from the service.
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
-    <P> PortInvocationHandler(final SecurityMgr securityMgr, final WebServiceTypeEnum webServiceType, final Service service, final Class portType) {
-        this.securityMgr = ObjectUtils.ensureObject(securityMgr, "Must provide a security manager!");
+    <P> PortInvocationHandler(final Credentials credentials, final LoginWebService loginWebService, final WebServiceType webServiceType, final Service service, final Class portType) {
+        this.credentials = ObjectUtils.ensureObject(credentials, "Must provide credentials!");
+        this.loginWebService = ObjectUtils.ensureObject(loginWebService, "Must provide a login web service!");
+        this.webServiceType = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        this.url = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!").computeSessionUrl(securityMgr, service);
+        this.port = new AtomicReference(SalesforcePortUtils.createSessionPort(webServiceType, loginWebService.login(credentials), service, portType));
     }
 
     /**
@@ -115,24 +163,28 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         ObjectUtils.ensureObject(proxy, "Must have a proxy object in which to call methods!");
         ObjectUtils.ensureObject(method, "Must provide a method to call!");
 
-        log(Level.FINE, "Calling [{0}.{1}]", proxy.getClass(), method.getName());
+        log(Level.FINE, "Calling [{0}.{1}]", getPortType().getName(), method.getName());
 
         int totalCalls = 0;
-        LoginContext loginContext = getSecurityMgr().getSession();
         Throwable toRaise = null;
+
+        final ExceptionContext exceptionContext = new ExceptionContext();
 
         do {
             try {
-                return method.invoke(PortUtils.createSessionPort(getSecurityMgr(), getService(), getPortType(), getUrl()), args);
+                return method.invoke(getPort().get(), args);
             } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException callFailure) {
-                getLogger().log(Level.WARNING, "Trouble calling " + proxy.getClass().getName() + "." + method.getName() + "()", toRaise);
+                log(Level.WARNING, "Trouble calling [{0}.{1}()]", getPortType().getName(), method.getName());
                 toRaise = callFailure;
-                PortUtils.processException(callFailure, method);
+
+                if (SalesforceExceptionEnum.isReloginException(exceptionContext.incrementFailureCount(toRaise))) {
+                    getPort().set(SalesforcePortUtils.createSessionPort(getWebServiceType(), getLoginWebService().login(getCredentials()), getService(), getPortType()));
+                }
             }
+        } while (isCallRetriable(++totalCalls));
 
-            loginContext = getSecurityMgr().resetSession(loginContext);
-        } while (PortUtils.isCallRetriable(++totalCalls));
+        log(Level.SEVERE, toRaise, "Unable to call [{0}].[{1}] after retry [{2}] attempts, raising exception.  Failures include [{3}]", port.get().getClass().getName(), method.getName(), totalCalls, exceptionContext.computeTotals());
 
-        throw toRaise;
+        throw new IllegalStateException("Attempts to retry calls to Salesforce have failed after [" + totalCalls + "] times.  Failures are: " + exceptionContext.computeTotals(), toRaise);
     }
 }
