@@ -308,13 +308,6 @@
 
                 <executions>
                     <execution>
-                        <id>clean</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>instrument</id>
                         <phase>site</phase>
                         <goals>
