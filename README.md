@@ -151,6 +151,20 @@ public static final class SessionContext {
 
 Now your application can simply use SessionContext with no regard to logins, etc.
 
+### Getting Your LoginContext
+
+Above we illustrated how to create and use a proxy port.  You can also get your current [LoginContext](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/LoginContext.java) by casting the proxy port to a [LoginContext](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/LoginContext.java).  This works, because the proxy port implements both the web service port and [LoginContext](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/LoginContext.java) interfaces!
+
+#### Examples
+
+```java
+final MetadataPortType metadataPort = WebServiceTypeEnum.METADATA_SERVICE_TYPE.createProxyPort(credentials, MetadataService.class, MyClass.class.getClassLoader().getResource("/home/myuser/metadata.wsdl");
+
+final LoginContext loginContext = (LoginContext) metadataPort;
+```
+
+The advantage here is that your [LoginContext](https://github.com/solenopsis/Keraiai/blob/master/src/main/java/org/solenopsis/keraiai/LoginContext.java) implicitly follows your web service port.
+
 ## Links
 
 You may find the following links useful:

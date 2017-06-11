@@ -19,12 +19,15 @@ package org.solenopsis.keraiai.soap.port;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import javax.xml.ws.Service;
 import org.flossware.jcore.AbstractCommonBase;
 import org.flossware.jcore.utils.ObjectUtils;
 import org.solenopsis.keraiai.Credentials;
+import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.LoginWebService;
 import org.solenopsis.keraiai.soap.WebServiceType;
 import org.solenopsis.keraiai.soap.exception.ExceptionContext;
@@ -37,16 +40,32 @@ import org.solenopsis.keraiai.soap.exception.SalesforceExceptionEnum;
  * @author Scot P. Floess
  */
 final class PortInvocationHandler extends AbstractCommonBase implements InvocationHandler {
+    /**
+     * Methods defined on LoginContext.
+     */
+    static final Set<Method> LOGIN_CONTEXT_METHODS;
 
     /**
      * Total calls for retry.
      */
     static final int MAX_RETRIES = 8;
 
+    static {
+        LOGIN_CONTEXT_METHODS = new HashSet<>();
+
+        for (final Method method : LoginContext.class.getDeclaredMethods()) {
+            LOGIN_CONTEXT_METHODS.add(method);
+        }
+    }
     /**
      * The credentials.
      */
     private final Credentials credentials;
+
+    /**
+     * Holds our login context.
+     */
+    private final AtomicReference<LoginContext> loginContext;
 
     /**
      * The login web service.
@@ -78,8 +97,17 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the credentials.
      */
-    Credentials getCredentials() {
+    final Credentials getCredentials() {
         return credentials;
+    }
+
+    /**
+     * Return the login context.
+     *
+     * @return the login context.
+     */
+    final AtomicReference<LoginContext> getLoginContext() {
+        return loginContext;
     }
 
     /**
@@ -87,7 +115,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the login web service.
      */
-    LoginWebService getLoginWebService() {
+    final LoginWebService getLoginWebService() {
         return loginWebService;
     }
 
@@ -96,7 +124,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the web service type.
      */
-    WebServiceType getWebServiceType() {
+    final WebServiceType getWebServiceType() {
         return webServiceType;
     }
 
@@ -105,7 +133,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the web service being used.
      */
-    Service getService() {
+    final Service getService() {
         return service;
     }
 
@@ -114,14 +142,14 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
      *
      * @return the port type on the web service.
      */
-    Class getPortType() {
+    final Class getPortType() {
         return portType;
     }
 
     /**
      * Return the port.
      */
-    AtomicReference getPort() {
+    final AtomicReference getPort() {
         return port;
     }
 
@@ -139,20 +167,21 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
     /**
      * This constructor all one needs to provide proxy calls for autologins and retries.
      *
-     * @param securityMgr used for login, re-login, etc.
+     * @param securityMgr    used for login, re-login, etc.
      * @param webServiceType the type of web service being used.
-     * @param service the web service to call.
-     * @param portType used to retrieve a port from the service.
+     * @param service        the web service to call.
+     * @param portType       used to retrieve a port from the service.
      *
      * @throws IllegalArgumentException if any of the params are null.
      */
     <P> PortInvocationHandler(final Credentials credentials, final LoginWebService loginWebService, final WebServiceType webServiceType, final Service service, final Class portType) {
         this.credentials = ObjectUtils.ensureObject(credentials, "Must provide credentials!");
+        this.loginContext = new AtomicReference<>(loginWebService.login(credentials));
         this.loginWebService = ObjectUtils.ensureObject(loginWebService, "Must provide a login web service!");
         this.webServiceType = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        this.port = new AtomicReference(SalesforcePortUtils.createSessionPort(webServiceType, loginWebService.login(credentials), service, portType));
+        this.port = new AtomicReference(SalesforcePortUtils.createSessionPort(webServiceType, loginContext.get(), service, portType));
     }
 
     /**
@@ -172,13 +201,17 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
 
         do {
             try {
-                return method.invoke(getPort().get(), args);
+                // If we are getting a call for login context methods, we will
+                // make the call to our login context.  Otherwise, call out
+                // to the port.
+                return method.invoke(LOGIN_CONTEXT_METHODS.contains(method) ? getLoginContext().get() : getPort().get(), args);
             } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException callFailure) {
                 log(Level.WARNING, "Trouble calling [{0}.{1}()]", getPortType().getName(), method.getName());
                 toRaise = callFailure;
 
                 if (SalesforceExceptionEnum.isReloginException(exceptionContext.incrementFailureCount(toRaise))) {
-                    getPort().set(SalesforcePortUtils.createSessionPort(getWebServiceType(), getLoginWebService().login(getCredentials()), getService(), getPortType()));
+                    getLoginContext().set(getLoginWebService().login(getCredentials()));
+                    getPort().set(SalesforcePortUtils.createSessionPort(getWebServiceType(), getLoginContext().get(), getService(), getPortType()));
                 }
             }
         } while (isCallRetriable(++totalCalls));
