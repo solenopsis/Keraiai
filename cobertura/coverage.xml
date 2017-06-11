@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.15691489361702127" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="376" branches-covered="34" branches-valid="82" complexity="1.2549019607843137" version="2.1.1" timestamp="1497185230564">
+<coverage line-rate="0.15649867374005305" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="377" branches-covered="34" branches-valid="82" complexity="1.2516129032258065" version="2.1.1" timestamp="1497196459105">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -1447,37 +1447,42 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.0" branch-rate="0.0" complexity="1.206896551724138">
+		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.0" branch-rate="0.0" complexity="1.2">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.port.ApiWebServiceEnum" filename="org/solenopsis/keraiai/soap/port/ApiWebServiceEnum.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="36" hits="0" branch="false"/>
+								<line number="37" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/lang/String;ILorg/solenopsis/keraiai/soap/WebServiceType;Ljavax/xml/ws/Service;Ljava/lang/Class;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="64" hits="0" branch="false"/>
 								<line number="65" hits="0" branch="false"/>
 								<line number="66" hits="0" branch="false"/>
 								<line number="67" hits="0" branch="false"/>
 								<line number="68" hits="0" branch="false"/>
+								<line number="69" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="100" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPortType" signature="()Ljava/lang/Class;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="91" hits="0" branch="false"/>
+								<line number="92" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getService" signature="()Ljavax/xml/ws/Service;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="83" hits="0" branch="false"/>
+								<line number="84" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getWebServiceType" signature="()Lorg/solenopsis/keraiai/soap/WebServiceType;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="75" hits="0" branch="false"/>
+								<line number="76" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="valueOf" signature="(Ljava/lang/String;)Lorg/solenopsis/keraiai/soap/port/ApiWebServiceEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1490,15 +1495,16 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="36" hits="0" branch="false"/>
-						<line number="64" hits="0" branch="false"/>
+						<line number="37" hits="0" branch="false"/>
 						<line number="65" hits="0" branch="false"/>
 						<line number="66" hits="0" branch="false"/>
 						<line number="67" hits="0" branch="false"/>
 						<line number="68" hits="0" branch="false"/>
-						<line number="75" hits="0" branch="false"/>
-						<line number="83" hits="0" branch="false"/>
-						<line number="91" hits="0" branch="false"/>
+						<line number="69" hits="0" branch="false"/>
+						<line number="76" hits="0" branch="false"/>
+						<line number="84" hits="0" branch="false"/>
+						<line number="92" hits="0" branch="false"/>
+						<line number="100" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.port.PortInvocationHandler" filename="org/solenopsis/keraiai/soap/port/PortInvocationHandler.java" line-rate="0.0" branch-rate="0.0" complexity="1.6">
