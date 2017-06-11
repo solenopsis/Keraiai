@@ -20,6 +20,7 @@ import javax.xml.ws.Service;
 import org.flossware.jcore.utils.StringUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
+import org.solenopsis.keraiai.soap.SessionServerFactory;
 import org.solenopsis.keraiai.soap.SessionUrlFactory;
 
 /**
@@ -28,17 +29,22 @@ import org.solenopsis.keraiai.soap.SessionUrlFactory;
  * @author Scot P. Floess
  */
 public enum SessionUrlFactoryEnum implements SessionUrlFactory {
-    APEX_SESSION_URL_FACTORY("services/Soap/s", SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    CUSTOM_SESSION_URL_FACTORY("services/Soap/class", SessionPortNameFactory.CUSTOM_PORT_NAME_FACTORY),
-    ENTERPRISE_SESSION_URL_FACTORY("services/Soap/c", SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    METADATA_SESSION_URL_FACTORY("services/Soap/m", SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    PARTNER_SESSION_URL_FACTORY("services/Soap/u", SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    TOOLING_SESSION_URL_FACTORY("services/Soap/T", SessionPortNameFactory.API_PORT_NAME_FACTORY);
+    APEX_SESSION_URL_FACTORY("services/Soap/s", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    CUSTOM_SESSION_URL_FACTORY("services/Soap/class", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.CUSTOM_PORT_NAME_FACTORY),
+    ENTERPRISE_SESSION_URL_FACTORY("services/Soap/c", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    METADATA_SESSION_URL_FACTORY("services/Soap/m", SessionServerFactory.METADATA_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    PARTNER_SESSION_URL_FACTORY("services/Soap/u", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    TOOLING_SESSION_URL_FACTORY("services/Soap/T", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY);
 
     /**
      * Our partial URL.
      */
     private final String partialUrl;
+
+    /**
+     * Computes the server host name.
+     */
+    private final SessionServerFactory sessionServerFactory;
 
     /**
      * Computes the port name.
@@ -53,6 +59,13 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
     }
 
     /**
+     * Return our session server factory.
+     */
+    SessionServerFactory getSessionServerFactory() {
+        return sessionServerFactory;
+    }
+
+    /**
      * Return the port name factory.
      */
     SessionPortNameFactory getPortNameFactory() {
@@ -62,11 +75,13 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
     /**
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
      *
-     * @param webServiceType the SFDC web service.
-     * @param webServiceSubUrl the port for the web service.
+     * @param webServiceType       the SFDC web service.
+     * @param sessionServerFactory is the factory that can compute a server name for a session.
+     * @param webServiceSubUrl     the port for the web service.
      */
-    private SessionUrlFactoryEnum(final String partialUrl, final SessionPortNameFactory portNameFactory) {
+    private SessionUrlFactoryEnum(final String partialUrl, final SessionServerFactory sessionServerFactory, final SessionPortNameFactory portNameFactory) {
         this.partialUrl = partialUrl;
+        this.sessionServerFactory = sessionServerFactory;
         this.portNameFactory = portNameFactory;
     }
 
@@ -83,6 +98,6 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
      */
     @Override
     public String computeSessionUrl(final LoginContext loginContext, final Service service) {
-        return StringUtils.concatWithSeparator(false, "/", loginContext.getServerUrl(), getPartialUrl(), getPortNameFactory().computePortName(loginContext, service));
+        return StringUtils.concatWithSeparator(false, "/", getSessionServerFactory().computeServer(loginContext), getPartialUrl(), getPortNameFactory().computePortName(loginContext, service));
     }
 }
