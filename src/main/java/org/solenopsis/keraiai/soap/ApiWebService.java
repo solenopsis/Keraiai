@@ -17,6 +17,7 @@
 package org.solenopsis.keraiai.soap;
 
 import javax.xml.ws.Service;
+import org.solenopsis.keraiai.Credentials;
 
 /**
  * This interface denotes the built in API SFDC web services.
@@ -44,4 +45,15 @@ public interface ApiWebService {
      * @return the port for the web service.
      */
     Class getPortType();
+
+    /**
+     * Will create a proxy port using the API services included in Keraiai.
+     *
+     * @param <P>         the type of port to create.
+     *
+     * @param credentials are the credentials to use when creating the API proxy port.
+     *
+     * @return a proxy port
+     */
+    <P> P createProxyPort(Credentials credentials);
 }
