@@ -16,37 +16,34 @@
  */
 package org.solenopsis.keraiai.credentials;
 
-import java.io.InputStream;
 import org.flossware.jcore.utils.PropertiesUtils;
 
 /**
- *
- * Uses an input stream to populate the credentials.
+ * Uses a resource to populate the credentials.
  *
  * @author sfloess
- *
  */
-public class InputStreamPropertiesCredentials extends PropertiesCredentials {
+public class ResourcePropertiesCredentials extends PropertiesCredentials {
     /**
      * Uses properties to get the credentials.
      *
-     * @param inputStream        stream containing properties.
+     * @param resource           the resource containing properties.
      * @param urlProperty        the name of the property containing URL.
      * @param userNameProperty   the name of the property containing user name.
      * @param passwordProperty   the name of the property containing password.
      * @param tokenProperty      the name of the property containing token.
      * @param apiVersionProperty the name of the property containing API.
      */
-    public InputStreamPropertiesCredentials(final InputStream inputStream, final String urlProperty, final String userNameProperty, final String passwordProperty, final String tokenProperty, final String apiVersionProperty) {
-        super(PropertiesUtils.createProperties(inputStream), urlProperty, userNameProperty, passwordProperty, tokenProperty, apiVersionProperty);
+    public ResourcePropertiesCredentials(final String resource, final String urlProperty, final String userNameProperty, final String passwordProperty, final String tokenProperty, final String apiVersionProperty) {
+        super(PropertiesUtils.createProperties(resource), urlProperty, userNameProperty, passwordProperty, tokenProperty, apiVersionProperty);
     }
 
     /**
      * Constructs credentials from properties.
      *
-     * @param inputStream stream containing properties.
+     * @param resource the resource containing properties.
      */
-    public InputStreamPropertiesCredentials(final InputStream inputStream) {
-        super(PropertiesUtils.createProperties(inputStream));
+    public ResourcePropertiesCredentials(final String resource) {
+        super(PropertiesUtils.createProperties(resource));
     }
 }
