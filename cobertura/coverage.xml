@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.15404699738903394" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="383" branches-covered="34" branches-valid="82" complexity="1.2452830188679245" version="2.1.1" timestamp="1497205219898">
+<coverage line-rate="0.15404699738903394" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="383" branches-covered="34" branches-valid="82" complexity="1.2452830188679245" version="2.1.1" timestamp="1497274120840">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -854,12 +854,6 @@
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.LoginWebService" filename="org/solenopsis/keraiai/soap/LoginWebService.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
-					<methods>
-					</methods>
-					<lines>
-					</lines>
-				</class>
-				<class name="org.solenopsis.keraiai.soap.SessionServerFactory" filename="org/solenopsis/keraiai/soap/SessionServerFactory.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 					</methods>
 					<lines>
@@ -1875,11 +1869,29 @@
 						<line number="44" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.session.DefaultSessionServerFactory" filename="org/solenopsis/keraiai/soap/session/DefaultSessionServerFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.session.DefaultSessionServerHostNameFactory" filename="org/solenopsis/keraiai/soap/session/DefaultSessionServerHostNameFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="27" hits="0" branch="false"/>
+								<line number="26" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="computeServer" signature="(Lorg/solenopsis/keraiai/LoginContext;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="31" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="26" hits="0" branch="false"/>
+						<line number="31" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="org.solenopsis.keraiai.soap.session.MetadataSessionServerHostNameFactory" filename="org/solenopsis/keraiai/soap/session/MetadataSessionServerHostNameFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="26" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="computeServer" signature="(Lorg/solenopsis/keraiai/LoginContext;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
@@ -1889,26 +1901,8 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="27" hits="0" branch="false"/>
+						<line number="26" hits="0" branch="false"/>
 						<line number="32" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="org.solenopsis.keraiai.soap.session.MetadataSessionServerFactory" filename="org/solenopsis/keraiai/soap/session/MetadataSessionServerFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
-					<methods>
-						<method name="&lt;init&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="27" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="computeServer" signature="(Lorg/solenopsis/keraiai/LoginContext;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="33" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="27" hits="0" branch="false"/>
-						<line number="33" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.session.SessionIdSoapRequestHeaderHandler" filename="org/solenopsis/keraiai/soap/session/SessionIdSoapRequestHeaderHandler.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
@@ -1961,51 +1955,57 @@
 					<lines>
 					</lines>
 				</class>
+				<class name="org.solenopsis.keraiai.soap.session.SessionServerHostNameFactory" filename="org/solenopsis/keraiai/soap/session/SessionServerHostNameFactory.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">
+					<methods>
+					</methods>
+					<lines>
+					</lines>
+				</class>
 				<class name="org.solenopsis.keraiai.soap.session.SessionUrlFactoryEnum" filename="org/solenopsis/keraiai/soap/session/SessionUrlFactoryEnum.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="30" hits="0" branch="false"/>
 								<line number="31" hits="0" branch="false"/>
 								<line number="32" hits="0" branch="false"/>
 								<line number="33" hits="0" branch="false"/>
 								<line number="34" hits="0" branch="false"/>
 								<line number="35" hits="0" branch="false"/>
 								<line number="36" hits="0" branch="false"/>
-								<line number="37" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="&lt;init&gt;" signature="(Ljava/lang/String;ILjava/lang/String;Lorg/solenopsis/keraiai/soap/SessionServerFactory;Lorg/solenopsis/keraiai/soap/session/SessionPortNameFactory;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;ILjava/lang/String;Lorg/solenopsis/keraiai/soap/session/SessionServerHostNameFactory;Lorg/solenopsis/keraiai/soap/session/SessionPortNameFactory;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="81" hits="0" branch="false"/>
 								<line number="82" hits="0" branch="false"/>
 								<line number="83" hits="0" branch="false"/>
 								<line number="84" hits="0" branch="false"/>
 								<line number="85" hits="0" branch="false"/>
-								<line number="86" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="computeSessionUrl" signature="(Lorg/solenopsis/keraiai/LoginContext;Ljavax/xml/ws/Service;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="101" hits="0" branch="false"/>
+								<line number="100" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="computeUrl" signature="(Lorg/solenopsis/keraiai/Credentials;Ljavax/xml/ws/Service;)Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="93" hits="0" branch="false"/>
+								<line number="92" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPartialUrl" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="58" hits="0" branch="false"/>
+								<line number="57" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPortNameFactory" signature="()Lorg/solenopsis/keraiai/soap/session/SessionPortNameFactory;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="72" hits="0" branch="false"/>
+								<line number="71" hits="0" branch="false"/>
 							</lines>
 						</method>
-						<method name="getSessionServerFactory" signature="()Lorg/solenopsis/keraiai/soap/SessionServerFactory;" line-rate="0.0" branch-rate="1.0" complexity="0">
+						<method name="getSessionServerFactory" signature="()Lorg/solenopsis/keraiai/soap/session/SessionServerHostNameFactory;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="65" hits="0" branch="false"/>
+								<line number="64" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="valueOf" signature="(Ljava/lang/String;)Lorg/solenopsis/keraiai/soap/session/SessionUrlFactoryEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -2018,23 +2018,23 @@
 						</method>
 					</methods>
 					<lines>
+						<line number="30" hits="0" branch="false"/>
 						<line number="31" hits="0" branch="false"/>
 						<line number="32" hits="0" branch="false"/>
 						<line number="33" hits="0" branch="false"/>
 						<line number="34" hits="0" branch="false"/>
 						<line number="35" hits="0" branch="false"/>
 						<line number="36" hits="0" branch="false"/>
-						<line number="37" hits="0" branch="false"/>
-						<line number="58" hits="0" branch="false"/>
-						<line number="65" hits="0" branch="false"/>
-						<line number="72" hits="0" branch="false"/>
+						<line number="57" hits="0" branch="false"/>
+						<line number="64" hits="0" branch="false"/>
+						<line number="71" hits="0" branch="false"/>
+						<line number="81" hits="0" branch="false"/>
 						<line number="82" hits="0" branch="false"/>
 						<line number="83" hits="0" branch="false"/>
 						<line number="84" hits="0" branch="false"/>
 						<line number="85" hits="0" branch="false"/>
-						<line number="86" hits="0" branch="false"/>
-						<line number="93" hits="0" branch="false"/>
-						<line number="101" hits="0" branch="false"/>
+						<line number="92" hits="0" branch="false"/>
+						<line number="100" hits="0" branch="false"/>
 					</lines>
 				</class>
 			</classes>
