@@ -17,19 +17,30 @@
 package org.solenopsis.keraiai.soap.session;
 
 import org.solenopsis.keraiai.LoginContext;
-import org.solenopsis.keraiai.soap.SessionServerFactory;
 
 /**
- * Metadata session server factory - when computing the server name, it uses the metadata server url found in the login context.
+ * Computes a server host name for a session. For non metadata API calls, this is the LoginContext.getBaseServerUrl(). For metadata
+ * API calls it is LoginContext.getMetadataServerUrl().
  *
  * @author Scot P. Floess
  */
-public class MetadataSessionServerFactory implements SessionServerFactory {
+interface SessionServerHostNameFactory {
     /**
-     * {@inheritDoc}
+     * The default session server factory.
      */
-    @Override
-    public String computeServer(final LoginContext loginContext) {
-        return loginContext.getMetadataServerUrl();
-    }
+    SessionServerHostNameFactory DEFAULT_SESSION_SERVER_FACTORY = new DefaultSessionServerHostNameFactory();
+
+    /**
+     * The metadata session server factory.
+     */
+    SessionServerHostNameFactory METADATA_SESSION_SERVER_FACTORY = new MetadataSessionServerHostNameFactory();
+
+    /**
+     * Will compute a server name.
+     *
+     * @param loginContext our session login data.
+     *
+     * @return a server name.
+     */
+    String computeServer(LoginContext loginContext);
 }

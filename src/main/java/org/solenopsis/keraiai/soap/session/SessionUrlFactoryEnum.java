@@ -20,7 +20,6 @@ import javax.xml.ws.Service;
 import org.flossware.jcore.utils.StringUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
-import org.solenopsis.keraiai.soap.SessionServerFactory;
 import org.solenopsis.keraiai.soap.SessionUrlFactory;
 
 /**
@@ -29,12 +28,12 @@ import org.solenopsis.keraiai.soap.SessionUrlFactory;
  * @author Scot P. Floess
  */
 public enum SessionUrlFactoryEnum implements SessionUrlFactory {
-    APEX_SESSION_URL_FACTORY("services/Soap/s", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    CUSTOM_SESSION_URL_FACTORY("services/Soap/class", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.CUSTOM_PORT_NAME_FACTORY),
-    ENTERPRISE_SESSION_URL_FACTORY("services/Soap/c", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    METADATA_SESSION_URL_FACTORY("services/Soap/m", SessionServerFactory.METADATA_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    PARTNER_SESSION_URL_FACTORY("services/Soap/u", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
-    TOOLING_SESSION_URL_FACTORY("services/Soap/T", SessionServerFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY);
+    APEX_SESSION_URL_FACTORY("services/Soap/s", SessionServerHostNameFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    CUSTOM_SESSION_URL_FACTORY("services/Soap/class", SessionServerHostNameFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.CUSTOM_PORT_NAME_FACTORY),
+    ENTERPRISE_SESSION_URL_FACTORY("services/Soap/c", SessionServerHostNameFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    METADATA_SESSION_URL_FACTORY("services/Soap/m", SessionServerHostNameFactory.METADATA_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    PARTNER_SESSION_URL_FACTORY("services/Soap/u", SessionServerHostNameFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY),
+    TOOLING_SESSION_URL_FACTORY("services/Soap/T", SessionServerHostNameFactory.DEFAULT_SESSION_SERVER_FACTORY, SessionPortNameFactory.API_PORT_NAME_FACTORY);
 
     /**
      * Our partial URL.
@@ -44,7 +43,7 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
     /**
      * Computes the server host name.
      */
-    private final SessionServerFactory sessionServerFactory;
+    private final SessionServerHostNameFactory sessionServerFactory;
 
     /**
      * Computes the port name.
@@ -61,7 +60,7 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
     /**
      * Return our session server factory.
      */
-    SessionServerFactory getSessionServerFactory() {
+    SessionServerHostNameFactory getSessionServerFactory() {
         return sessionServerFactory;
     }
 
@@ -79,7 +78,7 @@ public enum SessionUrlFactoryEnum implements SessionUrlFactory {
      * @param sessionServerFactory is the factory that can compute a server name for a session.
      * @param webServiceSubUrl     the port for the web service.
      */
-    private SessionUrlFactoryEnum(final String partialUrl, final SessionServerFactory sessionServerFactory, final SessionPortNameFactory portNameFactory) {
+    private SessionUrlFactoryEnum(final String partialUrl, final SessionServerHostNameFactory sessionServerFactory, final SessionPortNameFactory portNameFactory) {
         this.partialUrl = partialUrl;
         this.sessionServerFactory = sessionServerFactory;
         this.portNameFactory = portNameFactory;

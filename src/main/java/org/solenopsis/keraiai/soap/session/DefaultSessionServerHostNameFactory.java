@@ -17,14 +17,13 @@
 package org.solenopsis.keraiai.soap.session;
 
 import org.solenopsis.keraiai.LoginContext;
-import org.solenopsis.keraiai.soap.SessionServerFactory;
 
 /**
  * Default session server factory.
  *
  * @author Scot P. Floess
  */
-public class DefaultSessionServerFactory implements SessionServerFactory {
+final class DefaultSessionServerHostNameFactory implements SessionServerHostNameFactory {
     /**
      * {@inheritDoc}
      */
