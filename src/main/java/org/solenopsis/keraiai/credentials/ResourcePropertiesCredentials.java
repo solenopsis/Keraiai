@@ -20,9 +20,11 @@ import java.io.InputStream;
 import org.flossware.jcore.utils.PropertiesUtils;
 
 /**
+ *
  * Uses an input stream to populate the credentials.
  *
  * @author sfloess
+ *
  */
 public class InputStreamPropertiesCredentials extends PropertiesCredentials {
     /**
