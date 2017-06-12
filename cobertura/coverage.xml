@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.15404699738903394" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="383" branches-covered="34" branches-valid="82" complexity="1.2452830188679245" version="2.1.1" timestamp="1497274120840">
+<coverage line-rate="0.15404699738903394" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="383" branches-covered="34" branches-valid="82" complexity="1.2422360248447204" version="2.1.1" timestamp="1497308196800">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -1447,42 +1447,47 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.0" branch-rate="0.0" complexity="1.2">
+		<package name="org.solenopsis.keraiai.soap.port" line-rate="0.0" branch-rate="0.0" complexity="1.1935483870967742">
 			<classes>
 				<class name="org.solenopsis.keraiai.soap.port.ApiWebServiceEnum" filename="org/solenopsis/keraiai/soap/port/ApiWebServiceEnum.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="37" hits="0" branch="false"/>
+								<line number="38" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/lang/String;ILorg/solenopsis/keraiai/soap/WebServiceType;Ljavax/xml/ws/Service;Ljava/lang/Class;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="65" hits="0" branch="false"/>
 								<line number="66" hits="0" branch="false"/>
 								<line number="67" hits="0" branch="false"/>
 								<line number="68" hits="0" branch="false"/>
 								<line number="69" hits="0" branch="false"/>
+								<line number="70" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="100" hits="0" branch="false"/>
+								<line number="109" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Lorg/solenopsis/keraiai/soap/LoginWebService;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="101" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getPortType" signature="()Ljava/lang/Class;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="92" hits="0" branch="false"/>
+								<line number="93" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getService" signature="()Ljavax/xml/ws/Service;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="84" hits="0" branch="false"/>
+								<line number="85" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getWebServiceType" signature="()Lorg/solenopsis/keraiai/soap/WebServiceType;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="76" hits="0" branch="false"/>
+								<line number="77" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="valueOf" signature="(Ljava/lang/String;)Lorg/solenopsis/keraiai/soap/port/ApiWebServiceEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1495,16 +1500,17 @@
 						</method>
 					</methods>
 					<lines>
-						<line number="37" hits="0" branch="false"/>
-						<line number="65" hits="0" branch="false"/>
+						<line number="38" hits="0" branch="false"/>
 						<line number="66" hits="0" branch="false"/>
 						<line number="67" hits="0" branch="false"/>
 						<line number="68" hits="0" branch="false"/>
 						<line number="69" hits="0" branch="false"/>
-						<line number="76" hits="0" branch="false"/>
-						<line number="84" hits="0" branch="false"/>
-						<line number="92" hits="0" branch="false"/>
-						<line number="100" hits="0" branch="false"/>
+						<line number="70" hits="0" branch="false"/>
+						<line number="77" hits="0" branch="false"/>
+						<line number="85" hits="0" branch="false"/>
+						<line number="93" hits="0" branch="false"/>
+						<line number="101" hits="0" branch="false"/>
+						<line number="109" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.port.PortInvocationHandler" filename="org/solenopsis/keraiai/soap/port/PortInvocationHandler.java" line-rate="0.0" branch-rate="0.0" complexity="1.6">
@@ -1715,70 +1721,69 @@
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="66" hits="0" branch="false"/>
 								<line number="67" hits="0" branch="false"/>
 								<line number="68" hits="0" branch="false"/>
 								<line number="69" hits="0" branch="false"/>
 								<line number="70" hits="0" branch="false"/>
 								<line number="71" hits="0" branch="false"/>
 								<line number="72" hits="0" branch="false"/>
-								<line number="73" hits="0" branch="false"/>
-								<line number="75" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/lang/String;ILorg/solenopsis/keraiai/soap/SessionUrlFactory;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="88" hits="0" branch="false"/>
-								<line number="89" hits="0" branch="false"/>
-								<line number="90" hits="0" branch="false"/>
+								<line number="85" hits="0" branch="false"/>
+								<line number="86" hits="0" branch="false"/>
+								<line number="87" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="173" hits="0" branch="false"/>
+								<line number="170" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Ljava/lang/Class;Ljava/net/URL;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="157" hits="0" branch="false"/>
+								<line number="154" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Ljavax/xml/ws/Service;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="141" hits="0" branch="false"/>
+								<line number="138" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Ljavax/xml/ws/Service;Ljava/lang/Class;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="123" hits="0" branch="false"/>
+								<line number="120" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Lorg/solenopsis/keraiai/soap/LoginWebService;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="165" hits="0" branch="false"/>
+								<line number="162" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Lorg/solenopsis/keraiai/soap/LoginWebService;Ljava/lang/Class;Ljava/net/URL;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="149" hits="0" branch="false"/>
+								<line number="146" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Lorg/solenopsis/keraiai/soap/LoginWebService;Ljavax/xml/ws/Service;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="131" hits="0" branch="false"/>
-								<line number="133" hits="0" branch="false"/>
+								<line number="128" hits="0" branch="false"/>
+								<line number="130" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="createProxyPort" signature="(Lorg/solenopsis/keraiai/Credentials;Lorg/solenopsis/keraiai/soap/LoginWebService;Ljavax/xml/ws/Service;Ljava/lang/Class;)Ljava/lang/Object;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="105" hits="0" branch="false"/>
-								<line number="106" hits="0" branch="false"/>
-								<line number="110" hits="0" branch="false"/>
-								<line number="115" hits="0" branch="false"/>
+								<line number="102" hits="0" branch="false"/>
+								<line number="103" hits="0" branch="false"/>
+								<line number="107" hits="0" branch="false"/>
+								<line number="112" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="getSessionUrlFactory" signature="()Lorg/solenopsis/keraiai/soap/SessionUrlFactory;" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="97" hits="0" branch="false"/>
+								<line number="94" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="valueOf" signature="(Ljava/lang/String;)Lorg/solenopsis/keraiai/soap/port/WebServiceTypeEnum;" line-rate="1.0" branch-rate="1.0" complexity="0">
@@ -1791,30 +1796,29 @@
 						</method>
 					</methods>
 					<lines>
+						<line number="66" hits="0" branch="false"/>
 						<line number="67" hits="0" branch="false"/>
 						<line number="68" hits="0" branch="false"/>
 						<line number="69" hits="0" branch="false"/>
 						<line number="70" hits="0" branch="false"/>
 						<line number="71" hits="0" branch="false"/>
 						<line number="72" hits="0" branch="false"/>
-						<line number="73" hits="0" branch="false"/>
-						<line number="75" hits="0" branch="false"/>
-						<line number="88" hits="0" branch="false"/>
-						<line number="89" hits="0" branch="false"/>
-						<line number="90" hits="0" branch="false"/>
-						<line number="97" hits="0" branch="false"/>
-						<line number="105" hits="0" branch="false"/>
-						<line number="106" hits="0" branch="false"/>
-						<line number="110" hits="0" branch="false"/>
-						<line number="115" hits="0" branch="false"/>
-						<line number="123" hits="0" branch="false"/>
-						<line number="131" hits="0" branch="false"/>
-						<line number="133" hits="0" branch="false"/>
-						<line number="141" hits="0" branch="false"/>
-						<line number="149" hits="0" branch="false"/>
-						<line number="157" hits="0" branch="false"/>
-						<line number="165" hits="0" branch="false"/>
-						<line number="173" hits="0" branch="false"/>
+						<line number="85" hits="0" branch="false"/>
+						<line number="86" hits="0" branch="false"/>
+						<line number="87" hits="0" branch="false"/>
+						<line number="94" hits="0" branch="false"/>
+						<line number="102" hits="0" branch="false"/>
+						<line number="103" hits="0" branch="false"/>
+						<line number="107" hits="0" branch="false"/>
+						<line number="112" hits="0" branch="false"/>
+						<line number="120" hits="0" branch="false"/>
+						<line number="128" hits="0" branch="false"/>
+						<line number="130" hits="0" branch="false"/>
+						<line number="138" hits="0" branch="false"/>
+						<line number="146" hits="0" branch="false"/>
+						<line number="154" hits="0" branch="false"/>
+						<line number="162" hits="0" branch="false"/>
+						<line number="170" hits="0" branch="false"/>
 					</lines>
 				</class>
 			</classes>
