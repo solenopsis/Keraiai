@@ -18,6 +18,7 @@ package org.solenopsis.keraiai.soap;
 
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
+import org.solenopsis.keraiai.soap.login.LoginWebServiceEnum;
 
 /**
  * Represents all login SOAP web service: enterprise, partner and tooling. Additionally provides the ability to create a usable
@@ -27,13 +28,30 @@ import org.solenopsis.keraiai.LoginContext;
  */
 public interface LoginWebService {
     /**
+     * The default login web service when omitted...
+     */
+    LoginWebServiceEnum DEFAULT_LOGIN_WEB_SERVICE = LoginWebServiceEnum.ENTERPRISE_LOGIN_SERVICE;
+
+    /**
      * Return the login web service type.
      *
      * @return the login web service type.
      */
     ApiWebService getApiWebService();
 
+    /**
+     * Issues a login.
+     *
+     * @param credentials the credentials to use on login.
+     *
+     * @return a login context.
+     */
     LoginContext login(Credentials credentials);
 
+    /**
+     * Issues a logout.
+     *
+     * @param loginContext contains our login data,
+     */
     void logout(LoginContext loginContext);
 }

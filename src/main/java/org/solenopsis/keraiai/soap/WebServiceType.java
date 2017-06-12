@@ -39,6 +39,7 @@ public interface WebServiceType {
      * @param <S>             the type of web service being used.
      * @param <P>             the type of port desired.
      *
+     * @param credentials     our login credentials.
      * @param loginWebService used for logins and session ids.
      * @param service         contains the port for web service calls.
      * @param portType        the type of port to perform web service calls.

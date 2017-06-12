@@ -53,7 +53,7 @@ public enum LoginWebServiceEnum implements LoginWebService {
      * This constructor sets the SFDC web service, port type and partial URL (as defined in the Java doc header).
      *
      * @param webService the SFDC web service.
-     * @param portType the port for the web service.
+     * @param portType   the port for the web service.
      */
     private LoginWebServiceEnum(final ApiWebService apiWebService, final LoginMgr loginMgr) {
         this.apiWebService = apiWebService;

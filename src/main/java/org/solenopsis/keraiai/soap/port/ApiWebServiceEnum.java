@@ -19,6 +19,7 @@ package org.solenopsis.keraiai.soap.port;
 import javax.xml.ws.Service;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.soap.ApiWebService;
+import org.solenopsis.keraiai.soap.LoginWebService;
 import org.solenopsis.keraiai.soap.WebServiceType;
 import org.solenopsis.keraiai.wsdl.apex.ApexPortType;
 import org.solenopsis.keraiai.wsdl.apex.ApexService;
@@ -90,6 +91,14 @@ public enum ApiWebServiceEnum implements ApiWebService {
     @Override
     public Class getPortType() {
         return portType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <P> P createProxyPort(Credentials credentials, LoginWebService loginWebService) {
+        return (P) getWebServiceType().createProxyPort(credentials, loginWebService, getService(), getPortType());
     }
 
     /**

@@ -16,7 +16,6 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
-import org.solenopsis.keraiai.soap.SessionUrlFactory;
 import java.lang.reflect.Proxy;
 import java.net.URL;
 import javax.xml.ws.Service;
@@ -25,16 +24,16 @@ import org.flossware.jcore.utils.soap.ServiceUtils;
 import org.solenopsis.keraiai.Credentials;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.LoginWebService;
+import org.solenopsis.keraiai.soap.SessionUrlFactory;
 import org.solenopsis.keraiai.soap.WebServiceType;
-import org.solenopsis.keraiai.soap.login.LoginWebServiceEnum;
 import org.solenopsis.keraiai.soap.session.SessionUrlFactoryEnum;
 
 /**
- * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session ports
- * for SFDC web services.
+ * Denotes an SFDC API web service and the sub URL one needs when calling an SFDC web service and the ability to create session
+ * ports for SFDC web services.
  *
- * The fully qualified SFDC URLs for a web service always use partial URLs and a host plus either an API version
- * or a custom web service name. Here are some examples:
+ * The fully qualified SFDC URLs for a web service always use partial URLs and a host plus either an API version or a custom web
+ * service name. Here are some examples:
  * <ul>
  * <li>Apex = https://cs9.salesforce.com/services/Soap/s/31.0</li>
  * <li>Custom = https://cs9.salesforce.com/services/Soap/class/Foo</li>
@@ -59,8 +58,8 @@ import org.solenopsis.keraiai.soap.session.SessionUrlFactoryEnum;
  * <li>Tooling = https://login.salesforce.com/services/Soap/T/34.0</li>
  * </ul>
  *
- * An instance of Keraia's web services are included, along with the class of the port those web services use. The
- * exception here is for user defined custom web services as those will always be defined by consumers of this library.
+ * An instance of Keraia's web services are included, along with the class of the port those web services use. The exception here is
+ * for user defined custom web services as those will always be defined by consumers of this library.
  *
  * @author Scot P. Floess
  */
@@ -71,8 +70,6 @@ public enum WebServiceTypeEnum implements WebServiceType {
     METADATA_SERVICE_TYPE(SessionUrlFactoryEnum.METADATA_SESSION_URL_FACTORY),
     PARTNER_SERVICE_TYPE(SessionUrlFactoryEnum.PARTNER_SESSION_URL_FACTORY),
     TOOLING_SERVICE_TYPE(SessionUrlFactoryEnum.TOOLING_SESSION_URL_FACTORY);
-
-    private static final LoginWebService DEFAULT_LOGIN_WEB_SERVICE = LoginWebServiceEnum.ENTERPRISE_LOGIN_SERVICE;
 
     /**
      * Can compute a session URL.
@@ -120,7 +117,7 @@ public enum WebServiceTypeEnum implements WebServiceType {
      */
     @Override
     public <S extends Service, P> P createProxyPort(final Credentials credentials, final Service service, Class<P> portType) {
-        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, service, portType);
+        return createProxyPort(credentials, LoginWebService.DEFAULT_LOGIN_WEB_SERVICE, service, portType);
     }
 
     /**
@@ -138,7 +135,7 @@ public enum WebServiceTypeEnum implements WebServiceType {
      */
     @Override
     public <S extends Service, P> P createProxyPort(final Credentials credentials, final S service) {
-        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, service);
+        return createProxyPort(credentials, LoginWebService.DEFAULT_LOGIN_WEB_SERVICE, service);
     }
 
     /**
@@ -154,7 +151,7 @@ public enum WebServiceTypeEnum implements WebServiceType {
      */
     @Override
     public <S extends Service, P> P createProxyPort(final Credentials credentials, final Class<S> serviceClass, final URL wsdlResource) {
-        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
+        return createProxyPort(credentials, LoginWebService.DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
     }
 
     /**
@@ -170,6 +167,6 @@ public enum WebServiceTypeEnum implements WebServiceType {
      */
     @Override
     public <S extends Service, P> P createProxyPort(final Credentials credentials, final Class<S> serviceClass, final String wsdlResource) {
-        return createProxyPort(credentials, DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
+        return createProxyPort(credentials, LoginWebService.DEFAULT_LOGIN_WEB_SERVICE, serviceClass, wsdlResource);
     }
 }

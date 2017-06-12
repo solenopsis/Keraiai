@@ -49,6 +49,18 @@ public interface ApiWebService {
     /**
      * Will create a proxy port using the API services included in Keraiai.
      *
+     * @param <P>             the type of port to create.
+     *
+     * @param credentials     are the credentials to use when creating the API proxy port.
+     * @param loginWebService used for logins and session ids.
+     *
+     * @return a proxy port
+     */
+    <P> P createProxyPort(Credentials credentials, LoginWebService loginWebService);
+
+    /**
+     * Will create a proxy port using the API services included in Keraiai.
+     *
      * @param <P>         the type of port to create.
      *
      * @param credentials are the credentials to use when creating the API proxy port.
