@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.1524547803617571" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="387" branches-covered="34" branches-valid="82" complexity="1.2392638036809815" version="2.1.1" timestamp="1497314285951">
+<coverage line-rate="0.15089514066496162" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="391" branches-covered="34" branches-valid="82" complexity="1.2363636363636363" version="2.1.1" timestamp="1497318493099">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -533,7 +533,7 @@
 				</class>
 			</classes>
 		</package>
-		<package name="org.solenopsis.keraiai.credentials" line-rate="0.2727272727272727" branch-rate="0.7777777777777778" complexity="1.2962962962962963">
+		<package name="org.solenopsis.keraiai.credentials" line-rate="0.2571428571428571" branch-rate="0.7777777777777778" complexity="1.2758620689655173">
 			<classes>
 				<class name="org.solenopsis.keraiai.credentials.AbstractCredentials" filename="org/solenopsis/keraiai/credentials/AbstractCredentials.java" line-rate="1.0" branch-rate="0.7777777777777778" complexity="2.3333333333333335">
 					<methods>
@@ -681,22 +681,38 @@
 					<methods>
 						<method name="&lt;init&gt;" signature="(Ljava/io/File;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
-								<line number="50" hits="0" branch="false"/>
-								<line number="51" hits="0" branch="false"/>
+								<line number="63" hits="0" branch="false"/>
+								<line number="64" hits="0" branch="false"/>
 							</lines>
 						</method>
 						<method name="&lt;init&gt;" signature="(Ljava/io/File;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
+								<line number="40" hits="0" branch="false"/>
 								<line number="41" hits="0" branch="false"/>
-								<line number="42" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="72" hits="0" branch="false"/>
+								<line number="73" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="54" hits="0" branch="false"/>
+								<line number="55" hits="0" branch="false"/>
 							</lines>
 						</method>
 					</methods>
 					<lines>
+						<line number="40" hits="0" branch="false"/>
 						<line number="41" hits="0" branch="false"/>
-						<line number="42" hits="0" branch="false"/>
-						<line number="50" hits="0" branch="false"/>
-						<line number="51" hits="0" branch="false"/>
+						<line number="54" hits="0" branch="false"/>
+						<line number="55" hits="0" branch="false"/>
+						<line number="63" hits="0" branch="false"/>
+						<line number="64" hits="0" branch="false"/>
+						<line number="72" hits="0" branch="false"/>
+						<line number="73" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.credentials.InputStreamPropertiesCredentials" filename="org/solenopsis/keraiai/credentials/InputStreamPropertiesCredentials.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
