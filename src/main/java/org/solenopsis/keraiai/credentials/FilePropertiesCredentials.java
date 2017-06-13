@@ -18,13 +18,12 @@ package org.solenopsis.keraiai.credentials;
 
 import java.io.File;
 import org.flossware.jcore.utils.PropertiesUtils;
+import org.flossware.jcore.utils.io.FileUtils;
 
 /**
- *
  * Uses a file to populate the credentials.
  *
  * @author sfloess
- *
  */
 public class FilePropertiesCredentials extends PropertiesCredentials {
     /**
@@ -42,11 +41,34 @@ public class FilePropertiesCredentials extends PropertiesCredentials {
     }
 
     /**
+     * Uses properties to get the credentials.
+     *
+     * @param file               file containing properties.
+     * @param urlProperty        the name of the property containing URL.
+     * @param userNameProperty   the name of the property containing user name.
+     * @param passwordProperty   the name of the property containing password.
+     * @param tokenProperty      the name of the property containing token.
+     * @param apiVersionProperty the name of the property containing API.
+     */
+    public FilePropertiesCredentials(final String file, final String urlProperty, final String userNameProperty, final String passwordProperty, final String tokenProperty, final String apiVersionProperty) {
+        this(FileUtils.ensureFile(file), urlProperty, userNameProperty, passwordProperty, tokenProperty, apiVersionProperty);
+    }
+
+    /**
      * Constructs credentials from properties.
      *
      * @param file the file to create credentials from.
      */
     public FilePropertiesCredentials(final File file) {
         super(PropertiesUtils.createProperties(file));
+    }
+
+    /**
+     * Constructs credentials from properties.
+     *
+     * @param file the file to create credentials from.
+     */
+    public FilePropertiesCredentials(final String file) {
+        this(new File(file));
     }
 }
