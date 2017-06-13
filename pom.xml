@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.solenopsis</groupId>
 	<artifactId>keraiai</artifactId>
-	<version>3.0.7</version>
+	<version>3.0.8</version>
     <url>https://github.com/solenopsis/Keraiai</url>
     
     <licenses>
@@ -37,7 +37,7 @@
         <org.codehaus.mojo_findbugs-maven-plugin_version>3.0.4</org.codehaus.mojo_findbugs-maven-plugin_version>
         <org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>2.3</org.jvnet.jax-ws-commons_jaxws-maven-plugin_version>
         <net.sourceforge.cobertura_cobertura_version>2.1.1</net.sourceforge.cobertura_cobertura_version>
-        <org.flossware_jCore_version>1.0.44</org.flossware_jCore_version>
+        <org.flossware_jCore_version>1.0.45</org.flossware_jCore_version>
 
         <junit_junit_version>4.12</junit_junit_version>
 
