@@ -16,7 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
-import org.solenopsis.keraiai.soap.session.SalesforcePortUtils;
+import org.solenopsis.keraiai.soap.session.SalesforceSessionPortFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -182,7 +182,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
         this.webServiceType = ObjectUtils.ensureObject(webServiceType, "Must provide a web service type!");
         this.service = ObjectUtils.ensureObject(service, "Must provide a service!");
         this.portType = ObjectUtils.ensureObject(portType, "Must provide a port type!");
-        this.port = new AtomicReference(SalesforcePortUtils.createSessionPort(webServiceType, loginContext.get(), service, portType));
+        this.port = new AtomicReference(SalesforceSessionPortFactory.createSessionPort(webServiceType, loginContext.get(), service, portType));
     }
 
     /**
@@ -212,7 +212,7 @@ final class PortInvocationHandler extends AbstractCommonBase implements Invocati
 
                 if (SalesforceExceptionEnum.isReloginException(exceptionContext.incrementFailureCount(toRaise))) {
                     getLoginContext().set(getLoginWebService().login(getCredentials()));
-                    getPort().set(SalesforcePortUtils.createSessionPort(getWebServiceType(), getLoginContext().get(), getService(), getPortType()));
+                    getPort().set(SalesforceSessionPortFactory.createSessionPort(getWebServiceType(), getLoginContext().get(), getService(), getPortType()));
                 }
             }
         } while (isCallRetriable(++totalCalls));

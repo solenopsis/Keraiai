@@ -24,18 +24,17 @@ import org.flossware.jcore.utils.soap.SoapUtils;
 import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.ApiWebService;
 import org.solenopsis.keraiai.soap.WebServiceType;
-import org.solenopsis.keraiai.soap.session.SessionIdSoapRequestHeaderHandler;
 
 /**
  * Utility class for port functionality.
  *
  * @author Scot P. Floess
  */
-public final class SalesforcePortUtils {
+public final class SalesforceSessionPortFactory {
     /**
      * Our logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(SalesforcePortUtils.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SalesforceSessionPortFactory.class.getName());
 
     /**
      * Return the LOGGER.
@@ -97,6 +96,6 @@ public final class SalesforcePortUtils {
     /**
      * Default constructor not allowed.
      */
-    private SalesforcePortUtils() {
+    private SalesforceSessionPortFactory() {
     }
 }
