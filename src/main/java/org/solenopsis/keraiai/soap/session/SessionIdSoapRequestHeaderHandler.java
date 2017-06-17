@@ -28,7 +28,7 @@ import org.solenopsis.keraiai.soap.utils.SalesforceSessionHeaderUtils;
  *
  * @author sfloess
  */
-public class SessionIdSoapRequestHeaderHandler extends AbstractSoapRequestHeaderHandler {
+final class SessionIdSoapRequestHeaderHandler extends AbstractSoapRequestHeaderHandler {
     /**
      * This is the session id on the session header.
      */

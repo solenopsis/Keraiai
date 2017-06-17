@@ -22,7 +22,7 @@ import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.ApiWebService;
 import org.solenopsis.keraiai.soap.LoginWebService;
 import org.solenopsis.keraiai.soap.port.ApiWebServiceEnum;
-import org.solenopsis.keraiai.soap.port.SalesforcePortUtils;
+import org.solenopsis.keraiai.soap.session.SalesforcePortUtils;
 
 /**
  * Represents all login SOAP web service: enterprise, partner and tooling. Additionally provides the ability to create a usable

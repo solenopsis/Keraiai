@@ -16,6 +16,7 @@
  */
 package org.solenopsis.keraiai.soap.port;
 
+import org.solenopsis.keraiai.soap.session.SalesforcePortUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
