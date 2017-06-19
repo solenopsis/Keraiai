@@ -22,7 +22,7 @@ import org.solenopsis.keraiai.LoginContext;
 import org.solenopsis.keraiai.soap.ApiWebService;
 import org.solenopsis.keraiai.soap.LoginWebService;
 import org.solenopsis.keraiai.soap.port.ApiWebServiceEnum;
-import org.solenopsis.keraiai.soap.session.SalesforceSessionPortFactory;
+import org.solenopsis.keraiai.soap.session.SessionPortFactory;
 
 /**
  * Represents all login SOAP web service: enterprise, partner and tooling. Additionally provides the ability to create a usable
@@ -81,6 +81,6 @@ public enum LoginWebServiceEnum implements LoginWebService {
      */
     @Override
     public void logout(final LoginContext loginContext) {
-        getLoginMgr().logout(SalesforceSessionPortFactory.createSessionPort(getApiWebService(), loginContext));
+        getLoginMgr().logout(SessionPortFactory.createSessionPort(getApiWebService(), loginContext));
     }
 }

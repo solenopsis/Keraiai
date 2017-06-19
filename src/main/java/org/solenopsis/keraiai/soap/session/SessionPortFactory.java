@@ -30,11 +30,11 @@ import org.solenopsis.keraiai.soap.WebServiceType;
  *
  * @author Scot P. Floess
  */
-public final class SalesforceSessionPortFactory {
+public final class SessionPortFactory {
     /**
      * Our logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(SalesforceSessionPortFactory.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SessionPortFactory.class.getName());
 
     /**
      * Return the LOGGER.
@@ -96,6 +96,6 @@ public final class SalesforceSessionPortFactory {
     /**
      * Default constructor not allowed.
      */
-    private SalesforceSessionPortFactory() {
+    private SessionPortFactory() {
     }
 }
