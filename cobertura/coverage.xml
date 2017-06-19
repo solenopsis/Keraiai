@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.15089514066496162" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="391" branches-covered="34" branches-valid="82" complexity="1.2363636363636363" version="2.1.1" timestamp="1497724943745">
+<coverage line-rate="0.15089514066496162" branch-rate="0.4146341463414634" lines-covered="59" lines-valid="391" branches-covered="34" branches-valid="82" complexity="1.2363636363636363" version="2.1.1" timestamp="1497899744895">
 	<sources>
 		<source>--source</source>
 		<source>/var/lib/openshift/540b2c664382ec0a4f000622/app-root/data/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
@@ -1899,7 +1899,51 @@
 						<line number="32" hits="0" branch="false"/>
 					</lines>
 				</class>
-				<class name="org.solenopsis.keraiai.soap.session.SalesforceSessionPortFactory" filename="org/solenopsis/keraiai/soap/session/SalesforceSessionPortFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
+				<class name="org.solenopsis.keraiai.soap.session.SessionIdSoapRequestHeaderHandler" filename="org/solenopsis/keraiai/soap/session/SessionIdSoapRequestHeaderHandler.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
+					<methods>
+						<method name="&lt;init&gt;" signature="(Ljavax/xml/namespace/QName;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="55" hits="0" branch="false"/>
+								<line number="56" hits="0" branch="false"/>
+								<line number="57" hits="0" branch="false"/>
+								<line number="58" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="&lt;init&gt;" signature="(Ljavax/xml/ws/Service;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="98" hits="0" branch="false"/>
+								<line number="99" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="getHeaderName" signature="()Ljavax/xml/namespace/QName;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="67" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="getName" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="77" hits="0" branch="false"/>
+							</lines>
+						</method>
+						<method name="getValue" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
+							<lines>
+								<line number="87" hits="0" branch="false"/>
+							</lines>
+						</method>
+					</methods>
+					<lines>
+						<line number="55" hits="0" branch="false"/>
+						<line number="56" hits="0" branch="false"/>
+						<line number="57" hits="0" branch="false"/>
+						<line number="58" hits="0" branch="false"/>
+						<line number="67" hits="0" branch="false"/>
+						<line number="77" hits="0" branch="false"/>
+						<line number="87" hits="0" branch="false"/>
+						<line number="98" hits="0" branch="false"/>
+						<line number="99" hits="0" branch="false"/>
+					</lines>
+				</class>
+				<class name="org.solenopsis.keraiai.soap.session.SessionPortFactory" filename="org/solenopsis/keraiai/soap/session/SessionPortFactory.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
 					<methods>
 						<method name="&lt;clinit&gt;" signature="()V" line-rate="0.0" branch-rate="1.0" complexity="0">
 							<lines>
@@ -1945,50 +1989,6 @@
 						<line number="93" hits="0" branch="false"/>
 						<line number="99" hits="0" branch="false"/>
 						<line number="100" hits="0" branch="false"/>
-					</lines>
-				</class>
-				<class name="org.solenopsis.keraiai.soap.session.SessionIdSoapRequestHeaderHandler" filename="org/solenopsis/keraiai/soap/session/SessionIdSoapRequestHeaderHandler.java" line-rate="0.0" branch-rate="1.0" complexity="1.0">
-					<methods>
-						<method name="&lt;init&gt;" signature="(Ljavax/xml/namespace/QName;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="55" hits="0" branch="false"/>
-								<line number="56" hits="0" branch="false"/>
-								<line number="57" hits="0" branch="false"/>
-								<line number="58" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="&lt;init&gt;" signature="(Ljavax/xml/ws/Service;Ljava/lang/String;)V" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="98" hits="0" branch="false"/>
-								<line number="99" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="getHeaderName" signature="()Ljavax/xml/namespace/QName;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="67" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="getName" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="77" hits="0" branch="false"/>
-							</lines>
-						</method>
-						<method name="getValue" signature="()Ljava/lang/String;" line-rate="0.0" branch-rate="1.0" complexity="0">
-							<lines>
-								<line number="87" hits="0" branch="false"/>
-							</lines>
-						</method>
-					</methods>
-					<lines>
-						<line number="55" hits="0" branch="false"/>
-						<line number="56" hits="0" branch="false"/>
-						<line number="57" hits="0" branch="false"/>
-						<line number="58" hits="0" branch="false"/>
-						<line number="67" hits="0" branch="false"/>
-						<line number="77" hits="0" branch="false"/>
-						<line number="87" hits="0" branch="false"/>
-						<line number="98" hits="0" branch="false"/>
-						<line number="99" hits="0" branch="false"/>
 					</lines>
 				</class>
 				<class name="org.solenopsis.keraiai.soap.session.SessionPortNameFactory" filename="org/solenopsis/keraiai/soap/session/SessionPortNameFactory.java" line-rate="1.0" branch-rate="1.0" complexity="1.0">

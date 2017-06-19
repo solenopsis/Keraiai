@@ -24,7 +24,7 @@
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">package</strong> org.solenopsis.keraiai.soap.port;
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.solenopsis.keraiai.soap.session.SalesforceSessionPortFactory;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.solenopsis.keraiai.soap.session.SessionPortFactory;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.InvocationHandler;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.InvocationTargetException;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Method;
@@ -190,7 +190,7 @@
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">this</strong>.webServiceType = ObjectUtils.ensureObject(webServiceType, <span class="jxr_string">"Must provide a web service type!"</span>);
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">this</strong>.service = ObjectUtils.ensureObject(service, <span class="jxr_string">"Must provide a service!"</span>);
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">this</strong>.portType = ObjectUtils.ensureObject(portType, <span class="jxr_string">"Must provide a port type!"</span>);
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>         <strong class="jxr_keyword">this</strong>.port = <strong class="jxr_keyword">new</strong> AtomicReference(SalesforceSessionPortFactory.createSessionPort(webServiceType, loginContext.get(), service, portType));
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         <strong class="jxr_keyword">this</strong>.port = <strong class="jxr_keyword">new</strong> AtomicReference(SessionPortFactory.createSessionPort(webServiceType, loginContext.get(), service, portType));
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>     }
 <a class="jxr_linenumber" name="L187" href="#L187">187</a> 
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>     <em class="jxr_javadoccomment">/**</em>
@@ -220,7 +220,7 @@
 <a class="jxr_linenumber" name="L212" href="#L212">212</a> 
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>                 <strong class="jxr_keyword">if</strong> (SalesforceExceptionEnum.isReloginException(exceptionContext.incrementFailureCount(toRaise))) {
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>                     getLoginContext().set(getLoginWebService().login(getCredentials()));
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>                     getPort().set(SalesforceSessionPortFactory.createSessionPort(getWebServiceType(), getLoginContext().get(), getService(), getPortType()));
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>                     getPort().set(SessionPortFactory.createSessionPort(getWebServiceType(), getLoginContext().get(), getService(), getPortType()));
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>                 }
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>             }
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>         } <strong class="jxr_keyword">while</strong> (isCallRetriable(++totalCalls));
