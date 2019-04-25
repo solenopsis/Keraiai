@@ -27,7 +27,7 @@
 
         <com.github.github_site-maven-plugin_version>0.12</com.github.github_site-maven-plugin_version>
         <org.apache.maven.plugins_maven-compiler-plugin_version>3.6.1</org.apache.maven.plugins_maven-compiler-plugin_version>
-        <org.apache.maven.plugins_maven-surefire-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-plugin_version>
+        <org.apache.maven.plugins_maven-surefire-plugin_version>3.0.0-M3</org.apache.maven.plugins_maven-surefire-plugin_version>
         <org.apache.maven.plugins_maven-project-info-reports-plugin_version>2.9</org.apache.maven.plugins_maven-project-info-reports-plugin_version>
         <org.apache.maven.plugins_maven-javadoc-plugin_version>2.10.4</org.apache.maven.plugins_maven-javadoc-plugin_version>
         <org.apache.maven.plugins_maven-surefire-report-plugin_version>2.19.1</org.apache.maven.plugins_maven-surefire-report-plugin_version>
