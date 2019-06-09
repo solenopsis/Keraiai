@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.15815085158150852" branch-rate="0.4230769230769231" lines-covered="65" lines-valid="411" branches-covered="33" branches-valid="78" complexity="1.2363636363636363" version="2.1.1" timestamp="1556200686969">
+<coverage line-rate="0.15815085158150852" branch-rate="0.4230769230769231" lines-covered="65" lines-valid="411" branches-covered="33" branches-valid="78" complexity="1.2363636363636363" version="2.1.1" timestamp="1560056417798">
 	<sources>
-		<source>/var/lib/jenkins/workspace/Solenopsis-Keraiai/src/main/java</source>
 		<source>--source</source>
-		<source>/var/lib/jenkins/workspace/Solenopsis-Keraiai/target/generated-sources/jaxws/wsimport</source>
-		<source>/var/lib/jenkins/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
+		<source>/home/jenkins/workspace/Solenopsis-Keraiai/src/main/java</source>
+		<source>/home/jenkins/workspace/Solenopsis-Keraiai/target/generated-sources/jaxws/wsimport</source>
+		<source>/home/jenkins/workspace/Solenopsis-Keraiai/target/generated-sources/annotations</source>
 	</sources>
 	<packages>
 		<package name="org.flossware.jcore" line-rate="0.2631578947368421" branch-rate="1.0" complexity="0.0">
